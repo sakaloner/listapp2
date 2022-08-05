@@ -1,45 +1,20 @@
 <template>
-    <p>{{ page_num }}</p>
-    <div id="myForm">
-        <label for="fname">Name: </label><br>
-        <input type="text" id="fname" name="fname"><br>
-        <label for="lname">Link: </label><br>
-        <input type="text" id="lname" name="lname"><br>
-        <label for="lname">Autor: </label><br>
-        <input type="text" id="lname" name="lname"><br><br>
-        <!-- Slider -->
-        <div class="slidecontainer">
-            <input type="range" min="1" max="100" v-model="slider_value" class="slider" id="myRange">
-            <p>{{ slider_value }}</p>
-        </div>
-        <!-- end slider -->
-        <button @click="logg()">Log</button>
-    </div>
-
-
+  <div class="slidecontainer">
+    <input type="range" min="1" max="100" v-model="slider_value" class="slider" id="myRange">
+    <p>{{ slider_value }}</p>
+  </div>
 </template>
 
+
 <script setup>
-import { ref} from 'vue';
+  import { ref } from "vue";
 
 const slider_value = ref(50)
 
 
-function logg(obj="nothing to log") {
-    console.log(obj)
-}
-
-
-defineProps({
-    page_num: {
-        type: String,
-        required: true
-    }
-})
 </script>
 
-
-<style scoped>
+<style>
 .slidecontainer {
   width: 100%; /* Width of the outside container */
 }

@@ -1,7 +1,7 @@
 <template>
  <h1 style="color:orangered">Listapp</h1>
  <br>
- <InputMedi :page_nom="page_num"></InputMedi>
+ <InputMedi :page_num="page_num"></InputMedi>
  <br>
  <br>
  <br>
