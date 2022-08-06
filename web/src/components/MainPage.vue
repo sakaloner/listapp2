@@ -1,6 +1,5 @@
 <template>
- <h1 style="color:orangered">Listapp</h1>
- <br>
+ <h1 style="color:orangered">Listapp</h1><br>
  <InputMedi :page_num="page_num"></InputMedi>
  <br>
  <br>
@@ -12,7 +11,7 @@
   import InputMedi from './InputMedi.vue';
   import ListShow from './ListShow.vue';
 
-  import { ref } from 'vue'
+  import { ref } from 'vue';
   
-  const page_num = ref('Libros')
+  const page_num = ref('libros')
 </script>

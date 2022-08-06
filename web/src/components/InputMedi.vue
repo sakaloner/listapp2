@@ -1,5 +1,5 @@
 <template>
-    <p>{{ page_num }}</p>
+    <!-- <p>{{ page_num }}</p> -->
     <div id="myForm">
         <label for="fname">Name: </label><br>
         <input type="text" id="fname" name="fname"><br>
