@@ -4,13 +4,23 @@ import axios from 'axios';
 
 onMounted(() => {
   console.log(`the component is now mounted.`);
-  pene = get_lists()
-  console.log(pene)
+  get_lists()
+});
 
-})
 
-var pene;
+// data
+const lists = reactive({});
 
+// function
+const show_data = ref(0)
+function sho_data() {
+  if (show_data.value == 0) {
+    show_data.value ++;
+  }
+  else {
+    show_data.value = 0;
+  }
+}
 function get_lists() {
   axios.get('http://localhost:8000/', {
       params: {
@@ -18,45 +28,36 @@ function get_lists() {
       }
     })
     .then(function (response) {
-      console.log('res func', response.data);
-      return response.data;
+      const {data} = response
+      console.log('res func', data, typeof(data));
+      lists.data = data
+      return data;
     })
     .catch(function (error) {
       console.log(error);
+      return error
     });
 };
-
-const list_data = computed(() => {
-  return pene
-});
-
 
 
 defineProps({
   page_num: {
     type: String,
     required: true,
-  },
+  }
 });
 </script>
 
 <template>
-  <br>
-  <button @click="get_lists">log</button>
-  <div>{{ list_data }}</div>
-  <div>{{ datas }}</div>
-
-  <!-- <div>
-    <ul v-for="el in listas">
-      <li>{{ el.ano }}</li>
-      <li>{{ el.fecha }}</li>
-      <li>{{ el.nombre }}</li>
-      <button>Erase</button>
-      <button>Edit</button>
-      <br>
-    </ul>
-  </div> -->
-  <br>
-  <p>Pagina: {{ page_num }}</p>
+  
+  <div v-if="show_data">ld [ {{ lists.data }} ]</div>
+  <ul v-for="lista in lists.data">
+    <li> <span style="font-weight:bold; color:orange">{{ lista.titulo }}</span></li>
+    <li> {{ lista.autor }}</li>
+    <li> {{ lista.link }}</li>
+    <li> {{ lista.rating }}</li>
+    <br>
+  </ul>
+  <button @click="sho_data">button</button>
 
 </template>
