@@ -2,11 +2,12 @@ from pydantic import BaseModel
 
 
 class ItemBase(BaseModel):
-    titulo: str
+    id: int | None = None
+    titulo: str | None = None
     autor: str | None = None
     link: str | None = None
-    tipo: str
-    rating: int
+    tipo: str | None = None
+    rating: int | None = None
 
     class Config:
         orm_mode = True

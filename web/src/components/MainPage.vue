@@ -1,10 +1,9 @@
+
 <template>
  <h1 style="color:orangered">Listapp</h1><br>
- <InputMedi :page_num="page_num"></InputMedi>
- <br>
- <br>
- <br>
- <ListShow :page_num="page_num"></ListShow> 
+ <button @click="cambiar(p)" v-for="p in page_opt"> {{ p }}</button><br>
+ <InputMedi @submit="rerender" :page_num="page_num"></InputMedi><br>
+ <ListShow :submited="submited" :page_num="page_num"></ListShow> 
 </template>
 
 <script setup>
@@ -13,5 +12,23 @@
 
   import { ref } from 'vue';
   
-  const page_num = ref('libros')
+  // logic for changing content page
+  const page_opt = [
+    'libros',
+    'articulos',
+    'peliculas',
+    'podcasts'
+  ];
+  const page_num = ref('libros');
+  
+  function cambiar(nueva) {
+    page_num.value = nueva;
+    console.log(page_num.value)
+  };
+
+  // rerender component
+  function rerender() {
+    submited.value++;
+  };
+  const submited = ref(0)
 </script>

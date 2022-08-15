@@ -1,11 +1,11 @@
 <template>
     <!-- <p>{{ page_num }}</p> -->
     <div id="myForm">
-        <label for="fname">titulo </label><br>
+        <label for="ftitulo">titulo </label><br>
         <input v-model="titulo" type="text" id="fname" name="fname"><br>
-        <label for="lname">link </label><br>
+        <label for="link">link </label><br>
         <input v-model="link" type="text" id="lname" name="lname"><br>
-        <label for="lname">autor </label><br>
+        <label for="autor">autor </label><br>
         <input v-model="autor" type="text" id="lname" name="lname"><br><br>
         <!-- Slider -->
         <div class="slidecontainer">
@@ -21,6 +21,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 
 const slider_value = ref(50);
 const titulo = ref("");
@@ -29,28 +30,45 @@ const autor = ref("");
 
 
 
-function post_item() {
-  obj = {
-    titulo: titulo.value,
-    link: link.value,
-    autor: autor.value,
-    tipo: page_num,
-    rating: slider_value.value
-  }
-  console.log(obj)
-  return obj
-}
-
-function logg(obj="nothing to log") {
-    console.log(obj)
-};
-
-defineProps({
+const props = defineProps({
     page_num: {
         type: String,
         required: true
     }
 });
+
+function post_item() {
+  const objeto = {
+    titulo: titulo.value,
+    link: link.value,
+    autor: autor.value,
+    tipo: props.page_num,
+    rating: slider_value.value
+  };
+  console.log(objeto)
+  // post shit
+  axios.post('http://localhost:8000/items', objeto)
+  .then(function (response) {
+    console.log('post ',response);
+  })
+  .catch(function (error) {
+    console.log('jueputa', error);
+  });
+  titulo.value = '';
+  link.value = '';
+  autor.value = '';
+  slider_value.value = 50;
+  // emit change in list
+  emit('submit')
+};
+
+const emit = defineEmits(['submit'])
+
+function logg(obj="nothing to log") {
+    console.log(obj)
+};
+
+
 </script>
 
 

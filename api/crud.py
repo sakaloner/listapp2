@@ -25,7 +25,7 @@ import models, schemas
 
 
 def get_type_items(db: Session, tipo: str, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).filter(models.Item.tipo == tipo).offset(skip).limit(limit).all()
+    return db.query(models.Item).order_by(models.Item.rating.desc()).filter(models.Item.tipo == tipo).offset(skip).limit(limit).all()
 
 def create_item(db: Session, item: schemas.ItemCreate):
     db_item = models.Item(**item.dict())
@@ -33,3 +33,10 @@ def create_item(db: Session, item: schemas.ItemCreate):
     db.commit()
     db.refresh(db_item)
     return db_item
+
+def delete_item(db: Session, id: int, tipo: str):
+    db.query(models.Item).filter(models.Item.id == id, models.Item.tipo == tipo).delete()
+    db.commit()
+    return True
+
+

@@ -16,14 +16,14 @@ const slider_value = ref(50)
 
 <style>
 .slidecontainer {
-  width: 100%; /* Width of the outside container */
+  width: 50%; /* Width of the outside container */
 }
 
 /* The slider itself */
 .slider {
   -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
-  width: 100%; /* Full-width */
+  width: 50%; /* Full-width */
   height: 25px; /* Specified height */
   background: #d3d3d3; /* Grey background */
   outline: none; /* Remove outline */

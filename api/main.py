@@ -23,6 +23,7 @@ origins = [
     "*",
     "https://localhost*",
     "http://localhost:*",
+    "http://localhost*",
     "http://localhost:8080",
 ]
 
@@ -46,6 +47,13 @@ def read_items(tipo: str = 'libros', skip: int = 0, limit: int = 100, db: Sessio
     items = crud.get_type_items(db, tipo=tipo, skip=skip, limit=limit)
     print(items)
     return items
+
+@app.delete("/delete")
+def delete_item_by_idtype(
+    id: int, tipo: str, db: Session = Depends(get_db)
+):
+    crud.delete_item(db=db, id=id, tipo=tipo)
+    return {'ok': True}
 
 # @app.post("/users/", response_model=schemas.User)
 # def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
