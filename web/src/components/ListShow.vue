@@ -58,7 +58,7 @@ function get_lists(page_value) {
 function delete_item(id, tipo) {
   console.log(`id: ${id}, tipo: ${tipo}`);
   axios.delete('http://localhost:8000/delete', {
-    params: {
+    data: {
       id: id,
       tipo: tipo
     }

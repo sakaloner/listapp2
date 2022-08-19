@@ -52,8 +52,11 @@ def read_items(tipo: str = 'libros', skip: int = 0, limit: int = 100, db: Sessio
 def delete_item_by_idtype(
     id: int, tipo: str, db: Session = Depends(get_db)
 ):
-    crud.delete_item(db=db, id=id, tipo=tipo)
-    return {'ok': True}
+    try:
+        crud.delete_item(db=db, id=id, tipo=tipo)
+        return {'ok_its_gone_nigga': True}
+    except:
+        return {'Its_not_gone': False}
 
 # @app.post("/users/", response_model=schemas.User)
 # def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
