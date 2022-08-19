@@ -56,21 +56,27 @@ function get_lists(page_value) {
 };
 
 function delete_item(id, tipo) {
+  console.log('##########################')
   console.log(`id: ${id}, tipo: ${tipo}`);
   axios.delete('http://localhost:8000/delete', {
-    data: {
+    headers: {
+      accept: 'application/json'
+    },
+    params : {
       id: id,
       tipo: tipo
     }
   })
   .then(function (response) {
     console.log('deleted ', response);
+    get_lists(props.page_num)
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
   })
   .catch(function (error) {
     console.log(error);
-  });
-  get_lists(props.page_num)
+  })
 };
+
 
 watch(
   () => props.page_num,
@@ -97,9 +103,9 @@ watch(
     <li> {{ lista.autor }}</li>
     <li> {{ lista.link }}</li>
     <li> {{ lista.rating }}</li>
-    <button @click="delete_item(6, 'libros')">del{{lista}}</button>
+    <button @click="delete_item(lista.id, lista.tipo)">del</button>
     <br><br>
   </ul>
-  <button @click="sho_data">button</button>
+  <!-- <button @click="sho_data">button</button> -->
 
 </template>

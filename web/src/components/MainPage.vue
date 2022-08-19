@@ -1,7 +1,7 @@
 
 <template>
  <h1 style="color:orangered">Listapp</h1><br>
- <button @click="cambiar(p)" v-for="p in page_opt"> {{ p }}</button><br>
+ <button :id="p == page_num ? 'selecb' : 'not_selected'" @click="cambiar(p)" v-for="p in page_opt">{{ p }}</button><br>
  <InputMedi @submit="rerender" :page_num="page_num"></InputMedi><br>
  <ListShow :submited="submited" :page_num="page_num"></ListShow> 
 </template>
@@ -25,6 +25,9 @@
     page_num.value = nueva;
     console.log(page_num.value)
   };
+  // style for selected button
+  // const isSelected = computed(() =>
+  // )
 
   // rerender component
   function rerender() {
@@ -32,3 +35,9 @@
   };
   const submited = ref(0)
 </script>
+
+<style scoped>
+#selecb {
+  background-color: green
+}
+</style>

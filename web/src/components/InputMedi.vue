@@ -13,7 +13,7 @@
             <p>{{ slider_value }}</p>
         </div>
         <!-- end slider -->
-        <button @click="post_item">Log</button>
+        <button @click="post_item">Save</button>
     </div>
 
 
@@ -50,16 +50,17 @@ function post_item() {
   axios.post('http://localhost:8000/items', objeto)
   .then(function (response) {
     console.log('post ',response);
+    titulo.value = '';
+    link.value = '';
+    autor.value = '';
+    slider_value.value = 50;
+    emit('submit')
+  // emit change in list
+  emit('submit')
   })
   .catch(function (error) {
     console.log('jueputa', error);
   });
-  titulo.value = '';
-  link.value = '';
-  autor.value = '';
-  slider_value.value = 50;
-  // emit change in list
-  emit('submit')
 };
 
 const emit = defineEmits(['submit'])
@@ -81,7 +82,7 @@ function logg(obj="nothing to log") {
 .slider {
   -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
-  width: 100%; /* Full-width */
+  width: 25%; /* Full-width */
   height: 25px; /* Specified height */
   background: #d3d3d3; /* Grey background */
   outline: none; /* Remove outline */

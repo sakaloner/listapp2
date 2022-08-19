@@ -22,18 +22,23 @@ class Item(ItemBase):
 
 
 
-# class UserBase(BaseModel):
-#     email: str
+class UserBase(BaseModel):
+    email: str
+    name: str | None
 
 
-# class UserCreate(UserBase):
-#     password: str
+
+class UserCreate(UserBase):
+    password: str
 
 
-# class User(UserBase):
-#     id: int
-#     is_active: bool
-#     items: list[Item] = []
+class User(UserBase):
+    id: int
+    is_active: bool
+    items: list[Item] = []
 
-#     class Config:
-#         orm_mode = True
+    class Config:
+        orm_mode = True
+
+class UserInDB(UserBase):
+    hashed_password : str

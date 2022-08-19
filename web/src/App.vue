@@ -1,11 +1,17 @@
 <script setup>
 
-import MainPage from './components/MainPage.vue';
+import { RouterView, RouterLink } from 'vue-router'
+
 
 </script>
 
 <template>
-  <MainPage/>
+  <nav>
+        <RouterLink to="/">Home</RouterLink><br>
+        <RouterLink to="/signup">SignUp</RouterLink><br>
+        <RouterLink to="/login">LogIn</RouterLink>
+  </nav>
+  <RouterView />
 </template>
 
 
