@@ -13,32 +13,34 @@ class ItemBase(BaseModel):
         orm_mode = True
 
 
-
 class ItemCreate(ItemBase):
     pass
 
 class Item(ItemBase):
     pass
 
-
-
 class UserBase(BaseModel):
     email: str
     name: str | None
 
 
-
 class UserCreate(UserBase):
     password: str
 
-
 class User(UserBase):
-    id: int
     is_active: bool
     items: list[Item] = []
+
 
     class Config:
         orm_mode = True
 
-class UserInDB(UserBase):
+class UserInDB(User):
     hashed_password : str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: str | None = None
