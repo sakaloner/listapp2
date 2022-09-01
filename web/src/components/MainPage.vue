@@ -12,6 +12,8 @@
 
   import { ref } from 'vue';
   
+  // logged username
+  
   // logic for changing content page
   const page_opt = [
     'libros',

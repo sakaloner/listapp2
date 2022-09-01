@@ -183,8 +183,8 @@ def create_item(
 
 
 @app.get("/", response_model=list[schemas.Item])
-def read_items(tipo: str = 'libros', skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_type_items(db, tipo=tipo, skip=skip, limit=limit)
+def read_items(owner_id:str, token: str = Depends(oauth2_scheme),tipo: str = 'libros', skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    items = crud.get_type_items(db, tipo=tipo, owner_id=owner_id, skip=skip, limit=limit)
     print(items)
     return items
 

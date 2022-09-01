@@ -22,13 +22,14 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { useLoginStore } from '../stores/login';
 
 const slider_value = ref(50);
 const titulo = ref("");
 const link = ref("");
 const autor = ref("");
 
-
+const loginfo = useLoginStore();
 
 const props = defineProps({
     page_num: {
@@ -43,7 +44,8 @@ function post_item() {
     link: link.value,
     autor: autor.value,
     tipo: props.page_num,
-    rating: slider_value.value
+    rating: slider_value.value,
+    owner_id: localStorage.getItem('username')
   };
   console.log(objeto)
   // post shit

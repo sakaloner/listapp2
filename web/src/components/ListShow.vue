@@ -1,6 +1,11 @@
 <script setup>
 import { ref, watch, computed, onMounted, reactive  } from 'vue';
+import { useLoginStore } from '../stores/login';
 import axios from 'axios';
+import { createSimpleExpression } from '@vue/compiler-core';
+
+// pinia store setup
+
 
 const props = defineProps({
   page_num: {
@@ -22,7 +27,11 @@ onMounted(() => {
 // data
 const lists = reactive({});
 
-
+// show login message
+const error_msg = reactive({
+  msg: '',
+  show: false
+})
 
 // function
 const show_data = ref(0)
@@ -38,9 +47,15 @@ function sho_data() {
 
 
 function get_lists(page_value) {
+  let namero = localStorage.getItem('username');
+  // if (namero == null)  {
+  //   setTimeout(get_lists(page_value), 5000);
+  // }
+  console.log(namero);
   axios.get('http://localhost:8000/', {
       params: {
-        tipo: page_value
+        tipo: page_value,
+        owner_id: namero
       }
     })
     .then(function (response) {
@@ -50,8 +65,16 @@ function get_lists(page_value) {
       return data;
     })
     .catch(function (error) {
-      console.log(error);
-      return error
+      if (error.response.status == 401) {
+        error_msg.msg = 'Login to see your lists';
+        error_msg.show = true;
+        return 0;
+      } else {
+        error_msg.msg = 'Something went wrong';
+        error_msg.show = true;
+        console.log(error);
+        return error
+      }
     });
 };
 
@@ -97,6 +120,7 @@ watch(
 
 <template>
   <!-- <h1>sub: [{{submited}}]</h1> -->
+  <p v-if="error_msg.show">{{error_msg.msg}}</p>
   <div v-if="show_data">ld [ {{ lists.data }} ]</div>
   <ul v-for="lista in lists.data">
     <li> <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>

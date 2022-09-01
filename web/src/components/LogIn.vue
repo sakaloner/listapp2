@@ -11,6 +11,10 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
+import router from '../router';
+import { useLoginStore } from '../stores/login';
+
+const loginfo = useLoginStore();
 
 const email = ref('');
 const passw = ref('');
@@ -19,6 +23,7 @@ const passw = ref('');
 const login_msg = ref('');
 // style error message
 const isError = ref('notError');
+
 
 function login() {
     var bodyFormData = new FormData();
@@ -31,20 +36,41 @@ function login() {
         headers: { "Content-Type": "multipart/form-data"}
         })
         .then(function (response) {
-            console.log(response);
+            console.log('funciono', response);
             isError.value = 'notError';
             login_msg.value = 'Sucess!!';
             console.log(login_msg.value)
-            return 1
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+            // sending email username data to pinia store
+            localStorage.setItem('token', response.data.access_token);
+            loginfo.log_token(response.data.access_token);
+            //localStorage.setItem('username', response.data.)
+            setTimeout(get_user_name, 2000);
+            setTimeout( () => {
+                router.push('/')
+            }, 2000);
+;
+            //return 1
         })
         .catch(function (response) {
-            console.log(response);
+            console.log('error login', response);
             isError.value = 'error';
             login_msg.value = response.response.data.detail;
             return 0
         });
 
-}  
+};
+function get_user_name() {
+  axios.get('http://localhost:8000/users/me')
+    .then(function (response) {
+      console.log(response);
+      loginfo.log_user(response.data.email);
+      localStorage.setItem('username', response.data.email)
+    })
+    .catch(function (error) {
+      console.log('error get_user_name ', error);
+    });
+};  
 </script>
 
 <style scoped>

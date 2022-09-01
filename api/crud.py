@@ -27,8 +27,8 @@ def create_user(db: Session, user: schemas.UserCreate, hashed_pw:str):
     return db_user
 
 
-def get_type_items(db: Session, tipo: str, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).order_by(models.Item.rating.desc()).filter(models.Item.tipo == tipo).offset(skip).limit(limit).all()
+def get_type_items(db: Session, tipo: str, owner_id:str, skip: int = 0, limit: int = 100):
+    return db.query(models.Item).order_by(models.Item.rating.desc()).filter(models.Item.tipo == tipo, models.Item.owner_id == owner_id).offset(skip).limit(limit).all()
 
 def create_item(db: Session, item: schemas.ItemCreate):
     db_item = models.Item(**item.dict())
