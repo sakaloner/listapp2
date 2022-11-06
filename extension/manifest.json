@@ -9,10 +9,12 @@
         "tabs",
         "webNavigation",
         "webRequest",
-        "webRequestBlocking"
+        "webRequestBlocking",
+        "http://localhost:5173/"
     ],
     "action":{
         "default_popup": "index.html",
-        "default_title": "Listapp"
+        "default_title": "Listapp",
+        "default_icon": "favicon.ico"
     }
 }

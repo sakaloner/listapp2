@@ -8,7 +8,7 @@ class ItemBase(BaseModel):
     link: str | None = None
     tipo: str | None = None
     rating: int | None = None
-    owner_id: int | None = None
+    owner_id: str | None = None
 
     class Config:
         orm_mode = True

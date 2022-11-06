@@ -49,13 +49,14 @@ function login() {
             setTimeout( () => {
                 router.push('/')
             }, 2000);
-;
+    
+            
             //return 1
         })
         .catch(function (response) {
             console.log('error login', response);
             isError.value = 'error';
-            login_msg.value = response.response.data.detail;
+            l.value = response.response.data.detail;
             return 0
         });
 
