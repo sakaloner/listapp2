@@ -10,12 +10,26 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
+    # Prueba
+    categorias = relationship("Categories", back_populates="owner")
+
     items = relationship("Item", back_populates="owner")
 
     def verify_password(self, password):
         return True
 
+class Categories(Base):
+    __tablename__ = "categories"
 
+    id = Column(Integer, primary_key=True, index=True)
+    category_name = Column(String)
+    owner_id = Column(String, ForeignKey("users.email"))
+    ### prueba
+    owner = relationship("User", back_populates="categorias")
+
+
+
+    
 class Item(Base):
     __tablename__ = "content"
 

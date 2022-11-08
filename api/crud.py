@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 
+import json
 import models, schemas
 
 
@@ -42,4 +43,14 @@ def delete_item(db: Session, id: int, tipo: str):
     db.commit()
     return True
 
+## testing. this is a better way to setting up item getting than the main one
+def get_user_items_test(db: Session):
+    #return db.query(models.User).limit(1))
+    return [x.items for x in db.query(models.User).limit(1)]
+
+## Getting all the categories form an user
+def get_cats_user(db: Session, usuario:str):
+    #return db.query(models.User).limit(1))
+    cat_objs = [x.categorias for x in db.query(models.User).filter(models.User.email == usuario).limit(1).all()]
+    return [x.category_name for x in cat_objs[0]]
 

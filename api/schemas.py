@@ -1,5 +1,12 @@
 from pydantic import BaseModel
 
+class Categories(BaseModel):
+    id: int  | None = None
+    owner_id: str | None = None
+    category_name: str | None = None
+
+    class Config:
+        orm_mode = True
 
 class ItemBase(BaseModel):
     id: int | None = None
@@ -31,6 +38,7 @@ class UserCreate(UserBase):
 class User(UserBase):
     is_active: bool
     items: list[Item] = []
+    categorias: list[Categories] = []
 
 
     class Config:

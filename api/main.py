@@ -7,6 +7,7 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 import logging
+import json
 
 logging.info('asdfasdfsadf')
 
@@ -214,3 +215,14 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+## tests getting all the items of a user better way
+@app.get("/testing")
+def get_test(db: Session = Depends(get_db)):
+    print(crud.get_user_items_test(db))
+    return crud.get_user_items_test(db)
+
+@app.get("/testing/{usuario}")
+def get_categories(usuario:str, db: Session = Depends(get_db)):
+    print(crud.get_cats_user(db, usuario))
+    return crud.get_cats_user(db, usuario)
