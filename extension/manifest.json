@@ -16,5 +16,8 @@
         "default_popup": "index.html",
         "default_title": "Listapp",
         "default_icon": "favicon.ico"
+    },
+    "background": {
+        "service_worker": "background.js"
     }
 }

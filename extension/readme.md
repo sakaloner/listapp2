@@ -1,13 +1,7 @@
-Bueno que tengo que hacer. No se negro. Tengo que hacer una
-extension para guardar links de paginas en el server
-necesitare un div sencillo.
-Si no se esta loggeado entonces se lleva a que se logge
-si se esta loggeado.
-esa parte del login es importante pero la funcionalidad mas
-importante es que guarde el link de las paginas que 
-uno quiere guardar. 
-Entonces es un div con el link de la pagina y un slider para
-saber que tanto le gusto. Y bueno un espacio para el nombre.
-Esto despues se vera programaticametne pero ahora toca asi
-- second
-- third
+= creaer difernetes categorias.
+- tengo que tener una cosa que se guarde en la base de datos que son
+    las distintas categorias que tiene un men. Por que o si no seria
+    terrible tener que buscar por todas los elementos guardados todas las
+    categorias que hay.
+    Espero no romper nada. Guardar el commit.
+    - estas categorias deben estar pegadas a cada usuario.

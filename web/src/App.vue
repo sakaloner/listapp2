@@ -32,8 +32,8 @@ const showb = ref(0)
   <p v-else-if="username">Logged as: {{username}}</p>
   <p v-else>Not logged in</p>
 
-  <button v-if="loginfo.name" @click="log_out">logOut</button>
-  <button v-else-if="username" @click="log_out">logOut</button>
+  <button v-if="loginfo.name" @click="log_out">log out</button>
+  <button v-else-if="username" @click="log_out">log out</button>
   <p v-else></p>
 
   <nav>
