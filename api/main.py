@@ -145,7 +145,11 @@ def create_user(form_data: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
 
     hp = get_password_hash(form_data.password)
-    return crud.create_user(db=db, user=form_data, hashed_pw = hp)
+    user = crud.create_user(db=db, user=form_data, hashed_pw = hp)
+    ### create default categories
+    crud.create_cat(db=db, cat='666books videos podcasts articles', usuario=form_data.email)
+
+    return user
 
 ### Login    
 @app.post("/token")
@@ -222,7 +226,48 @@ def get_test(db: Session = Depends(get_db)):
     print(crud.get_user_items_test(db))
     return crud.get_user_items_test(db)
 
-@app.get("/testing/{usuario}")
+@app.get("/get_categories/{usuario}")
 def get_categories(usuario:str, db: Session = Depends(get_db)):
-    print(crud.get_cats_user(db, usuario))
-    return crud.get_cats_user(db, usuario)
+    cats_raw = crud.get_cats_user(db, usuario)
+    return cats_raw
+
+## crear categorias para usuarios
+@app.post("/cat_creation", response_model=schemas.Categories | list[schemas.Categories])#, response_model=schemas.User | str)
+def create_cat_for_user(owner_id:str, category_name:str, db: Session = Depends(get_db)):
+    # if db_user:
+    #     raise HTTPException(status_code=400, detail="Email already registered")
+    new_cat = crud.create_cat(db=db, cat=category_name, usuario=owner_id)
+    return new_cat
+
+## elimiar categorias
+@app.delete("/delete_cat")
+def delete_category_post(name_category:str, usuario: str, db: Session = Depends(get_db)):
+    try:
+        crud.delete_category(db=db, usuario=usuario, name_category=name_category)
+        return {'ok_this_category_is_gone_bro': True}
+    except:
+        return {'Its_not_gone': False}
+
+
+######## Multiplayer things ########
+@app.post("/multiplayer/follow")
+def follow_user(folower:str, folowee:str, db: Session = Depends(get_db)):
+    connection = crud.follow_user(db, folower=folower, folowee=folowee)
+    return connection
+
+@app.delete("/multiplayer/unfollow")
+def unfollow_user(folower:str, folowee:str, db: Session = Depends(get_db)):
+    if crud.unfollow_user(db, folower=folower, folowee=folowee):
+        return {'ok_this_connection_is_gone': True}
+    else:
+        return {'something went wrong my g': False}
+
+@app.get("/multiplayer/view_following")
+def get_following(folower:str, db: Session = Depends(get_db)):
+    following = crud.get_following(db, folower=folower)
+    return following
+
+@app.get("/multiplayer/view_followers")
+def get_followers(folowee:str, db: Session = Depends(get_db)):
+    followers = crud.get_followers(db, folowee=folowee)
+    return followers

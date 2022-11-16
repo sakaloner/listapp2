@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import MainPage from "../components/MainPage.vue";
 import SingUp from "../components/SignUp.vue";
 import Login from "../components/LogIn.vue";
+import Explore from "../components/ExploreLists.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,11 @@ const router = createRouter({
       name: "Login",
       component: Login
 
+    },
+    {
+      path: "/explore",
+      name: "Explore",
+      component: Explore
     }
   ],
 });

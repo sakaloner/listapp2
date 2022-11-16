@@ -1,5 +1,11 @@
 from pydantic import BaseModel
 
+
+class Connections(BaseModel):
+    folower: str
+    folowee: str  
+
+
 class Categories(BaseModel):
     id: int  | None = None
     owner_id: str | None = None

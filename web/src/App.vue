@@ -10,8 +10,7 @@ const loginfo = useLoginStore();
 
 const username = computed(() => {
   return localStorage.getItem('username');
-}
-);
+});
 // log out function button
 
 function log_out() {
@@ -39,9 +38,17 @@ const showb = ref(0)
   <nav>
         <RouterLink to="/">Home</RouterLink><br>
         <RouterLink to="/signup">SignUp</RouterLink><br>
-        <RouterLink to="/login">LogIn</RouterLink>
+        <RouterLink to="/login">LogIn</RouterLink><br>
+        <RouterLink to="/Explore">Explore Lists</RouterLink>
   </nav>
-  <RouterView />
+  <Suspense>
+    <template #default>
+      <RouterView />
+    </template>
+    <template #fallback>
+      <div>Loading...</div>
+    </template>
+  </Suspense>
 
 </template>
 

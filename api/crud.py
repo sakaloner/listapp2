@@ -54,3 +54,53 @@ def get_cats_user(db: Session, usuario:str):
     cat_objs = [x.categorias for x in db.query(models.User).filter(models.User.email == usuario).limit(1).all()]
     return [x.category_name for x in cat_objs[0]]
 
+## create categories for an user
+def create_cat(db: Session, cat:str | list[str], usuario:str):
+    ## hack for posting a lot at the same time
+    if len(cat) >= 3 and cat[0:3] == '666':
+        cat = cat[3:]
+        cat_cleaned = cat.split(' ')
+        lista_categories = []
+        for x in cat_cleaned:
+            db_cat = models.Categories(category_name=x, owner_id=usuario)
+            db.add(db_cat)
+            db.commit()
+            db.refresh(db_cat)
+            lista_categories.append(db_cat)
+        return lista_categories
+    else:
+        db_cat = models.Categories(category_name=cat, owner_id=usuario)
+        db.add(db_cat)
+        db.commit()
+        db.refresh(db_cat)
+        return db_cat
+
+### delete category
+def delete_category(db: Session, name_category:str, usuario:str):
+    db.query(models.Categories).filter(models.Categories.category_name == name_category, models.Categories.owner_id == usuario).delete()
+    db.commit()
+    return True
+
+######## multiplayer things ########
+def follow_user(db: Session, folower:str, folowee:str):
+    db_follow = models.Connections(folower=folower, folowee=folowee)
+    db.add(db_follow)
+    db.commit()
+    db.refresh(db_follow)
+    return db_follow
+
+## Stop following an user
+def unfollow_user(db: Session, folower:str, folowee:str):
+    db.query(models.Connections).filter(models.Connections.folower == folower, models.Connections.folowee == folowee).delete()
+    db.commit()
+    return True
+
+## Get all the users that an user is following
+def get_following(db: Session, folower:str):
+    return db.query(models.Connections).filter(models.Connections.folower == folower).all()
+
+## Get all the users that are following an user
+def get_followers(db: Session, folowee:str):
+    return db.query(models.Connections).filter(models.Connections.folowee == folowee).all()
+
+

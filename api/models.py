@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship
 
 from database import Base
 
+
+
 class User(Base):
     __tablename__ = "users"
 
@@ -17,6 +19,14 @@ class User(Base):
 
     def verify_password(self, password):
         return True
+
+class Connections(Base):
+    __tablename__ = "connections"
+
+    id = Column(Integer, primary_key=True, index=True)
+    folower = Column(String, ForeignKey("users.email"))
+    folowee = Column(String, ForeignKey("users.email"))
+
 
 class Categories(Base):
     __tablename__ = "categories"
