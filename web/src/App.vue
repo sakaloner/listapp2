@@ -1,6 +1,6 @@
 <script setup>
 
-import { RouterView, RouterLink } from 'vue-router';
+import { RouterView, RouterLink, useRouter } from 'vue-router';
 import { useLoginStore } from '@/stores/login';
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
@@ -19,10 +19,14 @@ function log_out() {
   localStorage.removeItem('username');
   location.reload(true)
 }
+const valor_input = ref("");
+const router = useRouter();
 
-const showb = ref(0)
+function push() {
+  console.log(valor_input.value);
 
-
+  router.push('Search');
+}
 
 </script>
 
@@ -40,10 +44,17 @@ const showb = ref(0)
         <RouterLink to="/signup">SignUp</RouterLink><br>
         <RouterLink to="/login">LogIn</RouterLink><br>
         <RouterLink to="/Explore">Explore Lists</RouterLink>
+        <!-- create a search bar -->
+        <div id="search_bar">
+          <input type="text" id="search" placeholder="Search lists or user" v-model="valor_input">
+          <RouterLink to="/Search" > <button type="submit" id="search_button">Search</button></RouterLink>
+        </div>
+
+        
   </nav>
   <Suspense>
     <template #default>
-      <RouterView />
+      <RouterView :search_value="valor_input" />
     </template>
     <template #fallback>
       <div>Loading...</div>

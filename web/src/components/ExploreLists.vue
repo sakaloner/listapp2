@@ -129,63 +129,63 @@ function get_following(username) {
 
 };
 
-let info_users = await get_following(username);
-let count = 0;
+
+const getUsers = async () => { 
+  console.log('trying')
+  const followingUsers = await axios.get('http://localhost:8000/multiplayer/view_following',{
+      params:{
+        folower: username
+      },
+      headers: {
+      'accept': 'application/json'
+      }
+  }).catch((err) => {
+    console.log(err)
+  });
+  console.log('followingUsers', followingUsers.data)
+  let users = {};
+  await followingUsers.data.forEach(async (element) => {
+
+    const categories = await axios.get(`http://localhost:8000/get_categories/${element.folowee}`,{
+      headers: {
+        'accept': 'application/json'
+      }
+    }).catch((err) => {
+      console.log(err)
+    });
+    categories.data.forEach(async (element2) => {
+      const items = await axios.get('http://localhost:8000/',{
+        params:{
+          owner_id: element.folowee,
+          tipo: element2,
+          limit: 5
+        },
+        headers: {
+          'accept': 'application/json'
+        }
+      }).catch((err) => {
+        console.log(err)
+      });
+      if (items.data.length > 0) {
+        users[element.folowee] = {
+          [element2]: items.data
+        };
+      };
+    });
+  });
+  return users;
+};
+
+
+
+//getUsers(username).then(users=> console.log(Object.entries(users), users));
+let info_users = await getUsers(username);
+
 while (Object.keys(info_users).length === 0) {
   await new Promise(r => setTimeout(r, 2000));
 };
 console.log('Data populated')
 console.log('info_users', info_users);
-
-// get_following(username)
-//   .then(function (info_following) {
-//     console.log('info_following', info_following);
-//     while (Object.keys(info_following).length === 0) {
-//       console.log('esperando');
-//     };
-//     console.log('info_following', info_following['deyza']);
-//   })
-
-
-
-
-
-//get_categories(username);
-// y de estos coger las listas
-// el autput deben ser array con listas, con el nombre del duenio
-// El nombre de la categoria y el autor de la meirda al final.
-
-// function get_lists(page_value) {
-//   let namero = localStorage.getItem('username');
-//   // if (namero == null)  {
-//   //   setTimeout(get_lists(page_value), 5000);
-//   // }
-//   console.log(namero);
-//   axios.get('http://localhost:8000/', {
-//       params: {
-//         tipo: page_value,
-//         owner_id: namero
-//       }
-//     })
-//     .then(function (response) {
-//       const {data} = response
-//       console.log('res func', data, typeof(data));
-//       lists.data = data
-//       return data;
-//     })
-//     .catch(function (error) {
-//       if (error.response.status == 401) {
-//         error_msg.msg = 'Login to see your lists';
-//         error_msg.show = true;
-//         return 0;
-//       } else {
-//         error_msg.msg = 'Something went wrong';
-//         error_msg.show = true;
-//         console.log(error);
-//         return error
-//       }
-//     });
-// };
 
 </script>
 

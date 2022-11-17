@@ -4,8 +4,8 @@ import json
 import models, schemas
 
 
-def get_user(db: Session, user_id: int):
-   return db.query(models.User).filter(models.User.id == user_id).first()
+def get_user(db: Session, user_id: str):
+   return db.query(models.User).filter(models.User.email == user_id).first()
 
 
 def get_user_by_email(db: Session, email: str):
@@ -54,6 +54,10 @@ def get_cats_user(db: Session, usuario:str):
     cat_objs = [x.categorias for x in db.query(models.User).filter(models.User.email == usuario).limit(1).all()]
     return [x.category_name for x in cat_objs[0]]
 
+## searching for a category in general
+def search_category(db: Session, category:str):
+    return db.query(models.Categories).filter(models.Categories.category_name == category).all()
+    
 ## create categories for an user
 def create_cat(db: Session, cat:str | list[str], usuario:str):
     ## hack for posting a lot at the same time
@@ -104,3 +108,8 @@ def get_followers(db: Session, folowee:str):
     return db.query(models.Connections).filter(models.Connections.folowee == folowee).all()
 
 
+def get_items_by_cat(user:str, category:str, db: Session):
+    #return db.query(models.User).limit(1))
+    results_raw = [x.items for x in db.query(models.User).limit(1)][0]
+    #return results_raw
+    return [x for x in results_raw if x.tipo == category and x.owner_id == user]

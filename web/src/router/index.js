@@ -3,6 +3,7 @@ import MainPage from "../components/MainPage.vue";
 import SingUp from "../components/SignUp.vue";
 import Login from "../components/LogIn.vue";
 import Explore from "../components/ExploreLists.vue";
+import Search from "../components/SearchComp.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,11 @@ const router = createRouter({
       path: "/explore",
       name: "Explore",
       component: Explore
+    },
+    {
+      path: "/search",
+      component: Search,
+      props: true
     }
   ],
 });
