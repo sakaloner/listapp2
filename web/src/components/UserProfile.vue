@@ -120,6 +120,7 @@ watch(
 </script>
 
 <template>
+  <p>gorsovia</p>
   <!-- <h1>sub: [{{submited}}]</h1> -->
   <p v-if="error_msg.show">{{error_msg.msg}}</p>
   <div v-if="show_data">ld [ {{ lists.data }} ]</div>

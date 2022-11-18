@@ -55,8 +55,11 @@ def get_cats_user(db: Session, usuario:str):
     return [x.category_name for x in cat_objs[0]]
 
 ## searching for a category in general
-def search_category(db: Session, category:str):
-    return db.query(models.Categories).filter(models.Categories.category_name == category).all()
+def search_category(db: Session, category:str, empty:int, skip:str):
+    if empty == 1:
+        return db.query(models.Categories).filter(models.Categories.category_name == category).all()
+    else:
+        return db.query(models.Categories).filter(models.Categories.category_name == category, models.Categories.num_items > 0, models.Categories.owner_id != skip).all()
     
 ## create categories for an user
 def create_cat(db: Session, cat:str | list[str], usuario:str):
@@ -109,7 +112,19 @@ def get_followers(db: Session, folowee:str):
 
 
 def get_items_by_cat(user:str, category:str, db: Session):
-    #return db.query(models.User).limit(1))
-    results_raw = [x.items for x in db.query(models.User).limit(1)][0]
-    #return results_raw
-    return [x for x in results_raw if x.tipo == category and x.owner_id == user]
+    return db.query(models.Item).filter(models.Item.tipo == category, models.Item.owner_id == user).all()
+
+### categories number of items
+def add_num_categories(db: Session, user:str, category:str, add_or_subs:str):
+    if add_or_subs == 'add':
+        cat_element = db.query(models.Categories).filter(models.Categories.category_name == category, models.Categories.owner_id == user)
+        cat_element.update({models.Categories.num_items: models.Categories.num_items + 1})
+        db.commit()
+        return {'added': True}
+    elif add_or_subs == 'subs':
+        cat_element = db.query(models.Categories).filter(models.Categories.category_name == category, models.Categories.owner_id == user)
+        cat_element.update({models.Categories.num_items: models.Categories.num_items - 1})
+        db.commit()
+        return {'substracted': True}
+    else:
+        return {'false': 'you need to specify if you want to add or substract form category'}

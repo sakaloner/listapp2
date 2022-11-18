@@ -34,6 +34,7 @@ class Categories(Base):
     id = Column(Integer, primary_key=True, index=True)
     category_name = Column(String)
     owner_id = Column(String, ForeignKey("users.email"))
+    num_items = Column(Integer, default=0)
     ### prueba
     owner = relationship("User", back_populates="categorias")
 

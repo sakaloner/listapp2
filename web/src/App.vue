@@ -46,15 +46,14 @@ function push() {
         <RouterLink to="/Explore">Explore Lists</RouterLink>
         <!-- create a search bar -->
         <div id="search_bar">
-          <input type="text" id="search" placeholder="Search lists or user" v-model="valor_input">
-          <RouterLink to="/Search" > <button type="submit" id="search_button">Search</button></RouterLink>
+          <RouterLink to="/Search" >Search</RouterLink>
         </div>
 
         
   </nav>
   <Suspense>
     <template #default>
-      <RouterView :search_value="valor_input" />
+      <RouterView />
     </template>
     <template #fallback>
       <div>Loading...</div>

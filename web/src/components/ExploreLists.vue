@@ -145,7 +145,7 @@ const getUsers = async () => {
   console.log('followingUsers', followingUsers.data)
   let users = {};
   await followingUsers.data.forEach(async (element) => {
-
+    
     const categories = await axios.get(`http://localhost:8000/get_categories/${element.folowee}`,{
       headers: {
         'accept': 'application/json'
@@ -167,6 +167,7 @@ const getUsers = async () => {
         console.log(err)
       });
       if (items.data.length > 0) {
+        console.log(element);
         users[element.folowee] = {
           [element2]: items.data
         };

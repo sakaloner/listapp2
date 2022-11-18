@@ -10,6 +10,7 @@ class Categories(BaseModel):
     id: int  | None = None
     owner_id: str | None = None
     category_name: str | None = None
+    num_items: int | None = None
 
     class Config:
         orm_mode = True

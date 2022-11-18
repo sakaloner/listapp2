@@ -1,7 +1,8 @@
 
 <template>
     <h1>Search Component</h1>
-    <div>Search Value: <p style="color:red">{{search_value}}</p></div>
+    <input type="text" v-model="search_value"><br>
+    <p><a href="/user_profile">tico</a>{{search_value}}</p>
     <input id="categories" type="radio" name="type_search" value="category" checked> category<br>
     <input id="users" type="radio" name="type_search" value="user"> user<br>
     <button @click="searchIt()">Search</button>
@@ -44,12 +45,8 @@ const loginfo = useLoginStore();
 const username = localStorage.getItem('username');
 
 // get the search bar value from father props
-const props = defineProps({
-  search_value: {
-    type: String,
-    required: true,
-  }
-});
+const search_value = ref("");
+
 const results = reactive({type: '', data: ''});
 const lists_expanded = reactive({});
 
@@ -60,10 +57,10 @@ function searchIt(){
   results.type = '';
   results.data = '';
   console.log('seraching..');
-  console.log(props.search_value);
+  console.log(search_value.value);
   if(document.getElementById('users').checked) {
   //Male radio button is checked
-  axios.get(`http://localhost:8000/users/${props.search_value}`,
+  axios.get(`http://localhost:8000/users/${search_value.value}`,
   {
     headers: {
       'accept': 'application/json'
@@ -81,10 +78,14 @@ function searchIt(){
   });
   } else if (document.getElementById('categories').checked) {
     console.log('searching for a category');
+    // log the category, empty value and skip name
+    console.log('cosas', search_value.value, username);
     axios.get('http://localhost:8000/search_category',
     { 
       params: {
-        category: props.search_value
+        category: search_value.value,
+        empty: 0,
+        skip: username,
       },
       headers: {
         'accept': 'application/json'

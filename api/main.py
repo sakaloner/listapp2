@@ -184,7 +184,12 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
 def create_item(
     item: schemas.ItemCreate, db: Session = Depends(get_db)
 ):
-    return crud.create_item(db=db, item=item)
+
+    new_item = crud.create_item(db=db, item=item)
+    crud.add_num_categories(user=item.owner_id, category=item.tipo, add_or_subs=
+    'add', db=db)
+    print(item)
+    return new_item
 
 
 @app.get("/", response_model=list[schemas.Item])
@@ -195,15 +200,14 @@ def read_items(owner_id:str, token: str = Depends(oauth2_scheme),tipo: str = 'li
 
 @app.delete("/delete")
 def delete_item_by_idtype(
-    id: int, tipo: str, db: Session = Depends(get_db)
+    id: int, tipo: str, usuario:str, db: Session = Depends(get_db)
 ):
     try:
+        crud.add_num_categories(user=usuario, category=tipo, add_or_subs='subs', db=db)
         crud.delete_item(db=db, id=id, tipo=tipo)
         return {'ok_its_gone_nigga': True}
     except:
         return {'Its_not_gone': False}
-
-
 
 
 
@@ -273,14 +277,17 @@ def get_followers(folowee:str, db: Session = Depends(get_db)):
     return followers
 
 @app.get("/search_category")
-def search_category_general(category:str ,db: Session = Depends(get_db)):
-    searched = crud.search_category(category=category, db=db)
+def search_category_general(skip:str | None, category:str, empty:int=1, db: Session = Depends(get_db)):
+    searched = crud.search_category(category=category, empty=empty, skip=skip, db=db)
     if searched:
         return searched
     else:
         return {'no_results': True}
 
-
 @app.get("/get_items_by_category")
 def get_items_by_cat_user(user:str, category:str, db: Session = Depends(get_db)):
     return crud.get_items_by_cat(user, category, db)
+
+@app.post("/add_sub_category")
+def add_sub_category(user:str, category:str, add_or_sub:str, db: Session = Depends(get_db)):
+    return crud.add_num_categories(db, user, category, add_or_sub)
