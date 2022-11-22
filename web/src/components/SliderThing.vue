@@ -1,6 +1,6 @@
 <template>
   <div class="slidecontainer">
-    <input type="range" min="1" max="100" v-model="slider_value" class="slider" id="myRange">
+    <input @change="$emit('moved_slider', slider_value)" type="range" min="1" max="100" v-model="slider_value" class="slider" id="myRange">
     <p>{{ slider_value }}</p>
   </div>
 </template>

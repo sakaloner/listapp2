@@ -2,12 +2,13 @@
 <template>
     <h1>Search Component</h1>
     <input type="text" v-model="search_value"><br>
-    <p><a href="/user_profile">tico</a>{{search_value}}</p>
     <input id="categories" type="radio" name="type_search" value="category" checked> category<br>
     <input id="users" type="radio" name="type_search" value="user"> user<br>
     <button @click="searchIt()">Search</button>
   
-    <div v-if="results.type == 'user_search'">{{results.data.email}}</div>
+    <div v-if="results.type == 'user_search'">
+      <a :href="'/user_profile/'+ results.data.email">{{results.data.email}}</a>
+    </div>
     <div v-else-if="results.type == 'category_search'">
       <ul v-for="category in results.data">
         <li>

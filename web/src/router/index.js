@@ -39,7 +39,7 @@ const router = createRouter({
       props: true
     },
     {
-      path: "/user_profile",
+      path: "/user_profile/:id",
       component: Profile,
     },
   ],

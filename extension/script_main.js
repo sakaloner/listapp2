@@ -1,4 +1,5 @@
 // get the username of the person logged in
+var owner_id = null;
 function is_user_signed_in() {
     return new Promise(resolve => {
         chrome.storage.local.get(['userStatus', 'user_info'],
@@ -14,6 +15,19 @@ function is_user_signed_in() {
             });
     });
 };
+
+function doThingToButtons() {
+    let btns = catContainer.getElementsByClassName("category");
+    console.log(btns);
+    for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+        console.log('clickec button', btns[i].textContent);
+        let current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+        });
+    };
+}
 // this is to check if someone is logged in too
 window.onload = function() {
     // redirect to main page if user is already logged in
@@ -27,9 +41,42 @@ window.onload = function() {
             }
             
         })
+            .then(() => {
+                getCategories()
+                    .then(function (res) {
+                        res.forEach(element => {
+                            var myDiv = document.getElementById("catContainer");
+                            var button = document.createElement("button");
+                            var text = document.createTextNode(element);
+                            button.appendChild(text);
+                            button.classList.add("category");
+                            if (element == "pending") {
+                                button.classList.add("active");
+                            }
+                            myDiv.appendChild(button);
+                        })
+                        console.log('done pupulating the array');
+                        
+                    })
+                    .then(function () {doThingToButtons()});
+            })
         .catch(err => console.log(err));
+    
 };
 
+const getCategories = async () => {
+    const result = await fetch(`http://localhost:8000/get_categories/${owner_id}`, {
+        headers: {
+            'accept': 'application/json'
+        }
+        })
+        .then(function (response) {
+            const categories = response.json();
+            return categories;
+        })
+        .catch(function (error) { console.log(error)});
+    return result;
+}
 
 
 console.log("Probando que se restaure la extension");
@@ -50,16 +97,6 @@ getCurrentTab()
 
 // Category focus on the current tab
 let catContainer = document.getElementById('catContainer');
-
-let btns = catContainer.getElementsByClassName("category");
-
-for (let i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
-      let current = document.getElementsByClassName("active");
-      current[0].className = current[0].className.replace(" active", "");
-      this.className += " active";
-    });
-};
 
 // preprocess for sending data to the server
 let saveBtn = document.getElementById("btn");
@@ -82,11 +119,19 @@ saveBtn.addEventListener("click", function () {
         'autor': '',
         'link': url,
         // change to an actual todo category when you make it
-        'tipo': 'articulos',
+        'tipo': active_category,
         'rating': value_slider,
         'owner_id': owner_id,
         })
-    });
+    })
+        .then(res => {
+            console.log(res);
+            document.getElementById('btn').innerHTML = 'Saved!';
+            document.getElementById('btn').style.backgroundColor = 'green';
+            document.getElementById('btn').style.color = 'white';
+            setTimeout(() => {  window.close() }, 1000);
+        })
+        .catch(err => console.log(err));
 });
 
 

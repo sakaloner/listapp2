@@ -128,3 +128,16 @@ def add_num_categories(db: Session, user:str, category:str, add_or_subs:str):
         return {'substracted': True}
     else:
         return {'false': 'you need to specify if you want to add or substract form category'}
+
+def update_item(db: Session, item: schemas.ItemBase):
+    db.query(models.Item).filter(models.Item.id == item.id, models.Item.tipo == item.tipo).update(item.dict())
+    db.commit()
+    return True
+
+
+def check_connection(db: Session, folower:str, folowee:str):
+    result = db.query(models.Connections).filter(models.Connections.folower == folower, models.Connections.folowee == folowee).all()
+    if result:
+        return {'connected': True, 'connection': result}
+    else:
+        return {'connected': False}

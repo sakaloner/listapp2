@@ -3,6 +3,8 @@ import { ref, watch, computed, onMounted, reactive  } from 'vue';
 import { useLoginStore } from '../stores/login';
 import axios from 'axios';
 import { createSimpleExpression } from '@vue/compiler-core';
+import SliderThing from './SliderThing.vue';
+
 
 // pinia store setup
 
@@ -19,14 +21,20 @@ const props = defineProps({
 });
 
 onMounted(() => {
+
   console.log(`the component is now mounted.`);
   get_lists(props.page_num);
 });
 
+
+const slider_value = ref(0);
 const username = localStorage.getItem('username');
 // data
 const lists = reactive({});
-
+const edit_mode = reactive({
+  'active': 0,
+  'item_id': undefined,
+})
 // show login message
 const error_msg = reactive({
   msg: '',
@@ -59,6 +67,7 @@ function get_lists(page_value) {
       }
     })
     .then(function (response) {
+      console.log(response);
       const {data} = response
       console.log('res func', data, typeof(data));
       lists.data = data
@@ -101,6 +110,32 @@ function delete_item(id, tipo) {
   })
 };
 
+function edit_item(id, tipo) {
+  console.log('edit item function');
+  edit_mode.active = 1;
+  edit_mode.item_id = id;
+  console.log("edit_mode_thing", edit_mode.active, edit_mode.item_id);
+}
+
+function save_edit_item(lista) {
+  console.log('slider_value',slider_value.value);
+  let plainObject = { ...lista };
+  plainObject['rating'] = slider_value.value;
+  console.log('new_slider_value', plainObject.ratingcv );
+  console.log('save edit item function', plainObject);
+  axios.put('http://localhost:8000/update_item', plainObject, {
+    headers: {
+      accept: 'application/json'
+    },
+  }).then(function (response) {
+    console.log('updated ', response);
+    edit_mode.active = 0;
+    edit_mode.item_id = undefined;
+    get_lists(props.page_num);
+
+  });
+  
+}
 
 watch(
   () => props.page_num,
@@ -116,21 +151,35 @@ watch(
   }
 );
 
+function changeSlider(value) {
+  console.log('change slider', value);
+  slider_value.value = value;
+}
 
 </script>
 
 <template>
-  <!-- <h1>sub: [{{submited}}]</h1> -->
+
   <p v-if="error_msg.show">{{error_msg.msg}}</p>
-  <div v-if="show_data">ld [ {{ lists.data }} ]</div>
+
   <ul v-for="lista in lists.data">
-    <li> <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
-    <li> {{ lista.autor }}</li>
-    <li> {{ lista.link }}</li>
-    <li> {{ lista.rating }}</li>
-    <button @click="delete_item(lista.id, lista.tipo)">del</button>
+    <div v-if="lista.id == edit_mode.item_id">
+      <li>titulo: <input type="text" v-model="lista.titulo"></li>
+      <li>link: <input type='text' v-model="lista.link"></li>
+      <li>autor: <input type="text" v-model="lista.autor"></li>
+      <li>rating:   <SliderThing @moved_slider="changeSlider" /></li>
+      <button @click="delete_item(lista.id, lista.tipo)">delete</button>
+      <button @click="save_edit_item(lista)">Save</button>
     <br><br>
+    </div>
+    <div v-else>
+      <li>titulo: <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
+      <li>autor: {{ lista.autor }}</li>
+      <li>rating: {{ lista.rating }}</li>
+      <button @click="delete_item(lista.id, lista.tipo)">delete</button>
+      <button @click="edit_item(lista.id, lista.tipo)">edit</button>
+      <br><br>
+    </div>
   </ul>
-  <!-- <button @click="sho_data">button</button> -->
 
 </template>

@@ -147,7 +147,7 @@ def create_user(form_data: schemas.UserCreate, db: Session = Depends(get_db)):
     hp = get_password_hash(form_data.password)
     user = crud.create_user(db=db, user=form_data, hashed_pw = hp)
     ### create default categories
-    crud.create_cat(db=db, cat='666books videos podcasts articles', usuario=form_data.email)
+    crud.create_cat(db=db, cat='666pending books videos podcasts articles', usuario=form_data.email)
 
     return user
 
@@ -291,3 +291,15 @@ def get_items_by_cat_user(user:str, category:str, db: Session = Depends(get_db))
 @app.post("/add_sub_category")
 def add_sub_category(user:str, category:str, add_or_sub:str, db: Session = Depends(get_db)):
     return crud.add_num_categories(db, user, category, add_or_sub)
+
+@app.put("/update_item")
+def update_item(item: schemas.ItemBase, db: Session = Depends(get_db)):
+    try: 
+        crud.update_item(db, item)
+        return {'ok': True}
+    except:
+        return {'error': True}
+    
+@app.get("/is_following")
+def is_following(folower:str, folowee:str, db: Session = Depends(get_db)):
+    return crud.check_connection(db, folower, folowee)
