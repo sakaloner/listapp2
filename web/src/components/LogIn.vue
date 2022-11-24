@@ -33,7 +33,8 @@ function login() {
         method: 'post',
         url:'http://localhost:8000/token',
         data:bodyFormData,
-        headers: { "Content-Type": "multipart/form-data"}
+        headers: { "Content-Type": "multipart/form-data",
+                    "Access-Control-Allow-Origin": "*"}
         })
         .then(function (response) {
             console.log('funciono', response);
