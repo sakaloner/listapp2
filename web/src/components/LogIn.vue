@@ -1,5 +1,4 @@
 <template>
-<h1>Le cambia una cosa al login</h1>
 <h1 style="color:orangered">Log in to your account</h1>
 <br>
 <div>
@@ -35,7 +34,7 @@ function login() {
     bodyFormData.append('password', passw.value);
     axios({
         method: 'post',
-        url:'http://54.210.181.21:8000/token',
+        url:`http://${loginfo.url}:8000/token`,
         data:bodyFormData,
         headers: { "Content-Type": "multipart/form-data",
                     "Access-Control-Allow-Origin": "*"}
@@ -67,7 +66,7 @@ function login() {
 
 };
 function get_user_name() {
-  axios.get('http://localhost:8000/users/me')
+  axios.get(`http://${loginfo.url}:8000/users/me`)
     .then(function (response) {
       console.log(response);
       loginfo.log_user(response.data.email);
