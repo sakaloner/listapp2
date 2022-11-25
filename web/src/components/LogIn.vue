@@ -44,12 +44,12 @@ function login() {
             console.log('funciono', response);
             isError.value = 'notError';
             login_msg.value = 'Sucess!!';
-            console.log(login_msg.value)
+            console.log(login_msg.value);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
             // sending email username data to pinia store
             localStorage.setItem('token', response.data.access_token);
             loginfo.log_token(response.data.access_token);
-            localStorage.setItem('username', response.data.)
+            localStorage.setItem('username', response.data);
             setTimeout(get_user_name, 2000);
             setTimeout( () => {
                 router.push('/')
