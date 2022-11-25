@@ -9,6 +9,11 @@ from datetime import datetime, timedelta
 import logging
 import json
 
+# Needed for running locally
+
+
+
+            
 logging.info('asdfasdfsadf')
 
 #### info for security
@@ -303,3 +308,8 @@ def update_item(item: schemas.ItemBase, db: Session = Depends(get_db)):
 @app.get("/is_following")
 def is_following(folower:str, folowee:str, db: Session = Depends(get_db)):
     return crud.check_connection(db, folower, folowee)
+
+if __name__ == '__main__':
+    import uvicorn
+    #uvicorn.run(app, port=8000, host='172.31.80.46')    
+    uvicorn.run(app, port=8000, host='0.0.0.0')

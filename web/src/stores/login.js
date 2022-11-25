@@ -5,7 +5,8 @@ export const useLoginStore = defineStore({
   state: () => ({
     isLogged: false,
     name: '',
-    token: ''
+    token: '',
+    url: '52.91.61.96'
   }),
   getters: {
     logger: (state) => !state.isLogged,
