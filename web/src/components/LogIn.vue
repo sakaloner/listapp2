@@ -28,7 +28,7 @@ const isError = ref('notError');
 
 function login() {
     console.log('cambiazo');
-    console.log(loginfo.url)
+    console.log(loginfo.url);
     var bodyFormData = new FormData();
     bodyFormData.append('username', email.value);
     bodyFormData.append('password', passw.value);
@@ -49,18 +49,18 @@ function login() {
             localStorage.setItem('token', response.data.access_token);
             loginfo.log_token(response.data.access_token);
             localStorage.setItem('username', response.data);
+            
             setTimeout(get_user_name, 2000);
             setTimeout( () => {
                 router.push('/')
             }, 2000);
-    
-            
+             
             //return 1
         })
         .catch(function (response) {
             console.log('error login', response);
             isError.value = 'error';
-            l.value = response.response.data.detail;
+            login_msg.value = response.response.data.detail;
             return 0
         });
 
