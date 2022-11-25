@@ -34,7 +34,7 @@ function login() {
     bodyFormData.append('password', passw.value);
     axios({
         method: 'post',
-        url:`http://${loginfo.url}:8000/token`,
+        url:`${loginfo.url}:8000/token`,
         data:bodyFormData,
         headers: { "Content-Type": "multipart/form-data",
                     "Access-Control-Allow-Origin": "*"}
@@ -49,7 +49,7 @@ function login() {
             localStorage.setItem('token', response.data.access_token);
             loginfo.log_token(response.data.access_token);
             localStorage.setItem('username', response.data);
-            
+
             setTimeout(get_user_name, 2000);
             setTimeout( () => {
                 router.push('/')
