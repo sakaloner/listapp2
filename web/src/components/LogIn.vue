@@ -1,4 +1,5 @@
 <template>
+<h1>Le cambia una cosa al login</h1>
 <h1 style="color:orangered">Log in to your account</h1>
 <br>
 <div>
@@ -37,11 +38,7 @@ function login() {
         url:'http://52.91.61.96:8000/token',
         data:bodyFormData,
         headers: { "Content-Type": "multipart/form-data",
-<<<<<<< HEAD
-		   "Access-Control-Allow-Origin": "*"}
-=======
                     "Access-Control-Allow-Origin": "*"}
->>>>>>> 582486e23da83d4d7dbc3927156a200a1d859de8
         })
         .then(function (response) {
             console.log('funciono', response);
