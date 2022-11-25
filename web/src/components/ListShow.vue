@@ -4,7 +4,7 @@ import { useLoginStore } from '../stores/login';
 import axios from 'axios';
 import { createSimpleExpression } from '@vue/compiler-core';
 import SliderThing from './SliderThing.vue';
-import { useLoginStore } from '../stores/login';
+
 
 const loginfo = useLoginStore();
 
