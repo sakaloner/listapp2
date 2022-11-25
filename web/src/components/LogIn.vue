@@ -66,6 +66,7 @@ function login() {
 
 };
 function get_user_name() {
+  console.log('url', loginfo.url);
   axios.get(`http://${loginfo.url}:8000/users/me`)
     .then(function (response) {
       console.log(response);
