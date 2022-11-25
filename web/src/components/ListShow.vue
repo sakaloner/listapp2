@@ -4,7 +4,9 @@ import { useLoginStore } from '../stores/login';
 import axios from 'axios';
 import { createSimpleExpression } from '@vue/compiler-core';
 import SliderThing from './SliderThing.vue';
+import { useLoginStore } from '../stores/login';
 
+const loginfo = useLoginStore();
 
 // pinia store setup
 
@@ -60,7 +62,7 @@ function get_lists(page_value) {
   //   setTimeout(get_lists(page_value), 5000);
   // }
   console.log(namero);
-  axios.get('http://localhost:8000/', {
+  axios.get(`${loginfo.url}:8000/`, {
       params: {
         tipo: page_value,
         owner_id: namero
@@ -90,7 +92,7 @@ function get_lists(page_value) {
 function delete_item(id, tipo) {
   console.log('##########################')
   console.log(`id: ${id}, tipo: ${tipo}`);
-  axios.delete('http://localhost:8000/delete', {
+  axios.delete(`${loginfo.url}:8000/delete`, {
     headers: {
       accept: 'application/json'
     },
@@ -123,7 +125,7 @@ function save_edit_item(lista) {
   plainObject['rating'] = slider_value.value;
   console.log('new_slider_value', plainObject.ratingcv );
   console.log('save edit item function', plainObject);
-  axios.put('http://localhost:8000/update_item', plainObject, {
+  axios.put(`${loginfo.url}:8000/update_item`, plainObject, {
     headers: {
       accept: 'application/json'
     },

@@ -33,7 +33,7 @@
   const page_num = ref(''); // selected category
 
   function get_category_data() {
-    axios.get(`http://localhost:8000/get_categories/${username.value}`, {
+    axios.get(`${loginfo.url}:8000/get_categories/${username.value}`, {
     })
     .then(function (response) {
       console.log('categorias',response.data);
@@ -53,7 +53,7 @@
   };
   function post_new_cat(){
     console.log(new_category_name.value)
-    fetch(`http://localhost:8000/cat_creation?owner_id=${username.value}&category_name=${new_category_name.value}`, {
+    fetch(`${loginfo.url}:8000/cat_creation?owner_id=${username.value}&category_name=${new_category_name.value}`, {
       method: 'POST',
       headers: {
           'accept': 'application/json',
@@ -81,7 +81,7 @@
   function cambiar(nueva) {
     if (erase_cats.value == 1) {
       if (confirm('Seguro deseas borrar '+ nueva)){
-        axios.delete(`http://localhost:8000/delete_cat?name_category=${nueva}&usuario=${username.value}`)
+        axios.delete(`${loginfo.url}:8000/delete_cat?name_category=${nueva}&usuario=${username.value}`)
           .then(function (response) {
             get_category_data();
             console.log(`borraste la categoria ${nueva}`);

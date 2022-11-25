@@ -50,7 +50,7 @@ function get_following(username) {
   // return un objeto con la infomacion de los "amigos"
   return new Promise(function (resolve, reject) {
     const info_following = new Object();
-    axios.get('http://localhost:8000/multiplayer/view_following',{
+    axios.get(`${loginfo.url}:8000/multiplayer/view_following`,{
       params:{
         folower: username
       },
@@ -78,7 +78,7 @@ function get_following(username) {
       //console.log('following', following_list);
       following_list.forEach(user_to_show => {
 
-        axios.get(`http://localhost:8000/get_categories/${user_to_show}`,{
+        axios.get(`${loginfo.url}/get_categories/${user_to_show}`,{
           headers: {
             'accept': 'application/json'
           }
@@ -88,7 +88,7 @@ function get_following(username) {
           //console.log('user_to_show', user_to_show);
           //console.log('categoires', response.data);
           response.data.forEach(category => {
-            axios.get('http://localhost:8000/',{
+            axios.get(`${loginfo.url}:8000/`,{
             params:{
               owner_id: user_to_show,
               tipo: category,
@@ -132,7 +132,7 @@ function get_following(username) {
 
 const getUsers = async () => { 
   console.log('trying')
-  const followingUsers = await axios.get('http://localhost:8000/multiplayer/view_following',{
+  const followingUsers = await axios.get(`${loginfo.url}:8000/multiplayer/view_following`,{
       params:{
         folower: username
       },
@@ -154,7 +154,7 @@ const getUsers = async () => {
       console.log(err)
     });
     categories.data.forEach(async (element2) => {
-      const items = await axios.get('http://localhost:8000/',{
+      const items = await axios.get(`${loginfo.url}:8000/`,{
         params:{
           owner_id: element.folowee,
           tipo: element2,

@@ -61,7 +61,7 @@ function searchIt(){
   console.log(search_value.value);
   if(document.getElementById('users').checked) {
   //Male radio button is checked
-  axios.get(`http://localhost:8000/users/${search_value.value}`,
+  axios.get(`${loginfo.url}:8000/users/${search_value.value}`,
   {
     headers: {
       'accept': 'application/json'
@@ -81,7 +81,7 @@ function searchIt(){
     console.log('searching for a category');
     // log the category, empty value and skip name
     console.log('cosas', search_value.value, username);
-    axios.get('http://localhost:8000/search_category',
+    axios.get('${loginfo.url}:8000/search_category',
     { 
       params: {
         category: search_value.value,
@@ -126,7 +126,7 @@ function showList(category, owner_id) {
   };
 
   console.log('showing list');
-  axios.get('http://localhost:8000/get_items_by_category',
+  axios.get(`${loginfo.url}:8000/get_items_by_category`,
   { params: {
     category: category,
     user: owner_id

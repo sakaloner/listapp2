@@ -49,7 +49,7 @@ function post_item() {
   };
   console.log(objeto)
   // post shit
-  axios.post('http://localhost:8000/items', objeto)
+  axios.post(`${loginfo.url}:8000/items`, objeto)
   .then(function (response) {
     console.log('post ',response);
     titulo.value = '';

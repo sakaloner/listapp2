@@ -5,7 +5,12 @@ import { useRouter, useRoute } from "vue-router";
 import { useLoginStore } from '../stores/login';
 import axios from 'axios';
 import { createSimpleExpression } from '@vue/compiler-core';
+import { useLoginStore } from '../stores/login';
 
+
+
+
+const loginfo = useLoginStore();
 // pinia store setup
 const router = useRouter();
 const route = useRoute();
@@ -26,7 +31,7 @@ onMounted(() => {
 })
 
 async function getCategories() { 
-  const categories = await axios.get(`http://localhost:8000/get_categories/${user_to_show}`, {
+  const categories = await axios.get(`${loginfo.url}:8000/get_categories/${user_to_show}`, {
   headers: {
     'accept': 'application/json'
   }
@@ -35,7 +40,7 @@ async function getCategories() {
 };
 
 async function get_lists(category_type) {
-  const lista = axios.get('http://localhost:8000/', {
+  const lista = axios.get(`${loginfo.url}:8000/`, {
       params: {
         tipo: category_type,
         owner_id: user_to_show
@@ -46,7 +51,7 @@ async function get_lists(category_type) {
 };
 
 function is_following() {
-  axios.get('http://localhost:8000/is_following',{
+  axios.get(`${loginfo.url}:8000/is_following`,{
     params:{
       folower: username,
       folowee: user_to_show,
@@ -72,7 +77,7 @@ function follow_or_unfollow() {
   console.log('valor boton', follow_button.value);
   if (follow_button.value == 'Unfollow') {
     console.log('trying to unfollow')
-    axios.delete('http://localhost:8000/multiplayer/unfollow', {
+    axios.delete(`${loginfo.url}:8000/multiplayer/unfollow`, {
       params: {
         folower: username,
         folowee: user_to_show,
@@ -91,7 +96,7 @@ function follow_or_unfollow() {
       });
   } else if (follow_button.value == 'Follow') {
     console.log('trying to follow');
-    axios.post('http://localhost:8000/multiplayer/follow', 
+    axios.post(`${loginfo.url}:8000/multiplayer/follow`, 
     '',
     {
       params: {

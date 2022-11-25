@@ -15,6 +15,9 @@
 <script setup>
 import { ref, computed } from 'vue';
 import axios from 'axios';
+import { useLoginStore } from '../stores/login';
+
+const loginfo = useLoginStore();
 
 const email = ref('');
 const password1 = ref('');
@@ -47,7 +50,7 @@ function post_form() {
         password: password1.value
     };
     console.log(dats)
-    axios.post('http://localhost:8000/users', dats)
+    axios.post(`${loginfo.url}:8000/users`, dats)
     .then(function (response) {
         //handle success
         classy.value = 'success'

@@ -8,6 +8,9 @@
 
 <script setup>
   import { ref } from "vue";
+  import { useLoginStore } from '../stores/login';
+
+const loginfo = useLoginStore();
 
 const slider_value = ref(50)
 
