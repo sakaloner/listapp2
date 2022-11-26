@@ -9,9 +9,13 @@ import fs from "fs";
 export default defineConfig({
   plugins: [vue()],
   server: { 
+    // https: {
+    //   key: fs.readFileSync('./.cert/key.pem'),
+    //   cert: fs.readFileSync('./.cert/cert.pem'),
+    // },
     https: {
-      key: fs.readFileSync('./.cert/key.pem'),
-      cert: fs.readFileSync('./.cert/cert.pem'),
+      key: fs.readFileSync('.certs/key.pem'),
+      cert: fs.readFileSync('certs/cert.pem'),
     },
   },
   resolve: {
