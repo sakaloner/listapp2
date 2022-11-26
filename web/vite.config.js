@@ -14,8 +14,8 @@ export default defineConfig({
     //   cert: fs.readFileSync('./.cert/cert.pem'),
     // },
     https: {
-      key: fs.readFileSync('certs/key.pem'),
-      cert: fs.readFileSync('certs/cert.pem'),
+      key: fs.readFileSync('certs/0000_key-certbot.pem'),
+      cert: fs.readFileSync('certs/0000_csr-certbot.pem'),
     },
   },
   resolve: {
