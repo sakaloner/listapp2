@@ -14,8 +14,8 @@ export default defineConfig({
     //   cert: fs.readFileSync('./.cert/cert.pem'),
     // },
     https: {
-      key: fs.readFileSync('/etc/letsencrypt/live/listapp.be.sexy/fullchain.pem'),
-      cert: fs.readFileSync('/etc/letsencrypt/live/listapp.be.sexy/privkey.pem'),
+      cert: fs.readFileSync('/etc/letsencrypt/live/listapp.be.sexy/fullchain.pem'),
+      key: fs.readFileSync('/etc/letsencrypt/live/listapp.be.sexy/privkey.pem'),
     },
   },
   resolve: {
