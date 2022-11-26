@@ -9,8 +9,8 @@ export default defineConfig({
   plugins: [vue()],
   server: { 
     https: {
-      key: fileURLToPath(new URL(".certs/cert1.pem", import.meta.url)),
-      cert: fileURLToPath(new URL(".certs/privkey1.pem", import.meta.url)),
+      key: fileURLToPath(new URL(".certs/key.pem", import.meta.url)),
+      cert: fileURLToPath(new URL(".certs/cert1.pem", import.meta.url)),
     }
    },
   resolve: {
