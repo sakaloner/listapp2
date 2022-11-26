@@ -2,16 +2,17 @@ import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import fs from "node:fs";
+import mkcert from 'vite-plugin-mkcert';
+//import fs from "node:fs";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
-  //server: {}
-  https: {
-    key: fs.readFileSync("/home/ubuntu/coding/listapp2/web/certs/key.pem"),
-    cert: fs.readFileSync("/home/ubuntu/coding/listapp2/web/certs/cert1.pem"),
-  },
+  plugins: [vue(), mkcert()],
+  server: { https: true},
+  // https: {
+  //   key: fs.readFileSync("/home/ubuntu/coding/listapp2/web/certs/key.pem"),
+  //   cert: fs.readFileSync("/home/ubuntu/coding/listapp2/web/certs/cert1.pem"),
+  // },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
