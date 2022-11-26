@@ -8,7 +8,7 @@ import mkcert from 'vite-plugin-mkcert';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), mkcert()],
-  server: { https: true},
+  server: { https: false},
   // https: {
   //   key: fs.readFileSync("/home/ubuntu/coding/listapp2/web/certs/key.pem"),
   //   cert: fs.readFileSync("/home/ubuntu/coding/listapp2/web/certs/cert1.pem"),
