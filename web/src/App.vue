@@ -31,15 +31,15 @@ function push() {
 </script>
 
 <template>
-  <head>
-  </head>
-  <p v-if="loginfo.name">Logged as: {{loginfo.name}}</p>
-  <p v-else-if="username">Logged as: {{username}}</p>
-  <p v-else>Not logged in</p>
+  <div class="login_info">
+    <p v-if="loginfo.name">Logged as: {{loginfo.name}}</p>
+    <p v-else-if="username">Logged as: {{username}}</p>
+    <p v-else>Not logged in</p>
+    <button v-if="loginfo.name" @click="log_out">log out</button>
+    <button v-else-if="username" @click="log_out">log out</button>
+    <p v-else></p>
+  </div>
 
-  <button v-if="loginfo.name" @click="log_out">log out</button>
-  <button v-else-if="username" @click="log_out">log out</button>
-  <p v-else></p>
 
   <nav class="navbar navbar-dark bg-dark">
     <li class="nav-item"><RouterLink to="/" >Home</RouterLink></li>

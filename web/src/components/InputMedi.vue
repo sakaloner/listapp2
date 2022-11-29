@@ -1,6 +1,6 @@
 <template>
     <!-- <p>{{ page_num }}</p> -->
-    <div id="myForm">
+    <div id="myForm" class="form-group">
         <label for="ftitulo">titulo </label><br>
         <input v-model="titulo" type="text" id="fname" name="fname"><br>
         <label for="link">link </label><br>
