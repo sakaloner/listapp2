@@ -160,8 +160,9 @@ def archive_item_by_link(db: Session, link:str, username:str):
     ## transform object into dictionary
     objeto1 = object[0]
     object_dicto = objeto1.__dict__
-    return object_dicto
+
     object_dicto["archived"] = 1
+    return object_dicto
     objeto3 = object.update(object_dicto)
     db.commit()
     db.refresh(objeto3)
