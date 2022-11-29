@@ -31,25 +31,38 @@ window.onload = function() {
         })
 }
 
+
+
+async function getCurrentTab() {
+    let queryOptions = { active: true, lastFocusedWindow: true };
+    // `tab` will either be a `tabs.Tab` instance or `undefined`.
+    let tab = await chrome.tabs.query(queryOptions);
+    return tab[0].url;
+};
 // if they archive
 let archbutton = document.getElementById("btn_archive");
 
 archbutton.addEventListener('click', () => {
     console.log('archive button clicked');
     let value_slider = document.getElementById('myRange').value;
-    async function getResponse() {
-        let response = await fetch('http://listapp.be.sexy:8000/archive_item_by_link?' + new URLSearchParams({
-        'link' : url,
-        'username' : owner_id,
-        'slider_value' : value_slider,
-        }), {
-        method: 'GET',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-        },
-        })
+    getCurrentTab().then(url_res=> {
+    console.log(url_res, owner_id, value_slider)
+        async function getResponse() {
+            let response = await fetch('http://listapp.be.sexy:8000/archive_item_by_link?' + new URLSearchParams({
+            'link' : url_res,
+            'username' : owner_id,
+            'slider_value' : value_slider,
+            }), {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+            })
+            return response;
+        };
+        getResponse()
             .then(function (response) {  
                 console.log('res of archivin',response);
                 let button2 = document.getElementById('debug');
@@ -57,15 +70,14 @@ archbutton.addEventListener('click', () => {
                 archbutton.innerHTML = 'Saved!';
                 archbutton.style.backgroundColor = 'green';
                 archbutton.style.color = 'white';
-                setTimeout(() => {  window.close() }, 2000);
-                return cosa;
+                //setTimeout(() => {  window.close() }, 2000);
+                return true;
             })   
             .catch(function (error) {
                 console.log(error);
                 return error
             });
-        return response;
-    };
+    })
 });
 
 // if they cancel

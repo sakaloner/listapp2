@@ -15,6 +15,35 @@ function is_user_signed_in() {
             });
     });
 };
+document.addEventListener("click", () => {
+    chrome.runtime.sendMessage({
+      type: "click_event"
+    });
+})
+
+async function getResponse() {
+    let response = await fetch('http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({
+    'link' : url.innerHTML,
+    }), {
+    method: 'GET',
+    headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+    },
+    })
+        .then(function (response) {  
+            console.log('res link', response);
+            let cosa = response.json();
+            console.log('json', cosa);
+            return cosa;
+        })   
+        .catch(function (error) {
+            //console.log(error);
+            return error
+        });
+    return response;
+};
 
 function doThingToButtons() {
     let btns = catContainer.getElementsByClassName("category");
@@ -42,24 +71,35 @@ window.onload = function() {
             
         })
             .then(() => {
-                getCategories()
-                    .then(function (res) {
-                        res.forEach(element => {
-                            var myDiv = document.getElementById("catContainer");
-                            var button = document.createElement("button");
-                            var text = document.createTextNode(element);
-                            button.appendChild(text);
-                            button.classList.add("category");
-                            if (element == "pending") {
-                                button.classList.add("active");
-                            }
-                            myDiv.appendChild(button);
-                        })
-                        console.log('done pupulating the array');
-                        
+                getResponse()
+                    .then(res => {
+                        console.log('res', res);
+                        if (res.is_in_db) {
+                            console.log('link is in db');
+                            window.location.replace('./index_archive.html');
+                        } else {
+                            getCategories()
+                                .then(function (res) {
+                                    res.forEach(element => {
+                                        var myDiv = document.getElementById("catContainer");
+                                        var button = document.createElement("button");
+                                        var text = document.createTextNode(element);
+                                        button.appendChild(text);
+                                        button.classList.add("category");
+                                        if (element == "pending") {
+                                            button.classList.add("active");
+                                        }
+                                        myDiv.appendChild(button);
+                                    })
+                                    console.log('done pupulating the array');
+                                    
+                                })
+                                .then(function () {doThingToButtons()});
+                        }
                     })
-                    .then(function () {doThingToButtons()});
+
             })
+
         .catch(err => console.log(err));
     
 };
@@ -108,72 +148,35 @@ saveBtn.addEventListener("click", function () {
     console.log(`user: ${owner_id}, url: ${url}, nombre: ${name}, cat: ${active_category}, slider: ${value_slider}`)
 
     // check if  link is in the database
+    // save thing and close the deal. Normal behaviour
 
-    async function getResponse() {
-        let response = await fetch('http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({
-        'link' : url,
-        }), {
-        method: 'GET',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-        },
+    //send data to the server
+    fetch('http://listapp.be.sexy:8000/items', {
+    method: 'POST',
+    headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        'titulo': name,
+        'autor': '',
+        'link': url,
+        'archived': 0,
+        'tipo': active_category,
+        'rating': value_slider,
+        'owner_id': owner_id,
         })
-            .then(function (response) {  
-               // console.log('res link', response);
-                let cosa = response.json();
-                //console.log('json', cosa);
-                return cosa;
-            })   
-            .catch(function (error) {
-                //console.log(error);
-                return error
-            });
-        return response;
-    };
-    const already_saved = async() => {
-        let response = await getResponse();
-        console.log(response.is_in_db);
-        console.log(response);
-        if (response.is_in_db == true) {
-            /// 
-            console.log('link already saved');
-            // change window
-            window.location.replace('./index_archive.html');
-        } else {
-            // save thing and close the deal. Normal behaviour
-            console.log('link not saved');
-            // send data to the server
-            fetch('http://listapp.be.sexy:8000/items', {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'titulo': name,
-                'autor': '',
-                'link': url,
-                // change to an actual todo category when you make it
-                'tipo': active_category,
-                'rating': value_slider,
-                'owner_id': owner_id,
-                })
-            })
-                .then(res => {
-                    console.log(res);
-                    document.getElementById('btn').innerHTML = 'Saved!';
-                    document.getElementById('btn').style.backgroundColor = 'green';
-                    document.getElementById('btn').style.color = 'white';
-                    setTimeout(() => {  window.close() }, 1000);
-                    return false;
-                })
-                .catch(err => console.log(err));
-            
-        }
-    };
-    already_saved()
+    })
+        .then(res => {
+            console.log(res);
+            document.getElementById('btn').innerHTML = 'Saved!';
+            document.getElementById('btn').style.backgroundColor = 'green';
+            document.getElementById('btn').style.color = 'white';
+            //setTimeout(() => {  window.close() }, 1000);
+            return false;
+        })
+        .catch(err => console.log(err));
+
             
     
     

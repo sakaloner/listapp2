@@ -17,7 +17,10 @@ function is_user_signed_in() {
 };
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.message === 'login') {
+    if (request.type == "click_event") {
+        console.log("click event captured in current webpage");
+        // Call the callback passed to chrome.action.onClicked
+    } else if (request.message === 'login') {
         flip_user_status(true, request.payload)
             .then(res => sendResponse(res))
             .catch(err => console.log(err));
@@ -39,42 +42,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             })
             .catch(err => console.log(err));
             return true;
+    } else if (request.message === 'clicked_icon') {
+        console.log('click event happened');
     }
 });
 
-// still to check where to send the logged in or not person
-// chrome.action.onClicked.addListener(function () {
-//     is_user_signed_in()
-//         .then(res => {
-//             if (res.userStatus) {
-//                 if (return_session) {
-//                     chrome.windows.create({
-//                         url: './index_main.html',
-//                         width: 300,
-//                         height: 600,
-//                         focused: true
-//                     }, function () { return_session = false });
-//                 } else {
-//                     chrome.windows.create({
-//                         url: './index_main.html',
-//                         width: 300,
-//                         height: 600,
-//                         focused: true
-//                     });
-//                 }
-//             } else {
-//                 chrome.windows.create({
-//                     url: './index.html',
-//                     width: 300,
-//                     height: 600,
-//                     focused: true
-//                 });
-//             }
-//         })
-//         .catch(err => console.log(err));
-// });
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
-
+});
 
 function flip_user_status(signIn, user_info) {
     if (signIn) {

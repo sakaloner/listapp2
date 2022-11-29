@@ -31,6 +31,8 @@ function push() {
 </script>
 
 <template>
+  <head>
+  </head>
   <p v-if="loginfo.name">Logged as: {{loginfo.name}}</p>
   <p v-else-if="username">Logged as: {{username}}</p>
   <p v-else>Not logged in</p>
@@ -60,6 +62,7 @@ function push() {
       <div>Loading...</div>
     </template>
   </Suspense>
+
 
 </template>
 
