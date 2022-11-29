@@ -309,6 +309,16 @@ def update_item(item: schemas.ItemBase, db: Session = Depends(get_db)):
 def is_following(folower:str, folowee:str, db: Session = Depends(get_db)):
     return crud.check_connection(db, folower, folowee)
 
+<<<<<<< HEAD
+=======
+@app.get("/link_in_db")
+def is_in_db(link:str, db: Session = Depends(get_db)):
+    return crud.check_link_db(db, link)
+
+@app.get("/archive_item_by_link")
+def archive_item_by_link(link:str, db: Session = Depends(get_db)):
+    return crud.archive_item_by_link(db, link)
+>>>>>>> my-temporary-work
 
 if __name__ == '__main__':
     import uvicorn
