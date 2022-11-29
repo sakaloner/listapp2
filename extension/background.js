@@ -102,7 +102,7 @@ function flip_user_status(signIn, user_info) {
                     });
                 })
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log('fallo algo', err));
     // cambiar todo esto/
     } else if (!signIn) {
         // fetch the localhost:3000/logout route

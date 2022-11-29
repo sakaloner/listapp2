@@ -108,50 +108,77 @@ saveBtn.addEventListener("click", function () {
     console.log(`user: ${owner_id}, url: ${url}, nombre: ${name}, cat: ${active_category}, slider: ${value_slider}`)
 
     // check if  link is in the database
-    fetch('http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({
-       'link' : url,
-    }), {
-    method: 'GET',
-    headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-    },
-    })
-        .then(function (response) {  
-            console.log('res link', response);
-        })   
-        .catch(function (error) {
-            console.log(error);
-        });
+
+    async function getResponse() {
+        let response = await fetch('http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({
+        'link' : url,
+        }), {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        },
+        })
+            .then(function (response) {  
+               // console.log('res link', response);
+                let cosa = response.json();
+                //console.log('json', cosa);
+                return cosa;
+            })   
+            .catch(function (error) {
+                //console.log(error);
+                return error
+            });
+        return response;
+    };
+    const already_saved = async() => {
+        let response = await getResponse();
+        console.log(response.is_in_db);
+        console.log(response);
+        if (response.is_in_db == true) {
+            /// 
+            console.log('link already saved');
+            // archive the item
+            fetch('http://listapp.be.sexy:8000/update')
+            return true;
+        } else {
+            // save thing and close the deal. Normal behaviour
+            console.log('link not saved');
+            // send data to the server
+            fetch('http://listapp.be.sexy:8000/items', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'titulo': name,
+                'autor': '',
+                'link': url,
+                // change to an actual todo category when you make it
+                'tipo': active_category,
+                'rating': value_slider,
+                'owner_id': owner_id,
+                })
+            })
+                .then(res => {
+                    console.log(res);
+                    document.getElementById('btn').innerHTML = 'Saved!';
+                    document.getElementById('btn').style.backgroundColor = 'green';
+                    document.getElementById('btn').style.color = 'white';
+                    setTimeout(() => {  window.close() }, 1000);
+                    return false;
+                })
+                .catch(err => console.log(err));
+            
+        }
+    };
+    already_saved()
             
     
     
-    // send data to the server
-    // fetch('http://listapp.be.sexy:8000/items', {
-    // method: 'POST',
-    // headers: {
-    //     'accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    // },
-    // body: JSON.stringify({
-    //     'titulo': name,
-    //     'autor': '',
-    //     'link': url,
-    //     // change to an actual todo category when you make it
-    //     'tipo': active_category,
-    //     'rating': value_slider,
-    //     'owner_id': owner_id,
-    //     })
-    // })
-    //     .then(res => {
-    //         console.log(res);
-    //         document.getElementById('btn').innerHTML = 'Saved!';
-    //         document.getElementById('btn').style.backgroundColor = 'green';
-    //         document.getElementById('btn').style.color = 'white';
-    //         setTimeout(() => {  window.close() }, 1000);
-    //     })
-    //     .catch(err => console.log(err));
+
 });
 
 

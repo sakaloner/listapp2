@@ -1,5 +1,5 @@
 
-  <template #fallback>
+<template>
     <h1>Explorar listas de tus amigos y enemigos</h1>
     <div id="Listas">
       <!-- for each user -->

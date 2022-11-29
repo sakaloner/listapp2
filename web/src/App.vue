@@ -48,6 +48,7 @@ function push() {
         <div id="search_bar">
           <RouterLink to="/Search" >Search</RouterLink>
         </div>
+        <RouterLink to="/Archive">Archive</RouterLink>
 
         
   </nav>

@@ -198,8 +198,8 @@ def create_item(
 
 
 @app.get("/", response_model=list[schemas.Item])
-def read_items(owner_id:str, token: str = Depends(oauth2_scheme),tipo: str = 'libros', skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_type_items(db, tipo=tipo, owner_id=owner_id, skip=skip, limit=limit)
+def read_items(owner_id:str, token: str = Depends(oauth2_scheme),tipo: str = 'libros', skip: int = 0, archived:int=0, limit: int = 100, db: Session = Depends(get_db)):
+    items = crud.get_type_items(db, tipo=tipo, owner_id=owner_id, skip=skip, limit=limit, archived=archived)
     print(items)
     return items
 
@@ -303,7 +303,7 @@ def update_item(item: schemas.ItemBase, db: Session = Depends(get_db)):
         crud.update_item(db, item)
         return {'ok': True}
     except:
-        return {'error': True}
+        return {'ok': False}
     
 @app.get("/is_following")
 def is_following(folower:str, folowee:str, db: Session = Depends(get_db)):
@@ -312,6 +312,10 @@ def is_following(folower:str, folowee:str, db: Session = Depends(get_db)):
 @app.get("/link_in_db")
 def is_in_db(link:str, db: Session = Depends(get_db)):
     return crud.check_link_db(db, link)
+
+@app.get("/archive_item_by_link")
+def archive_item_by_link(link:str, db: Session = Depends(get_db)):
+    return crud.archive_item_by_link(db, link)
 
 if __name__ == '__main__':
     import uvicorn
