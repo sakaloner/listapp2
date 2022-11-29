@@ -157,7 +157,7 @@ def check_link_db(db: Session, link:str):
 
 def archive_item_by_link(db: Session, link:str, username:str):
     thinga = db.query(models.Item).filter(models.Item.link == link, models.Item.owner_id == username)
-    thinga.update({models.Item.archived: True})
+    thinga.update({models.Item.archived: 1})
     db.commit()
     db.refresh(thinga)
     return {'archived': True}
