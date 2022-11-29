@@ -2,13 +2,13 @@
     <!-- <p>{{ page_num }}</p> -->
     <div id="myForm" class="form-group">
         <label for="ftitulo">titulo </label><br>
-        <input v-model="titulo" type="text" id="fname" name="fname"><br>
+        <input v-model="titulo" class="form-control" type="text" id="fname" name="fname"><br>
         <label for="link">link </label><br>
-        <input v-model="link" type="text" id="lname" name="lname"><br>
+        <input v-model="link" class="form-control" type="text" id="lname" name="lname"><br>
         <label for="autor">autor </label><br>
-        <input v-model="autor" type="text" id="lname" name="lname"><br><br>
+        <input v-model="autor" class="form-control" type="text" id="lname" name="lname"><br><br>
         <!-- Slider -->
-        <div class="slidecontainer">
+        <div class="slidecontainer form-control">
             <input type="range" min="1" max="100" v-model="slider_value" class="slider" id="myRange">
             <p>{{ slider_value }}</p>
         </div>

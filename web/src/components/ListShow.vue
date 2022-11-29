@@ -188,29 +188,29 @@ function changeSlider(value) {
 
   <p v-if="error_msg.show">{{error_msg.msg}}</p>
 
-  <ul v-for="lista in lists.data">
+  <ul v-for="lista in lists.data" class="list-group">
     <div v-if="lista.id == edit_mode.item_id">
-      <li>titulo: <input type="text" v-model="lista.titulo"></li>
-      <li>link: <input type='text' v-model="lista.link"></li>
-      <li>autor: <input type="text" v-model="lista.autor"></li>
-      <li>rating:   <SliderThing @moved_slider="changeSlider" /></li>
+      <li class="list-group-item"></li>>titulo: <input type="text" v-model="lista.titulo"></li>
+      <li class="list-group-item"></li>>link: <input type='text' v-model="lista.link"></li>
+      <li class="list-group-item"></li>>autor: <input type="text" v-model="lista.autor"></li>
+      <li class="list-group-item"></li>>rating:   <SliderThing @moved_slider="changeSlider" /></li>
       <button @click="delete_item(lista.id, lista.tipo)">delete</button>
       <button @click="save_edit_item(lista)">Save</button>
     <br><br>
     </div>
         <!-- div for the archiving -->
     <div v-else-if="lista.id == archiving">
-      <li>titulo: <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
-      <li>autor: {{ lista.autor }}</li>
-      <li>How much did you enjoy it?</li>
+      <li class="list-group-item"></li>>titulo: <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
+      <li class="list-group-item"> </liclass>>autor: {{ lista.autor }}</li>
+      <li class="list-group-item"></li>>How much did you enjoy it?</li>
       <SliderThing @moved_slider="changeSlider" />
       <button @click="send_archive(lista)">Send to the archive</button>
     </div>
     <!-- normal situation -->
     <div v-else>
-      <li>titulo: <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
-      <li>autor: {{ lista.autor }}</li>
-      <li>rating: {{ lista.rating }}</li>
+      <li class="list-group-item"></li>>titulo: <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
+      <li class="list-group-item"></li>>autor: {{ lista.autor }}</li>
+      <li class="list-group-item"></li>>rating: {{ lista.rating }}</li>
       <button @click="delete_item(lista.id, lista.tipo)">delete</button>
       <button @click="edit_item(lista.id, lista.tipo)">edit</button>
       <button @click="archive(lista)">archive</button>
