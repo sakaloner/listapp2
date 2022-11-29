@@ -156,19 +156,11 @@ def check_link_db(db: Session, link:str):
         return { 'is_in_db' : False }
 
 def archive_item_by_link(db: Session, link:str):
-    return db.query(models.Item).filter(models.Item.link == link).all()
-    print('##########################################################')
-    print(result)
-    print('##########################################################')
-    return result
-    print(result)
-    object = db.query(models.Item).filter(models.Item.id == result.id, models.Item.tipo == result.tipo)
-    raw_object = result.dict()
-    print(raw_object)
-    return raw_object
-    objeto2 = object.update(result.dict())
+    object = db.query(models.Item).filter(models.Item.link == link).all()[0]
+    object2 = object.dict()
+    object2["archived"] = 1
+    objeto3 = object.update(object2.dict())
     db.commit()
-    db.refresh(objeto2)
-    return True
+    db.refresh(objeto3)
 
     return {'archived': True}
