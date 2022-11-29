@@ -65,7 +65,7 @@ window.onload = function() {
 };
 
 const getCategories = async () => {
-    const result = await fetch(`http://localhost:8000/get_categories/${owner_id}`, {
+    const result = await fetch(`http://listapp.be.sexy:8000/get_categories/${owner_id}`, {
         headers: {
             'accept': 'application/json'
         }
@@ -107,8 +107,26 @@ saveBtn.addEventListener("click", function () {
     let value_slider = document.getElementById('myRange').value;
     console.log(`user: ${owner_id}, url: ${url}, nombre: ${name}, cat: ${active_category}, slider: ${value_slider}`)
 
+    // check if  link is in the database
+    fetch('http://listapp.be.sexy:8000/', {
+    method: 'POST',
+    headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        'titulo': name,
+        'autor': '',
+        'link': url,
+        // change to an actual todo category when you make it
+        'tipo': active_category,
+        'rating': value_slider,
+        'owner_id': owner_id,
+        })
+    })
+    
     // send data to the server
-    fetch('http://localhost:8000/items', {
+    fetch('http://listapp.be.sexy:8000/items', {
     method: 'POST',
     headers: {
         'accept': 'application/json',
