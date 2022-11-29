@@ -50,6 +50,8 @@ class Item(Base):
     link = Column(String)
     tipo = Column(String)
     rating = Column(Integer)
+    archived = Column(Integer)
+    archived_rating = Column(Integer)
     
     owner_id = Column(String, ForeignKey("users.email"))
 

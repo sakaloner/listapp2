@@ -61,5 +61,5 @@ document.querySelector('form').addEventListener('submit', event => {
 // open a tab to the register page when clicking on the register link
 document.querySelector('#register').addEventListener('click', event => {
     event.preventDefault();
-    chrome.tabs.create({ url: 'http://localhost:5173/signup' });
+    chrome.tabs.create({ url: 'http://listapp.be.sexy:5173/signup' });
 });

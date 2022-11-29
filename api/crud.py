@@ -28,8 +28,11 @@ def create_user(db: Session, user: schemas.UserCreate, hashed_pw:str):
     return db_user
 
 
-def get_type_items(db: Session, tipo: str, owner_id:str, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).order_by(models.Item.rating.desc()).filter(models.Item.tipo == tipo, models.Item.owner_id == owner_id).offset(skip).limit(limit).all()
+def get_type_items(db: Session, archived:int, tipo: str, owner_id:str, skip: int = 0, limit: int = 100):
+    if archived:
+        return db.query(models.Item).order_by(models.Item.rating.desc()).filter(models.Item.archived == 1, models.Item.tipo == tipo, models.Item.owner_id == owner_id).offset(skip).limit(limit).all()
+    else:
+        return db.query(models.Item).order_by(models.Item.rating.desc()).filter(models.Item.archived == 0, models.Item.tipo == tipo, models.Item.owner_id == owner_id).offset(skip).limit(limit).all()
 
 def create_item(db: Session, item: schemas.ItemCreate):
     db_item = models.Item(**item.dict())
@@ -50,9 +53,10 @@ def get_user_items_test(db: Session):
 
 ## Getting all the categories form an user
 def get_cats_user(db: Session, usuario:str):
-    #return db.query(models.User).limit(1))
-    cat_objs = [x.categorias for x in db.query(models.User).filter(models.User.email == usuario).limit(1).all()]
-    return [x.category_name for x in cat_objs[0]]
+    cat_objs = db.query(models.Categories).order_by(models.Categories.num_items.desc()).filter(models.Categories.owner_id == usuario).all()
+    return [x.category_name for x in cat_objs]
+    # cat_objs = [x.categorias for x in db.query(models.User).filter(models.User.email == usuario).limit(1).all()]
+    # return [x.category_name for x in cat_objs[0]]
 
 ## searching for a category in general
 def search_category(db: Session, category:str, empty:int, skip:str):
@@ -130,8 +134,10 @@ def add_num_categories(db: Session, user:str, category:str, add_or_subs:str):
         return {'false': 'you need to specify if you want to add or substract form category'}
 
 def update_item(db: Session, item: schemas.ItemBase):
-    db.query(models.Item).filter(models.Item.id == item.id, models.Item.tipo == item.tipo).update(item.dict())
+    object = db.query(models.Item).filter(models.Item.id == item.id, models.Item.tipo == item.tipo)
+    objeto2 = object.update(item.dict())
     db.commit()
+    db.refresh(objeto2)
     return True
 
 
@@ -141,3 +147,4 @@ def check_connection(db: Session, folower:str, folowee:str):
         return {'connected': True, 'connection': result}
     else:
         return {'connected': False}
+

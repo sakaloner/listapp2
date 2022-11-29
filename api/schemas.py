@@ -12,6 +12,7 @@ class Categories(BaseModel):
     category_name: str | None = None
     num_items: int | None = None
 
+
     class Config:
         orm_mode = True
 
@@ -23,6 +24,8 @@ class ItemBase(BaseModel):
     tipo: str | None = None
     rating: int | None = None
     owner_id: str | None = None
+    archived: int | None = None
+    archived_rating: int | None = None
 
     class Config:
         orm_mode = True

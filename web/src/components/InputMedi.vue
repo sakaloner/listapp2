@@ -45,7 +45,8 @@ function post_item() {
     autor: autor.value,
     tipo: props.page_num,
     rating: slider_value.value,
-    owner_id: localStorage.getItem('username')
+    owner_id: localStorage.getItem('username'),
+    archived: 0
   };
   console.log(objeto)
   // post shit

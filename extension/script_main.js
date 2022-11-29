@@ -65,7 +65,7 @@ window.onload = function() {
 };
 
 const getCategories = async () => {
-    const result = await fetch(`http://localhost:8000/get_categories/${owner_id}`, {
+    const result = await fetch(`http://listapp.be.sexy:8000/get_categories/${owner_id}`, {
         headers: {
             'accept': 'application/json'
         }
@@ -108,7 +108,7 @@ saveBtn.addEventListener("click", function () {
     console.log(`user: ${owner_id}, url: ${url}, nombre: ${name}, cat: ${active_category}, slider: ${value_slider}`)
 
     // send data to the server
-    fetch('http://localhost:8000/items', {
+    fetch('http://listapp.be.sexy:8000/items', {
     method: 'POST',
     headers: {
         'accept': 'application/json',

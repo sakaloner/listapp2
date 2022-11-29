@@ -31,18 +31,18 @@ onMounted(() => {
 
 async function getCategories() { 
   const categories = await axios.get(`${loginfo.url}:8000/get_categories/${user_to_show}`, {
-  headers: {
-    'accept': 'application/json'
-  }
+    headers: {
+      'accept': 'application/json'
+    }
   });
   return categories;
 };
 
 async function get_lists(category_type) {
-  const lista = axios.get(`${loginfo.url}:8000/`, {
+  const lista = await axios.get(`${loginfo.url}:8000/`, {
       params: {
         tipo: category_type,
-        owner_id: user_to_show
+        owner_id: user_to_show,
       }
   });
   console.log('result lista', lista);
@@ -172,10 +172,9 @@ watch(
 
   <p v-if="current_list == 0">El usuario no tiene items aqui</p>
   <ul v-for="lista in current_list">
-    <li> <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
-    <li> {{ lista.autor }}</li>
-    <li> {{ lista.link }}</li>
-    <li> {{ lista.rating }}</li>
+    <li> <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">titulo: {{ lista.titulo }}</a></span></li>
+    <li>autor: {{ lista.autor }}</li>
+    <li>rating: {{ lista.rating }}</li>
     <button @click="delete_item(lista.id, lista.tipo)">del</button>
     <br><br>
   </ul>

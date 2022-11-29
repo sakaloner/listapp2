@@ -79,7 +79,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 function flip_user_status(signIn, user_info) {
     if (signIn) {
         console.log(user_info);
-        return fetch('http://localhost:8000/token', {
+        return fetch('http://listapp.be.sexy:8000/token', {
             method: 'POST',
             headers: {
                 'accept': 'application/json'
