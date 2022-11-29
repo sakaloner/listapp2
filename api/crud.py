@@ -156,7 +156,8 @@ def check_link_db(db: Session, link:str):
         return { 'is_in_db' : False }
 
 def archive_item_by_link(db: Session, link:str):
-    result = db.query(models.Item).filter(models.Item.link == link).all()[0]
+    result = db.query(models.Item).filter(models.Item.link == link).all()
+    return result
     object = db.query(models.Item).filter(models.Item.id == result.id, models.Item.tipo == result.tipo)
     raw_object = result.dict()
     return raw_object
