@@ -143,7 +143,7 @@ def check_connection(db: Session, folower:str, folowee:str):
         return {'connected': False}
 
 def check_link_db(db: Session, link:str):
-    result = db.query(models.Item).filter(models.Item.link).all()
+    result = db.query(models.Item).filter(models.Item.link == link).all()
     if result:
         return { 'is_in_db' : True }
     else:

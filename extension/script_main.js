@@ -108,19 +108,22 @@ saveBtn.addEventListener("click", function () {
     console.log(`user: ${owner_id}, url: ${url}, nombre: ${name}, cat: ${active_category}, slider: ${value_slider}`)
 
     // check if  link is in the database
-    fetch('http://listapp.be.sexy:8000/is_following', {
+    fetch('http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({
+       'link' : url,
+    }), {
     method: 'GET',
     headers: {
         'accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
     },
-    body: JSON.stringify({
-        'link': url,
-        })
     })
         .then(function (response) {  
             console.log('res link', response);
         })   
+        .catch(function (error) {
+            console.log(error);
+        });
             
     
     
