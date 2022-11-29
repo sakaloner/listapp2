@@ -1,7 +1,7 @@
 
 <template>
  <h1><p style="color:blue"></p></h1>
- <h1 style="color:orangered">Listapp</h1><br>
+ <h1 style="color:orangered; align-self: center;">Listapp</h1><br>
  <button :id="p == page_num ? 'selecb' : 'not_selected'" @click="cambiar(p)" v-for="p in page_opt">{{ p }}</button>
  <button style="color:red" @click="modo_borrar_cats()">borrar categorias</button>
  <button style="color:green" @click="create_new_cat()">+</button>
