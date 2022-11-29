@@ -108,48 +108,47 @@ saveBtn.addEventListener("click", function () {
     console.log(`user: ${owner_id}, url: ${url}, nombre: ${name}, cat: ${active_category}, slider: ${value_slider}`)
 
     // check if  link is in the database
-    fetch('http://listapp.be.sexy:8000/', {
-    method: 'POST',
+    fetch('http://listapp.be.sexy:8000/is_following', {
+    method: 'GET',
     headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-        'titulo': name,
-        'autor': '',
         'link': url,
-        // change to an actual todo category when you make it
-        'tipo': active_category,
-        'rating': value_slider,
-        'owner_id': owner_id,
         })
     })
+        .then(function (response) {  
+            console.log('res link', response);
+        })   
+            
+    
     
     // send data to the server
-    fetch('http://listapp.be.sexy:8000/items', {
-    method: 'POST',
-    headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        'titulo': name,
-        'autor': '',
-        'link': url,
-        // change to an actual todo category when you make it
-        'tipo': active_category,
-        'rating': value_slider,
-        'owner_id': owner_id,
-        })
-    })
-        .then(res => {
-            console.log(res);
-            document.getElementById('btn').innerHTML = 'Saved!';
-            document.getElementById('btn').style.backgroundColor = 'green';
-            document.getElementById('btn').style.color = 'white';
-            setTimeout(() => {  window.close() }, 1000);
-        })
-        .catch(err => console.log(err));
+    // fetch('http://listapp.be.sexy:8000/items', {
+    // method: 'POST',
+    // headers: {
+    //     'accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    // },
+    // body: JSON.stringify({
+    //     'titulo': name,
+    //     'autor': '',
+    //     'link': url,
+    //     // change to an actual todo category when you make it
+    //     'tipo': active_category,
+    //     'rating': value_slider,
+    //     'owner_id': owner_id,
+    //     })
+    // })
+    //     .then(res => {
+    //         console.log(res);
+    //         document.getElementById('btn').innerHTML = 'Saved!';
+    //         document.getElementById('btn').style.backgroundColor = 'green';
+    //         document.getElementById('btn').style.color = 'white';
+    //         setTimeout(() => {  window.close() }, 1000);
+    //     })
+    //     .catch(err => console.log(err));
 });
 
 
