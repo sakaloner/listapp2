@@ -6,7 +6,7 @@ export const useLoginStore = defineStore({
     isLogged: false,
     name: '',
     token: '',
-    url: 'http://localhost'//'http://54.210.181.21'
+    url: 'http://listapp.be.sexy'//'http://54.210.181.21'
   }),
   getters: {
     logger: (state) => !state.isLogged,
