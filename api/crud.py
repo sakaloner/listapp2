@@ -156,7 +156,7 @@ def check_link_db(db: Session, link:str):
         return { 'is_in_db' : False }
 
 def archive_item_by_link(db: Session, link:str):
-    object = db.query(models.Item).filter(models.Item.link == link).all()[0]
+    object = db.query(models.Item).filter(models.Item.link == link).all()
     ## transform object into dictionary
     object_dicto = object.__dict__
     object_dicto["archived"] = 1
