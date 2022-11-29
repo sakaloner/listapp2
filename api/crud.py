@@ -155,8 +155,8 @@ def check_link_db(db: Session, link:str):
     else:
         return { 'is_in_db' : False }
 
-def archive_item_by_link(db: Session, link:str):
-    object = db.query(models.Item).filter(models.Item.link == link)
+def archive_item_by_link(db: Session, link:str, username:str):
+    object = db.query(models.Item).filter(models.Item.link == link, models.Item.owener_id == username)
     ## transform object into dictionary
     objeto1 = object[0]
     object_dicto = objeto1.__dict__

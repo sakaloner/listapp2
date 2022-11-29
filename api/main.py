@@ -314,8 +314,8 @@ def is_in_db(link:str, db: Session = Depends(get_db)):
     return crud.check_link_db(db, link)
 
 @app.get("/archive_item_by_link")
-def archive_item_by_link(link:str, db: Session = Depends(get_db)):
-    return crud.archive_item_by_link(db, link)
+def archive_item_by_link(link:str, username:str,  db: Session = Depends(get_db)):
+    return crud.archive_item_by_link(db, link, username)
 
 if __name__ == '__main__':
     import uvicorn
