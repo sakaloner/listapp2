@@ -208,9 +208,9 @@ function changeSlider(value) {
     </div>
     <!-- normal situation -->
     <div v-else>
-      <li class="list-group-item"></li>>titulo: <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
-      <li class="list-group-item"></li>>autor: {{ lista.autor }}</li>
-      <li class="list-group-item"></li>>rating: {{ lista.rating }}</li>
+      <li class="list-group-item">titulo: <span style="font-weight:bold; color:orange"><a :href="lista.link" target="_blank">{{ lista.titulo }}</a></span></li>
+      <li class="list-group-item">autor: {{ lista.autor }}</li>
+      <li class="list-group-item">rating: {{ lista.rating }}</li>
       <button @click="delete_item(lista.id, lista.tipo)">delete</button>
       <button @click="edit_item(lista.id, lista.tipo)">edit</button>
       <button @click="archive(lista)">archive</button>
