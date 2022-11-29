@@ -148,8 +148,6 @@ def check_connection(db: Session, folower:str, folowee:str):
     else:
         return {'connected': False}
 
-<<<<<<< HEAD
-=======
 def check_link_db(db: Session, link:str):
     result = db.query(models.Item).filter(models.Item.link == link).all()
     if result:
@@ -161,4 +159,3 @@ def archive_item_by_link(db: Session, link:str):
     result = db.query(models.Item).filter(models.Item.link == link).all()[0]
     update_item(db, result)
     return {'archived': True}
->>>>>>> my-temporary-work
