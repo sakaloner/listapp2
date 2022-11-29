@@ -41,7 +41,7 @@ function push() {
   <button v-else-if="username" @click="log_out">log out</button>
   <p v-else></p>
 
-  <nav>
+  <nav class="navbar">
         <RouterLink to="/">Home</RouterLink><br>
         <RouterLink to="/signup">SignUp</RouterLink><br>
         <RouterLink to="/login">LogIn</RouterLink><br>
