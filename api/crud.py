@@ -158,7 +158,8 @@ def check_link_db(db: Session, link:str):
 def archive_item_by_link(db: Session, link:str):
     object = db.query(models.Item).filter(models.Item.link == link).all()
     ## transform object into dictionary
-    object_dicto = object[0].__dict__
+    objeto1 = object[0]
+    object_dicto = objeto1.__dict__
     object_dicto["archived"] = 1
     objeto3 = object.update(object_dicto)
     db.commit()
