@@ -139,9 +139,8 @@ saveBtn.addEventListener("click", function () {
         if (response.is_in_db == true) {
             /// 
             console.log('link already saved');
-            // archive the item
-            fetch('http://listapp.be.sexy:8000/update')
-            return true;
+            // change window
+            window.location.replace('./index_archive.html');
         } else {
             // save thing and close the deal. Normal behaviour
             console.log('link not saved');
