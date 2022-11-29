@@ -42,17 +42,12 @@ function push() {
   <p v-else></p>
 
   <nav class="navbar">
-        <RouterLink to="/">Home</RouterLink><br>
-        <RouterLink to="/signup">SignUp</RouterLink><br>
-        <RouterLink to="/login">LogIn</RouterLink><br>
-        <RouterLink to="/Explore">Explore Lists</RouterLink>
-        <!-- create a search bar -->
-        <div id="search_bar">
-          <RouterLink to="/Search" >Search</RouterLink>
-        </div>
-        <RouterLink to="/Archive">Archive</RouterLink>
-
-        
+    <li class="nav-item"><RouterLink to="/" >Home</RouterLink></li>
+    <li class="nav-item"><RouterLink to="/signup">SignUp</RouterLink></li>
+    <li class="nav-item"><RouterLink to="/login">LogIn</RouterLink></li>
+    <li class="nav-item"><RouterLink to="/Explore">Explore Lists</RouterLink></li>
+    <li class="nav-item"><RouterLink to="/Search" >Search</RouterLink></li>
+    <li class="nav-item"><RouterLink to="/Archive">Archive</RouterLink></li>
   </nav>
   <Suspense>
     <template #default>
