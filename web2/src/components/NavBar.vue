@@ -1,5 +1,7 @@
 <script setup>
   import IconTooling from './icons/IconTooling.vue'
+  import { RouterLink, RouterView } from "vue-router";
+
 </script>
 
 <template>
@@ -8,28 +10,34 @@
       <IconTooling class="logo" />
     </div>
     <div class="navItems">
-      <div>Archive</div>
-      <div>Explore</div>
-      <div>Main</div>
+      <div class="link">Archive</div>
+      <div class="link">Explore</div>
+      <RouterLink class="link" to="/categories">Categories</RouterLink>
+      <RouterLink class="link" to="/">Main</RouterLink>
     </div>
   </div>
 </template>
 
 <style scoped>
+.link {
+  color: white;
+  text-decoration: none;
+}
 .logoContainer {
   padding-left: 40%;
   padding-top: 30%;
   transform: scale(2.0);
+  color:white;
 }
 .sidenav {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 10%;
+  width: 11%;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgb(248, 214, 42);
+  background-color: rgb(13, 63, 212);
 }
 .navItems {
   display:flex;
@@ -41,7 +49,7 @@
   left: 25%;
   font-size: 20px;
 }
-.navItems div:hover {
-  color: #f1f1f1;
+.navItems *:hover {
+  color: green
 }
 </style>
