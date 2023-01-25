@@ -1,0 +1,37 @@
+.navButtonGeneral{
+    color:var(--main-color);
+    list-style: none;
+    padding:15px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--secondary-background-color);
+}
+
+.navButtonGeneral:hover{
+    background-color: var(--main-background-color);
+}
+.iconNavButton{
+    font-size: 25px;
+    justify-self: center;
+}
+.textNavButton{
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.textNavButtonGeneral{
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+}
+.dissapear{
+    display: none;
+}
+.navButtonActive{
+    color:var(--main-color);
+    background-color: var(--main-background-color);
+    list-style: none;
+    padding:15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
