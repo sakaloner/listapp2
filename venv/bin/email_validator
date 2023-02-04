@@ -1,4 +1,4 @@
-#!/home/andresv/coding/listapp2/venv/bin/python
+#!/home/andres/coding/listapp2/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

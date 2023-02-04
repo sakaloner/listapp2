@@ -1,69 +1,58 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-
 from database import Base
 
-
-
-class User(Base):
+class Users(Base):
     __tablename__ = "users"
 
-    email = Column(String, primary_key=True, unique=True, index=True)
+    id_user = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    # Prueba
-    categorias = relationship("Categories", back_populates="owner")
-
     items = relationship("Item", back_populates="owner")
 
-    def verify_password(self, password):
-        return True
+class Items(Base):
+    __tablename__ = "items"
 
-class Connections(Base):
-    __tablename__ = "connections"
-
-    id = Column(Integer, primary_key=True, index=True)
-    folower = Column(String, ForeignKey("users.email"))
-    folowee = Column(String, ForeignKey("users.email"))
-
-
-class Categories(Base):
-    __tablename__ = "categories"
-
-    id = Column(Integer, primary_key=True, index=True)
-    category_name = Column(String)
-    owner_id = Column(String, ForeignKey("users.email"))
-    num_items = Column(Integer, default=0)
-    ### prueba
-    owner = relationship("User", back_populates="categorias")
-
-
-
-    
-class Item(Base):
-    __tablename__ = "content"
-
-    id = Column(Integer, primary_key=True, index=True)
-    titulo = Column(String)
-    autor = Column(String)
+    id_item = Column(Integer, primary_key=True, index=True)
+    content = Column(String)
     link = Column(String)
-    tipo = Column(String)
+    creation_date = Column(DateTime(timezone=True), server_default=func.now())
     rating = Column(Integer)
     archived = Column(Integer)
     archived_rating = Column(Integer)
-    
-    owner_id = Column(String, ForeignKey("users.email"))
+    owner_id = Column(Integer, ForeignKey("users.id_user"))
 
     owner = relationship("User", back_populates="items")
 
+class Tags(Base):
+    __tablename__ = "tags"
 
-# class Item(Base):
-#     __tablename__ = "items"
+    id_tag = Column(Integer, primary_key=True, index=True)
+    tag_name = Column(String)
+    owner_id = Column(String, ForeignKey("users.id_user"))
+    creation_date = Column(DateTime(timezone=True), server_default=func.now())
+    private = Column(Boolean)
+
+
+class ItemTags(Base):
+    __tablename__ = "items_tags"
+
+    id_item_tag = Column(Integer, primary_key=True, index=True)
+    id_item = Column(Integer, ForeignKey("items.id_item"))
+    id_tag = Column(Integer, ForeignKey("tags.id_tag"))
+    owner_id = Column(String, ForeignKey("users.id_user"))
+
+
+    
+
+
+
+# class Connections(Base):
+#     __tablename__ = "connections"
 
 #     id = Column(Integer, primary_key=True, index=True)
-#     title = Column(String, index=True)
-#     description = Column(String, index=True)
-#     owner_id = Column(Integer, ForeignKey("users.id"))
-
-#     owner = relationship("User", back_populates="items")
+#     folower = Column(String, ForeignKey("users.email"))
+#     folowee = Column(String, ForeignKey("users.email"))

@@ -318,7 +318,6 @@ def archive_item_by_link(link:str, username:str, slider_value:int,  db: Session 
     return crud.archive_item_by_link(db, link, username, slider_value)
 
 if __name__ == '__main__':
-    import uvicorn
-    #uvicorn.run(app, port=8000, host='172.31.80.46')    
+    import uvicorn 
     uvicorn.run(app, port=8000, host='0.0.0.0')
 
