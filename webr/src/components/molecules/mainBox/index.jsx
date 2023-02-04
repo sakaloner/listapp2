@@ -7,19 +7,20 @@ const MainBox = ({searchValue}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [itemsInfo, setItemsInfo] = useState(null);
 
-    useEffect(() => {
-        fetch("http://localhost:8000/get_items?user=andy")
-          .then((response) => response.json())
-          .then((res) => {
-            console.log(res)
-            setItemsInfo(res)
-          });
-      }, []);
+    // useEffect(() => {
+    //     fetch("http://localhost:8000/get_items?user=andy")
+    //       .then((response) => response.json())
+    //       .then((res) => {
+    //         console.log(res)
+    //         setItemsInfo(res)
+    //       });
+    //   }, []);
     
     return (
         <div className={styles.container}>
             <div className={styles.boxContainer}>
                 <AddBox type="mainBox"/>
+                {console.log('items', itemsInfo)}
                 {itemsInfo && itemsInfo.map((item, index) => {
                     if (searchValue && item.content.includes(searchValue)) {
                         return (

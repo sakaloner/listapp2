@@ -4,7 +4,7 @@ import styles from './index.module.css'
 import { useState } from 'react'
 
 const MainView = () => {
-    const [searchValue, setSearchValue] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
 
     const handleOnChangeSearch = (e) => {
         setSearchValue(e.target.value)

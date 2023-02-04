@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 const CategoryView = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [itemsInfo, setItemsInfo] = useState(null);
-    const [searchValue, setSearchValue] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
 
     const handleOnChangeSearch = (e) => {
         setSearchValue(e.target.value)
