@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 ''' This are the models for verification purposes
 This is not implemented well i need to separete the models
@@ -16,25 +17,26 @@ class User(BaseModel):
     class Config:
         orm_mode = True
 
-class ItemBase(BaseModel):
-    id_itmem: int | None = None
+class Item(BaseModel):
+    id_item: int | None = None
     content: str | None = None
     link: str | None = None
-    creation_date: str | None = None
+    creation_date: datetime | None = None
     rating: int | None = None
     archived: bool | None = None
     archived_rating: int | None = None
-    owner_id: str | None = None
+    owner_id: int | None = None
 
     class Config:
         orm_mode = True
 
-class Tags(BaseModel):
+class Tag(BaseModel):
     id_tag: int  | None = None
     tag_name: str | None = None
     owner_id: str | None = None
-    creation_date: str | None = None
+    creation_date: datetime | None = None
     private: bool | None = None
+    num_items: int | None = None
 
     class Config:
         orm_mode = True

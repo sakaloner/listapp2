@@ -11,7 +11,7 @@ class Users(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    items = relationship("Item", back_populates="owner")
+    items = relationship("Items", back_populates="owner")
 
 class Items(Base):
     __tablename__ = "items"
@@ -21,20 +21,21 @@ class Items(Base):
     link = Column(String)
     creation_date = Column(DateTime(timezone=True), server_default=func.now())
     rating = Column(Integer)
-    archived = Column(Integer)
+    archived = Column(Boolean)
     archived_rating = Column(Integer)
     owner_id = Column(Integer, ForeignKey("users.id_user"))
 
-    owner = relationship("User", back_populates="items")
+    owner = relationship("Users", back_populates="items")
 
 class Tags(Base):
     __tablename__ = "tags"
 
     id_tag = Column(Integer, primary_key=True, index=True)
     tag_name = Column(String)
-    owner_id = Column(String, ForeignKey("users.id_user"))
+    owner_id = Column(Integer, ForeignKey("users.id_user"))
     creation_date = Column(DateTime(timezone=True), server_default=func.now())
     private = Column(Boolean)
+    num_items = Column(Integer)
 
 
 class ItemTags(Base):
@@ -43,7 +44,7 @@ class ItemTags(Base):
     id_item_tag = Column(Integer, primary_key=True, index=True)
     id_item = Column(Integer, ForeignKey("items.id_item"))
     id_tag = Column(Integer, ForeignKey("tags.id_tag"))
-    owner_id = Column(String, ForeignKey("users.id_user"))
+    owner_id = Column(Integer, ForeignKey("users.id_user"))
 
 
     
