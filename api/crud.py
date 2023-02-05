@@ -9,6 +9,17 @@ def get_user_items(db: Session, order_by:str, owner_id:int, skip: int = 0, limit
     elif order_by == 'date':
         return db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.owner_id == owner_id).offset(skip).limit(limit).all()
 
+def get_user_items_by_tag(db: Session, order_by:str, owner_id:int, tag_id:int, skip: int = 0, limit: int = 100):
+    itemsTags = db.query(models.ItemTags).filter(models.ItemTags.id_tag == tag_id).all()
+    id_items_in_tags = [x.id_item for x in itemsTags]
+    if not id_items_in_tags:
+        return {'message': 'No items with this tag'}
+    if order_by == 'rating':
+        return db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.id_item.in_(id_items_in_tags), models.Items.owner_id == owner_id).offset(skip).limit(limit).all()
+    elif order_by == 'date':
+        return db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.id_item.in_(id_items_in_tags), models.Items.owner_id == owner_id).offset(skip).limit(limit).all()
+
+
 def get_user_tags(db: Session, owner_id:int, skip: int, limit: int, type:str='random'):
     # type = ['random', 'rating', 'num_items]
     if type == 'random':
@@ -27,8 +38,8 @@ def get_user_tags(db: Session, owner_id:int, skip: int, limit: int, type:str='ra
                 dict[tag_id] = mean_rating
         return [x[0] for x in sorted(dict.items(), key=lambda item: item[1], reverse=True)]
     elif type == 'num_items':
-        tags = db.query(models.Tags).filter(models.Tags.owner_id == owner_id).all() 
-        return [x.id_tag for x in sorted(tags, key=lambda item: item.num_items, reverse=True)]
+        tags = db.query(models.Tags).order_by(models.Tags.num_items.desc()).filter(models.Tags.owner_id == owner_id).offset(skip).limit(limit).all() 
+        return tags
         
 def create_item(db: Session, item: schemas.Item):
     item_dict = {**item.dict()}

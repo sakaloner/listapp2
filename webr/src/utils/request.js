@@ -1,23 +1,20 @@
-async function request(route= '', method=' ', data = {}) {
-    if (method === 'GET') {
-        const response = await fetch(process.env.API_URL + route, {
-            method: method, 
-            cache: 'no-cache',
-            headers: {
+async function Request(url='', method='', data={}) {
+    const MAIN_URL = process.env.MAIN_URL;
+    let options = {
+        method:method,
+        credentials: 'include',
+        headers: {
+            'Access-Control-Allow-Credentials': 'true',
             'Content-Type': 'application/json'
-            },
-        });
-        return response.json(); 
-    } else {
-        const response = await fetch(process.env.API_URL + route, {
-            method: method, 
-            cache: 'no-cache',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) 
-        });
-        return response.json(); 
+        },
     }
+    if ( 'GET' === method ) {
+        url += '?' + (new URLSearchParams(data)).toString();
+    } else {
+        options.body = JSON.stringify(data);
+    }
+    const final_url = `http://${MAIN_URL+url}`;
+    return fetch(final_url,options).then(response=>response.json())
 }
-export default request
+
+export default Request;

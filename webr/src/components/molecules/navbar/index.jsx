@@ -13,11 +13,15 @@ const NavBar = ()=>{
         localStorage.setItem('navBar', JSON.stringify(!navBarState))
         setNavBarState(!navBarState)
     }
+    const handleUserChange = () => {
+
+    }
     
     return (
         <div className={styles.contNavBar}>
             <nav className={navBarState ? styles.navBar : styles.navBarClose}>
                 <i className={'icon-lw' + " " + styles.logo}>L</i>
+                <input onClick={handleUserChange} type='text'/>
                 <ul style={{padding:'0'}}>
                     <NavButton name='Profile' link='/' icon='Prof' state={navBarState}/>
                     <NavButton name='Explore' link='/' icon='Expl' state={navBarState}/>

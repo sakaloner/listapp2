@@ -1,13 +1,16 @@
 import crud, models, schemas
+from sqlalchemy import update
 from database import SessionLocal, Meta, engine
 import random
+from datetime import datetime
 
 db = SessionLocal()
 
-tags = '''hola perro vaca comprar yt hoy nunca hay nada que hacer aqui en esta
-        casa solo estoy aqui haciendo un codigo muy chingon para una app que 
-        me hara salir de pobreza y me dara una vida de lujo y riqueza 
-        a mi hermano diego lo matara'''
+tags = '''hola perro vaca comprar yt hoy nunca patineta ninios
+        familia escuela proyectos suenios vida startups ideas
+        novias amigos deportes actividades'''
+tags_proccessed = tags.split()
+items_len = 1000
 
 def delete_table(table=None):
     if table:
@@ -33,46 +36,58 @@ def create_users():
     print('Users created')
 
 def create_items():
-    for i in range(10):
+    for i in range(items_len):
         user = models.Items(
             id_item = i,
-            content = f'content{i}',
+            content = (random.choice(tags_proccessed))*(random.randint(0,10)),
             link = f'link{i}',
-            creation_date = '2021-01-01',
+            creation_date = datetime.now(),
             rating = random.randint(1,100),
             archived = False,
             archived_rating = None,
-            owner_id = i,
+            owner_id = random.randint(0,9),
         )
         db.add(user)
         db.commit()
     print('Items created')
 
 def create_tags():
-    tags_proccessed = tags.split()
-    for i in range(len(tags_proccessed)):
-        user = models.Tags(
-            id_tag = i,
-            tag_name = random.choice(tags_proccessed),
-            owner_id = random.randint(0,9),
-            creation_date = '2021-01-01',
-            private = False,
-            num_items = random.randint(1,50),
-        )
-        db.add(user)
-        db.commit()
+    count = 0
+    for i, tag in enumerate(tags_proccessed):
+        for j in range(random.randint(2,10)):
+            user = models.Tags(
+                id_tag = count,
+                tag_name = random.choice(tags_proccessed),
+                owner_id = random.randint(0,9),
+                creation_date = datetime.now(),
+                private = False,
+                num_items = 0,
+            )
+            db.add(user)
+            db.commit()
+            count+=1
     print('tags created')
 
 def create_item_tags():
-    for i in range(40):
-        user = models.ItemTags(
-            id_item_tag = i,
-            id_item = random.randint(0,9),
-            id_tag = random.randint(0,19),
-            owner_id = random.randint(0,9),
-        )
-        db.add(user)
-        db.commit()
+    count = 0
+    for i in range(items_len):
+        for j in range(random.randint(0,8)):
+            rand_tag = random.randint(0,len(tags_proccessed)-1)
+            user = models.ItemTags(
+                id_item_tag = count,
+                id_item = random.randint(0,items_len-1),
+                id_tag = rand_tag,
+                owner_id = random.randint(0,9),
+            )
+            db.add(user)
+            stmt = (update(models.Tags)
+                        .where(models.Tags.id_tag == rand_tag)
+                        .values(num_items = models.Tags.num_items + 1)
+                        .execution_options(synchronize_session="fetch")
+            )
+            db.execute(stmt)
+            db.commit()
+            count += 1
     print('item_tags created')
 
 

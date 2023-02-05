@@ -1,50 +1,48 @@
 import ItemCard from "../itemCard"
 import styles from './index.module.css'
+import Request from '@utils/request'
 import { useState, useEffect } from 'react'
 
-const itemsInCarousel = [
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-    {content:'perrito', rating:58, tags:['cosa', 'lacrose']},
-]
 
 const CarouselBox = ({title, tag_id, searchValue}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [itemsInfo, setItemsInfo] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_items_by_tag?user=andy&tag=perrocosas")
-          .then((response) => response.json())
-          .then((res) => {
-            console.log('in the card', res)
-            setItemsInfo(res)
-          });
-      }, []);
+        const data = {
+            owner_id: 1,
+            tag_id: tag_id
+        }
+        Request('get_items_by_tag', 'GET', data)
+            .then((res) => {
+                if (res.length === 0 || res.message) {
+                    setItemsInfo(null)
+                } else {
+                    setItemsInfo(res)
+                }
+            })
+            .catch((error) => {
+                console.log('error', error)
+            });
+        }, []);
 
     return (
         <div className={styles.container}>
             <h1>{title}</h1>
             <div className={styles.itemsContainer}>
+                {console.log('itemsInfo', itemsInfo)}
                 {itemsInfo && itemsInfo.map((item, index) => {
-                    return (
-                        <ItemCard 
-                            key={index}
-                            type="carousel"
-                            content={item.content} 
-                            rating={item.rating} 
-                            // tags={item.tags}
-                        />
-                    )
-                })}
+                    console.log('items', itemsInfo)
+                        return (
+                            <ItemCard 
+                                key={index}
+                                type="carousel"
+                                content={item.content} 
+                                rating={item.rating} 
+                            />
+                        )
+                    })
+                }
             </div>
         </div>
     )

@@ -89,14 +89,21 @@ def read_items(owner_id:int, order_by:str='rating', skip: int = 0, limit: int = 
     print(items)
     return items
 
+@app.get("/get_items_by_tag")
+def read_items_by_tag(owner_id:int, tag_id:int, order_by:str='rating', skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    items = crud.get_user_items_by_tag(db, owner_id=owner_id, tag_id=tag_id, order_by=order_by, skip=skip, limit=limit)
+    return items
+
 @app.get('/get_tags') #response_model=list[schemas.Tag]
 def read_tags(owner_id:int, type:str='random', skip: int = 0, limit: int = 5, db: Session = Depends(get_db)):
     tags = crud.get_user_tags(db, owner_id=owner_id, type=type, skip=skip, limit=limit)
     return tags
 
+
 @app.post('/create_item')
 def create_item(item: schemas.Item, db: Session = Depends(get_db)):
     return crud.create_item(db=db, item=item)
+
 
 if __name__ == '__main__':
     import uvicorn 

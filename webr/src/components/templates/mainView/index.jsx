@@ -9,7 +9,6 @@ const MainView = () => {
     const handleOnChangeSearch = (e) => {
         setSearchValue(e.target.value)
     }
-    console.log('url', process.env.API_URL)
 
     return (
         <div className={styles.container}>

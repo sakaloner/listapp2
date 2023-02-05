@@ -1,27 +1,32 @@
-import ItemCard from '../itemCard'
+import ItemCard from '@molecules/itemCard'
 import styles from './index.module.css'
 import { useState, useEffect } from 'react'
-import 
-import AddBox from '../addBox'
+import Request from '@utils/request'
+import AddBox from '@molecules/addBox'
 
 const MainBox = ({searchValue}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [itemsInfo, setItemsInfo] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_items?user=andy")
-          .then((response) => response.json())
-          .then((res) => {
-            console.log(res)
-            setItemsInfo(res)
-          });
-      }, []);
+        const data = {
+            owner_id: 1,
+        }
+        Request('get_items', 'GET', data)
+        .then((response) => {
+            console.log(response)
+            setItemsInfo(response)
+            setIsLoading(false)
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
+    }, []);
     
     return (
         <div className={styles.container}>
             <div className={styles.boxContainer}>
                 <AddBox type="mainBox"/>
-                {console.log('items', itemsInfo)}
                 {itemsInfo && itemsInfo.map((item, index) => {
                     if (searchValue && item.content.includes(searchValue)) {
                         return (

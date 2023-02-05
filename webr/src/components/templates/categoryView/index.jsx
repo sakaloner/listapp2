@@ -1,5 +1,6 @@
 import CarouselBox from "@/components/molecules/carouselBox"
 import SearchBar from "@/components/molecules/searchBar"
+import Request from "@utils/request"
 import styles from './index.module.css'
 import { useState, useEffect } from 'react'
 
@@ -13,11 +14,14 @@ const CategoryView = () => {
     }
 
     useEffect(() => {
-        fetch("http://localhost:8000/get_top_tags?user=andy")
-          .then((response) => response.json())
-          .then((res) => {
-            console.log(res)
-            setItemsInfo(res)
+        const data = {
+            owner_id:1,
+            type:'num_items'
+        }
+        Request("get_tags", "GET", data)
+            .then((res) => {
+                console.log('tags res',res)
+                setItemsInfo(res)
             })            
     }, []);
 
@@ -32,16 +36,13 @@ const CategoryView = () => {
                 {itemsInfo && itemsInfo.map((tag, index) => {
                     return (
                         <CarouselBox 
-                            title={tag.tag}
+                            title={tag.tag_name}
                             key={index}
-                            tag_id={tag.id}
+                            tag_id={tag.id_tag}
                         />
                     )
                 })}
-                <CarouselBox title="Videos"/>
-                {/* <CarouselBox title="Podcasts"/>
-                <CarouselBox title="Books"/>
-                <CarouselBox title="Articles"/> */}
+
             </div>
         </div>
     )
