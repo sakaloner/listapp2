@@ -36,20 +36,66 @@ def get_user_tags(db: Session, owner_id:int, skip: int, limit: int, type:str='ra
                 items_rating = [x.rating for x in items]
                 mean_rating = (sum(items_rating)/len(items_rating))
                 dict[tag_id] = mean_rating
-        return [x[0] for x in sorted(dict.items(), key=lambda item: item[1], reverse=True)]
+        tag_ids_ordered =  [x[0] for x in sorted(dict.items(), key=lambda item: item[1], reverse=True)]
+        final_list = []
+        for tag in tag_ids_ordered:
+            full_tag = db.query(models.Tags).filter(models.Tags.id_tag == tag).all()
+            final_list.append(full_tag[0])
+        return final_list[skip:skip+limit]
     elif type == 'num_items':
         tags = db.query(models.Tags).order_by(models.Tags.num_items.desc()).filter(models.Tags.owner_id == owner_id).offset(skip).limit(limit).all() 
         return tags
         
-def create_item(db: Session, item: schemas.Item):
+def create_item(db: Session, item: schemas.CreateItem):
     item_dict = {**item.dict()}
     item_dict['creation_date'] = datetime.now()
-    print(item_dict)
+    ## add all the tags to the database
+    if hasattr(item, 'tags'):
+        print('has tags')
+        tags = item.tags
+        for tag in tags:
+            tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == item.owner_id).first()
+            if not tag_db:
+                tag_db = models.Tags(tag_name=tag, owner_id=item.owner_id, private=False, num_items=1)
+                db.add(tag_db)
+                db.commit()
+                db.refresh(tag_db)
+            else:
+                ## update the number of items in the tag
+                tag_db.num_items += 1
+                db.commit()
+                db.refresh(tag_db)
+            ## add the item and tag to the itemTags table
+            tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == item.owner_id).first()
+            item_tag = models.ItemTags(id_item=item.id_item, id_tag=tag_db.id_tag, owner_id=item.owner_id)
+            db.add(item_tag)
+            db.commit()
+            db.refresh(item_tag)
+
+    item_dict.pop('tags')
     db_item = models.Items(**item_dict)
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
-    return db_item
+    res_dict = {**db_item.__dict__}
+    res_dict['tags'] = tags
+
+    for tag in tags:
+        tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == db_item.owner_id).first()
+        item_tag = models.ItemTags(id_item=db_item.id_item, id_tag=tag_db.id_tag, owner_id=db_item.owner_id)
+        db.add(item_tag)
+        db.commit()
+        db.refresh(item_tag)
+
+    return res_dict
+
+def get_item_tags(db: Session, item_id:int):
+    itemTags = db.query(models.ItemTags).filter(models.ItemTags.id_item == item_id).all()
+    id_tags_in_item = [x.id_tag for x in itemTags]
+    if not id_tags_in_item:
+        return {'message': 'No tags for this item'}
+    return db.query(models.Tags).filter(models.Tags.id_tag.in_(id_tags_in_item)).all()
+
 
 # def get_user(db: Session, user_id: str):
 #    return db.query(models.User).filter(models.User.email == user_id).first()

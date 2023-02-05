@@ -99,12 +99,14 @@ def read_tags(owner_id:int, type:str='random', skip: int = 0, limit: int = 5, db
     tags = crud.get_user_tags(db, owner_id=owner_id, type=type, skip=skip, limit=limit)
     return tags
 
-
 @app.post('/create_item')
-def create_item(item: schemas.Item, db: Session = Depends(get_db)):
+def create_item(item: schemas.CreateItem, db: Session = Depends(get_db)):
     return crud.create_item(db=db, item=item)
 
-
+@app.get('/get_item_tags')
+def get_item_tags(item_id:int, db: Session = Depends(get_db)):
+    return crud.get_item_tags(db=db, item_id=item_id)
+    
 if __name__ == '__main__':
     import uvicorn 
     uvicorn.run(app, port=8000, host='0.0.0.0')

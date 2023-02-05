@@ -16,7 +16,7 @@ class Users(Base):
 class Items(Base):
     __tablename__ = "items"
 
-    id_item = Column(Integer, primary_key=True, index=True)
+    id_item = Column(Integer, autoincrement=True, primary_key=True, index=True)
     content = Column(String)
     link = Column(String)
     creation_date = Column(DateTime(timezone=True), server_default=func.now())
