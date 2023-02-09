@@ -1,9 +1,47 @@
 import styles from './index.module.css'
 import { WithContext as ReactTags } from 'react-tag-input';
-import { useState } from 'react';
-const AddBox= ({type}) => {
+import { useState, useRef } from 'react';
+import Request from '@/utils/request';
+
+const AddBox= ({type, getItems}) => {
     const [editMode, setEditMode] = useState(false)
     const [tags, setTags] = useState([])
+
+    const content = useRef(null)
+    const link = useRef(null)
+    const sliderValue = useRef(null)
+
+    const cleanData = () => {
+        content.current.value = ''
+        link.current.value = ''
+        sliderValue.current.value = 0
+        setTags([])
+    }
+    const handleSaveItem = () => {
+        console.log('tags', tags)
+        const cleanTags = tags.map((tag) => {
+            return tag.text
+        })
+        const data = {
+            content: content.current.value,
+            link: link.current.value,
+            rating: sliderValue.current.value,
+            tags: cleanTags,
+            owner_id: 4,
+        }
+        console.log('data to save', cleanTags)
+        Request('create_item', 'POST', data)
+        .then((response) => {
+            console.log('save res',response)
+            getItems()
+            cleanData()
+            setEditMode(false)
+            console.log('Items Inf', itemsInfo)
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
+    }
 
     const handleDelete = i => {
         setTags(tags.filter((tag, index) => index !== i));
@@ -21,16 +59,16 @@ const AddBox= ({type}) => {
 
         // re-render
         setTags(newTags);
-        };
+    };
     
     if (editMode) {
         return (
             <div className={styles.itemCardContainer + " " + styles[type]}>
                 <div className={styles.inputs}>
-                    <input className={styles.input} placeholder="Content"/>
-                    <input className={styles.input} placeholder="Link"/>
+                    <input ref={content} className={styles.input} placeholder="Content"/>
+                    <input ref={link} className={styles.input} placeholder="Link"/>
                 </div>
-                <input type='range' min='0' max='100' className={styles.slider} id='myRange'/>
+                <input ref={sliderValue} type='range' min='0' max='100' className={styles.slider} id='myRange'/>
                 <ReactTags
                     tags={tags}
                     handleDelete={handleDelete}
@@ -39,10 +77,9 @@ const AddBox= ({type}) => {
                     autocomplete
                 />
                 <div className={styles.buttons}>
-                    <button className={styles.button}>Add</button>
+                    <button onClick={handleSaveItem} className={styles.button}>Save</button>
                     <button onClick={()=>setEditMode(false)} className={styles.button}>Cancel</button>
-                </div>
-                
+                </div> 
             </div>
         )
     } else {

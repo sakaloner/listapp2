@@ -1,0 +1,27 @@
+.itemCardContainer{
+    cursor:pointer;
+    background-color: rgb(197, 122, 8);
+    border-radius: 10px;
+    margin:10px;
+}
+.mainBox{
+    margin:auto;
+    padding:40px;
+    text-align:center;
+    font-size: 17px;
+    color:white;
+}
+.carousel{
+    margin:auto;
+    padding:30px;
+    text-align:center;
+    font-size: 17px;
+    color:white;
+}
+.inputs{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    width: 100%;
+    height: 100%;
+}

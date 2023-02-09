@@ -5,9 +5,13 @@ import { useState } from 'react'
 
 const MainView = () => {
     const [searchValue, setSearchValue] = useState('');
+    const [orderItems, setOrderItems] = useState('rating');
 
     const handleOnChangeSearch = (e) => {
         setSearchValue(e.target.value)
+    }
+    const handleSelectChange = (e) => {
+        setOrderItems(e.target.value)
     }
 
     return (
@@ -16,8 +20,12 @@ const MainView = () => {
                 searchMsg="Search in your lists"
                 handleOnChangeSearch={handleOnChangeSearch}
                 searchValue={searchValue}
-                />
-            <MainBox searchValue={searchValue}/>
+            />
+            <select onChange={handleSelectChange}>
+                <option value="rating">Rating</option>
+                <option value="date">Creation Date</option>
+            </select>
+            <MainBox searchValue={searchValue} orderItems={orderItems}/>
         </div>
     )
 }

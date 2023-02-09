@@ -8,9 +8,9 @@ const CarouselBox = ({title, tag_id, searchValue}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [itemsInfo, setItemsInfo] = useState(null);
 
-    useEffect(() => {
+    const getItems = () => {
         const data = {
-            owner_id: 1,
+            owner_id: 4,
             tag_id: tag_id
         }
         Request('get_items_by_tag', 'GET', data)
@@ -24,24 +24,25 @@ const CarouselBox = ({title, tag_id, searchValue}) => {
             .catch((error) => {
                 console.log('error', error)
             });
-        }, []);
+    }
+
+    useEffect(() => {
+        getItems()
+    }, [tag_id]);
 
     return (
         <div className={styles.container}>
             <h1>{title}</h1>
             <div className={styles.itemsContainer}>
-                {console.log('itemsInfo', itemsInfo)}
                 {itemsInfo && itemsInfo.map((item, index) => {
-                    console.log('items', itemsInfo)
-                        return (
-                            <ItemCard 
-                                key={index}
-                                type="carousel"
-                                content={item.content} 
-                                rating={item.rating} 
-                            />
-                        )
-                    })
+                    return (
+                        <ItemCard 
+                            key={index}
+                            type="carousel"
+                            itemInfo={item}
+                        />
+                    )
+                })
                 }
             </div>
         </div>

@@ -1,10 +1,19 @@
 import styles from './index.module.css'
+import { useState } from 'react'
+import EditBox from '../editBox'
 
-const ItemCard = ({type,content,rating,tags}) => {
+const ItemCard = ({type,itemInfo}) => {
+  const [editMode, setEditMode] = useState(false)
+  if (!editMode) {
     return (
-    <div className={styles.itemCardContainer + " " + styles[type]}>
-        <p>{content}</p>
-    </div>
-  )
+      <div onClick={()=>setEditMode(!editMode)} className={styles.itemCardContainer + " " + styles[type]}>
+          <p>{itemInfo.content}</p>
+      </div>
+    )
+  } else {
+    return (
+      <EditBox type="mainBox" itemInfo={itemInfo} changeMode={()=>setEditMode(false)}/>
+    )
+  }
 }
 export default ItemCard

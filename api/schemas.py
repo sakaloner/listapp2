@@ -26,11 +26,21 @@ class Item(BaseModel):
     archived: bool | None = None
     archived_rating: int | None = None
     owner_id: int | None = None
-
     class Config:
         orm_mode = True
 
 class CreateItem(BaseModel):
+    id_item: int | None = None
+    content: str | None = None
+    link: str | None = None
+    creation_date: datetime | None = None
+    rating: int | None = None
+    archived: bool | None = None
+    archived_rating: int | None = None
+    owner_id: int | None = None
+    tags: list[str] | None = None
+
+class UpdateItem(BaseModel):
     id_item: int | None = None
     content: str | None = None
     link: str | None = None

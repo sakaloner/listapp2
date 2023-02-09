@@ -45,47 +45,49 @@ def get_user_tags(db: Session, owner_id:int, skip: int, limit: int, type:str='ra
     elif type == 'num_items':
         tags = db.query(models.Tags).order_by(models.Tags.num_items.desc()).filter(models.Tags.owner_id == owner_id).offset(skip).limit(limit).all() 
         return tags
-        
+
+def create_tag(db: Session, tag:str, owner_id:int):
+    tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == owner_id).first()
+    #tag exists
+    if tag_db:
+        ## update the number of items in the tag
+        tag_db.num_items += 1
+        db.commit()
+        db.refresh(tag_db)
+        return tag_db
+    #tag does not exist
+    else:
+        tag_db = models.Tags(tag_name=tag, owner_id=owner_id, private=False, num_items=1)
+        db.add(tag_db)
+        db.commit()
+        db.refresh(tag_db)
+        return tag_db
+
+def create_itemTag(db: Session, id_item:int, id_tag:int, owner_id:int):
+    item_tag = models.ItemTags(id_item=id_item, id_tag=id_tag, owner_id=owner_id)
+    db.add(item_tag)
+    db.commit()
+    db.refresh(item_tag)
+    return item_tag
+
 def create_item(db: Session, item: schemas.CreateItem):
     item_dict = {**item.dict()}
     item_dict['creation_date'] = datetime.now()
     ## add all the tags to the database
     if hasattr(item, 'tags'):
-        print('has tags')
         tags = item.tags
         for tag in tags:
-            tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == item.owner_id).first()
-            if not tag_db:
-                tag_db = models.Tags(tag_name=tag, owner_id=item.owner_id, private=False, num_items=1)
-                db.add(tag_db)
-                db.commit()
-                db.refresh(tag_db)
-            else:
-                ## update the number of items in the tag
-                tag_db.num_items += 1
-                db.commit()
-                db.refresh(tag_db)
-            ## add the item and tag to the itemTags table
-            tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == item.owner_id).first()
-            item_tag = models.ItemTags(id_item=item.id_item, id_tag=tag_db.id_tag, owner_id=item.owner_id)
-            db.add(item_tag)
-            db.commit()
-            db.refresh(item_tag)
-
+            tag_db = create_tag(db, tag, item.owner_id)
+            create_itemTag(db, item.id_item, tag_db.id_tag, item.owner_id)
+    ## add the item to the database
     item_dict.pop('tags')
     db_item = models.Items(**item_dict)
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
+    ## prepare the response
     res_dict = {**db_item.__dict__}
     res_dict['tags'] = tags
-
-    for tag in tags:
-        tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == db_item.owner_id).first()
-        item_tag = models.ItemTags(id_item=db_item.id_item, id_tag=tag_db.id_tag, owner_id=db_item.owner_id)
-        db.add(item_tag)
-        db.commit()
-        db.refresh(item_tag)
 
     return res_dict
 
@@ -93,9 +95,46 @@ def get_item_tags(db: Session, item_id:int):
     itemTags = db.query(models.ItemTags).filter(models.ItemTags.id_item == item_id).all()
     id_tags_in_item = [x.id_tag for x in itemTags]
     if not id_tags_in_item:
-        return {'message': 'No tags for this item'}
+        return []
     return db.query(models.Tags).filter(models.Tags.id_tag.in_(id_tags_in_item)).all()
 
+def update_item(db: Session, item:schemas.UpdateItem):
+    ## update item no tags
+    item_db = db.query(models.Items).filter(models.Items.id_item == item.id_item)
+    item_no_tags = {**item.dict()}
+    item_no_tags.pop('tags')
+    item_db.update(item_no_tags)
+    db.commit()
+    ''' I need to update the user Tags if they change
+    How? i need to get all the user tags. i have a function already
+    I need to see if theresa difference between the tags in the item and the tags 
+    in the database.
+    If theres a change of more tags, i need to add the new ones and thats easy
+    If theres a change of less tags i need to delete the entries and maybe
+    delete the tag if it had 1 item only
+    You need to separate the creat tag from the other create item function'''
+    ## update tags
+    if hasattr(item, 'tags'):
+        old_tags_db = get_item_tags(db, item.id_item)
+        old_tags = [x.tag_name for x in old_tags_db]
+        diff = list(set(old_tags).symmetric_difference(set(item.tags)))
+        for tag in diff:
+            if tag in item.tags:
+                ## New tag. Add to db
+                tag_db = create_tag(db, tag, item.owner_id)
+                create_itemTag(db, item.id_item, tag_db.id_tag, item.owner_id)
+            else:
+                ## old tag gone. delete from db
+                
+    else:
+        return {'message': 'updated item'}
+
+
+
+def delete_item(db: Session, id_item: int, tipo: str):
+    db.query(models.Item).filter(models.Item.id == id_item).delete()
+    db.commit()
+    return True
 
 # def get_user(db: Session, user_id: str):
 #    return db.query(models.User).filter(models.User.email == user_id).first()

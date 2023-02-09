@@ -7,7 +7,7 @@ from sqlalchemy.schema import MetaData
 SQLALCHEMY_DATABASE_URL = "postgresql://docker:docker@localhost:5432/challenge_db"
 
 engine = create_engine(
-        SQLALCHEMY_DATABASE_URL, echo=False
+        SQLALCHEMY_DATABASE_URL, echo=True
 
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

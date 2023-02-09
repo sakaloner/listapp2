@@ -106,7 +106,11 @@ def create_item(item: schemas.CreateItem, db: Session = Depends(get_db)):
 @app.get('/get_item_tags')
 def get_item_tags(item_id:int, db: Session = Depends(get_db)):
     return crud.get_item_tags(db=db, item_id=item_id)
-    
+
+@app.post('/update_item')
+def update_item(item:schemas.UpdateItem, db: Session = Depends(get_db)):
+    return crud.update_item(db=db, item=item)
+
 if __name__ == '__main__':
     import uvicorn 
     uvicorn.run(app, port=8000, host='0.0.0.0')
