@@ -3,7 +3,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import { useState, useRef, useEffect } from 'react';
 import Request from '@/utils/request';
 
-const EditBox = ({type, itemInfo, changeMode}) => {
+const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender}) => {
     const [tags, setTags] = useState([])
     const content = useRef(null)
     const link = useRef(null)
@@ -22,7 +22,7 @@ const EditBox = ({type, itemInfo, changeMode}) => {
             .then((response) => {
                 console.log('tags res', response)
                 const new_tags = response.map((tag) => {
-                    return {id: tag.id_tag, text: tag.tag_name}
+                    return {id: tag.tag_name, text: tag.tag_name}
                 })
                 setTags(new_tags)
             })
@@ -31,29 +31,35 @@ const EditBox = ({type, itemInfo, changeMode}) => {
             })
     }
     const handleEditItem = () => {
-        // console.log('tags', tags)
-        // const cleanTags = tags.map((tag) => {
-        //     return tag.text
-        // })
-        // const data = {
-        //     content: content.current.value,
-        //     link: link.current.value,
-        //     rating: sliderValue.current.value,
-        //     tags: cleanTags,
-        //     owner_id: 4,
-        // }
-        // console.log('data to save', cleanTags)
-        // Request('create_item', 'POST', data)
-        // .then((response) => {
-        //     console.log('save res',response)
-        //     getItems()
-        //     cleanData()
-        //     setEditMode(false)
-        //     console.log('Items Inf', itemsInfo)
-        // })
-        // .catch((error) => {
-        //     console.log('error', error)
-        // })
+        const tag_names = tags.map((tag) => {return tag.text})
+        console.log('itemInfo', itemInfo)
+        let body = {
+            ...itemInfo,
+            content: content.current.value,
+            link: link.current.value,
+            rating: sliderValue.current.value,
+            tags: tag_names,
+        }
+        Request('update_item', 'POST', body)
+        .then((response) => {
+            console.log('update res',response)
+            setRerender(rerender+1)
+            setEditMode(false)
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
+    }
+    const handleDeleteItem = () => {
+        const url = `delete_item?id_item=${itemInfo.id_item}`
+        Request(url, 'DELETE')
+            .then((response) => {
+                setRerender(rerender+1)
+                setEditMode(false)
+            })
+            .catch((error) => {
+                console.log('error', error)
+            })
     }
     const handleDelete = i => {
         setTags(tags.filter((tag, index) => index !== i));
@@ -71,6 +77,7 @@ const EditBox = ({type, itemInfo, changeMode}) => {
 
     return (
         <div className={styles.itemCardContainer + " " + styles[type]}>
+            <button onClick={()=>setEditMode(false)} className={styles.closeButton}>X</button>
             <div className={styles.inputs}>
                 <input ref={content} className={styles.input} placeholder="Content"/>
                 <input ref={link} className={styles.input} placeholder="Link"/>
@@ -83,8 +90,8 @@ const EditBox = ({type, itemInfo, changeMode}) => {
                 autocomplete
             />
             <div className={styles.buttons}>
-                <button onClick={null} className={styles.button}>Save</button>
-                <button onClick={changeMode} className={styles.button}>Cancel</button>
+                <button onClick={handleEditItem} className={styles.button}>Save</button>
+                <button className={`${styles.deleteButton} ${styles.button}`} onClick={handleDeleteItem}>Delete</button>
             </div> 
         </div>
     )

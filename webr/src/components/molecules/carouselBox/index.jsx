@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 const CarouselBox = ({title, tag_id, searchValue}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [itemsInfo, setItemsInfo] = useState(null);
+    const [rerender, setRerender] = useState(0)
 
     const getItems = () => {
         const data = {
@@ -28,7 +29,7 @@ const CarouselBox = ({title, tag_id, searchValue}) => {
 
     useEffect(() => {
         getItems()
-    }, [tag_id]);
+    }, [tag_id,rerender]);
 
     return (
         <div className={styles.container}>
@@ -40,6 +41,8 @@ const CarouselBox = ({title, tag_id, searchValue}) => {
                             key={index}
                             type="carousel"
                             itemInfo={item}
+                            rerender={rerender}
+                            setRerender={setRerender}
                         />
                     )
                 })

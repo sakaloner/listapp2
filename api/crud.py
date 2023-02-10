@@ -70,25 +70,28 @@ def create_itemTag(db: Session, id_item:int, id_tag:int, owner_id:int):
     db.refresh(item_tag)
     return item_tag
 
-def create_item(db: Session, item: schemas.CreateItem):
+def create_item(db: Session, item:schemas.CreateItem):
     item_dict = {**item.dict()}
     item_dict['creation_date'] = datetime.now()
-    ## add all the tags to the database
-    if hasattr(item, 'tags'):
-        tags = item.tags
-        for tag in tags:
-            tag_db = create_tag(db, tag, item.owner_id)
-            create_itemTag(db, item.id_item, tag_db.id_tag, item.owner_id)
-    ## add the item to the database
+    print('item', item)
+    ## create item
     item_dict.pop('tags')
     db_item = models.Items(**item_dict)
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
+    if item.tags:
+        print('item.tags', item.tags)
+        tags = item.tags
+        for tag in tags:
+            print('current tag', tag)
+            tag_db = create_tag(db, tag, item.owner_id)
+            print('created tag', tag_db)
+            print('tag_db', tag_db, 'tag_db.id_tag', tag_db.id_tag, 'item.id_item', item.id_item, 'item.owner_id', item.owner_id)
+            final = create_itemTag(db, db_item.id_item, tag_db.id_tag, item.owner_id)
     ## prepare the response
     res_dict = {**db_item.__dict__}
     res_dict['tags'] = tags
-
     return res_dict
 
 def get_item_tags(db: Session, item_id:int):
@@ -105,34 +108,66 @@ def update_item(db: Session, item:schemas.UpdateItem):
     item_no_tags.pop('tags')
     item_db.update(item_no_tags)
     db.commit()
-    ''' I need to update the user Tags if they change
-    How? i need to get all the user tags. i have a function already
-    I need to see if theresa difference between the tags in the item and the tags 
-    in the database.
-    If theres a change of more tags, i need to add the new ones and thats easy
-    If theres a change of less tags i need to delete the entries and maybe
-    delete the tag if it had 1 item only
-    You need to separate the creat tag from the other create item function'''
     ## update tags
     if hasattr(item, 'tags'):
         old_tags_db = get_item_tags(db, item.id_item)
         old_tags = [x.tag_name for x in old_tags_db]
         diff = list(set(old_tags).symmetric_difference(set(item.tags)))
+        print('diff', diff)
+        print('item.tags', item.tags)
+        print('item_db.tags', old_tags)
+        if not diff:
+            return {'message': 'updated item with no tag changes'}
         for tag in diff:
             if tag in item.tags:
+                print("tag is new, adding")
                 ## New tag. Add to db
                 tag_db = create_tag(db, tag, item.owner_id)
                 create_itemTag(db, item.id_item, tag_db.id_tag, item.owner_id)
             else:
+                print("tag is old. deleting")
                 ## old tag gone. delete from db
-                
+                ## delete the itemTag
+                tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == item.owner_id).first()
+                itemTag = db.query(models.ItemTags).filter(models.ItemTags.id_item == item.id_item, models.ItemTags.id_tag == tag_db.id_tag).first()
+                db.delete(itemTag)
+                db.commit()
+                ## delete the tag if it has 1 item
+                if tag_db.num_items == 1:
+                    print('deleting tag')
+                    db.delete(tag_db)
+                    db.commit()
+                else:
+                    print('substracting from tag num_item')
+                    tag_db.num_items -= 1
+                    db.commit()
+        return {'message': 'updated item with tag changes'}
     else:
-        return {'message': 'updated item'}
+        return {'message': 'updated item, no tags'}
 
 
 
-def delete_item(db: Session, id_item: int, tipo: str):
-    db.query(models.Item).filter(models.Item.id == id_item).delete()
+def delete_item(db: Session, id_item: int):
+    item = db.query(models.Items).filter(models.Items.id_item == id_item)
+    tags_db = get_item_tags(db, id_item)
+    if tags_db:
+        for tag_db in tags_db:
+        # tag_db = db.query(models.Tags).filter(models.Tags.tag_name == tag, models.Tags.owner_id == item.owner_id).first()
+            itemTag = db.query(models.ItemTags).filter(models.ItemTags.id_item == id_item, models.ItemTags.id_tag == tag_db.id_tag).first()
+            print("deleting item tag")
+            db.delete(itemTag)
+            db.commit()
+            ## delete the tag if it has 1 item
+            if tag_db.num_items == 1:
+                print('deleting tag')
+                db.delete(tag_db)
+                db.commit()
+            else:
+                print('substracting from tag num_item')
+                tag_db.num_items -= 1
+                db.commit()
+    ## delete Item
+    item.delete()
     db.commit()
     return True
 

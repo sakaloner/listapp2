@@ -7,10 +7,11 @@ import AddBox from '@molecules/addBox'
 const MainBox = ({searchValue, orderItems}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [itemsInfo, setItemsInfo] = useState(null);
+    const [rerender, setRerender] = useState(0)
 
     useEffect(() => {
         getItems()
-    }, [orderItems]);
+    }, [orderItems, rerender]);
 
     const getItems = () => {
         const data = {
@@ -19,7 +20,6 @@ const MainBox = ({searchValue, orderItems}) => {
         }
         Request('get_items', 'GET', data)
         .then((response) => {
-            console.log(response)
             setIsLoading(false)
             setItemsInfo(response)
             setIsLoading(false)
@@ -41,6 +41,8 @@ const MainBox = ({searchValue, orderItems}) => {
                                 key={index}
                                 itemInfo={item}
                                 type="mainBox"
+                                setRerender={setRerender}
+                                rerender={rerender}
                             />
                         )
                     } else if (!searchValue) {
@@ -49,6 +51,8 @@ const MainBox = ({searchValue, orderItems}) => {
                                 key={index}
                                 itemInfo={item}
                                 type="mainBox"
+                                setRerender={setRerender}
+                                rerender={rerender}
                             />
                         )
                     }

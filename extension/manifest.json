@@ -13,7 +13,7 @@
         "http://localhost:5173/"
     ],
     "action":{
-        "default_popup": "index.html",
+        "default_popup": "index_main.html",
         "default_title": "Listapp",
         "default_icon": "favicon.ico"
     },

@@ -100,7 +100,7 @@ def read_tags(owner_id:int, type:str='random', skip: int = 0, limit: int = 5, db
     return tags
 
 @app.post('/create_item')
-def create_item(item: schemas.CreateItem, db: Session = Depends(get_db)):
+def create_item(item:schemas.CreateItem, db: Session = Depends(get_db)):
     return crud.create_item(db=db, item=item)
 
 @app.get('/get_item_tags')
@@ -110,6 +110,10 @@ def get_item_tags(item_id:int, db: Session = Depends(get_db)):
 @app.post('/update_item')
 def update_item(item:schemas.UpdateItem, db: Session = Depends(get_db)):
     return crud.update_item(db=db, item=item)
+
+@app.delete('/delete_item')
+def delete_item(id_item:int, db: Session = Depends(get_db)):
+    return crud.delete_item(db=db, id_item=id_item)
 
 if __name__ == '__main__':
     import uvicorn 

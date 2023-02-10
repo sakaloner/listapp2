@@ -92,7 +92,7 @@ def create_things():
 def create_all():
     models.Base.metadata.create_all(bind=engine)
     create_users()
-    #create_things()
+    create_things()
 
 delete_table()
 create_all()

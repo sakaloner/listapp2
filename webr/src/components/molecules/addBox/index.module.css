@@ -1,8 +1,17 @@
 .itemCardContainer{
+    position:relative;
     cursor:pointer;
     background-color: rgb(197, 122, 8);
     border-radius: 10px;
     margin:10px;
+}
+.closeButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    cursor: pointer;
+    background-color: rgb(167, 1, 227);
 }
 .mainBox{
     margin:auto;
