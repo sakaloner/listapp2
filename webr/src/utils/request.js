@@ -2,7 +2,6 @@ async function Request(url='', method='', data={}) {
     const MAIN_URL = process.env.MAIN_URL;
     let options = {
         method:method,
-        credentials: 'include',
         headers: {
             'Access-Control-Allow-Credentials': 'true',
             'Content-Type': 'application/json'

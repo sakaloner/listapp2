@@ -1,23 +1,19 @@
 {
-    "name": "Listapp2",
+    "name": "Listapp",
     "version": "1.0.0",
     "description": "Save the shit you want to save",
     "manifest_version": 3,
     "author": "Andres Velasquez",
     "permissions": [
         "storage",
-        "tabs",
-        "webNavigation",
-        "webRequest",
-        "webRequestBlocking",
-        "http://localhost:5173/"
+        "tabs"
     ],
     "action":{
-        "default_popup": "index_main.html",
+        "default_popup": "popups/index_main.html",
         "default_title": "Listapp",
-        "default_icon": "favicon.ico"
+        "default_icon": "media/favicon.ico"
     },
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "service_worker.js"
     }
 }

@@ -16,6 +16,7 @@ function is_user_signed_in() {
     });
 };
 
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type == "click_event") {
         console.log("click event captured in current webpage");

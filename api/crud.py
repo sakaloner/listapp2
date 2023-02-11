@@ -88,8 +88,9 @@ def create_item(db: Session, item:schemas.CreateItem):
             tag_db = create_tag(db, tag, item.owner_id)
             print('created tag', tag_db)
             print('tag_db', tag_db, 'tag_db.id_tag', tag_db.id_tag, 'item.id_item', item.id_item, 'item.owner_id', item.owner_id)
-            final = create_itemTag(db, db_item.id_item, tag_db.id_tag, item.owner_id)
-    ## prepare the response
+            create_itemTag(db, db_item.id_item, tag_db.id_tag, item.owner_id)
+    # prepare the response
+    db.refresh(db_item)
     res_dict = {**db_item.__dict__}
     res_dict['tags'] = tags
     return res_dict

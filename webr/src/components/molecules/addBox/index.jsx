@@ -42,17 +42,7 @@ const AddBox= ({type, getItems}) => {
             console.log('error', error)
         })
     }
-    const handleDeleteItem = () => {
-        Request('delete_item', 'POST', {item_id: itemInfo.id_item})
-        .then((response) => {
-            console.log('delete res',response)
-            setRerender(rerender+1)
-            setEditMode(false)
-        })
-        .catch((error) => {
-            console.log('error', error)
-        })
-    }
+
     const handleDelete = i => {
         setTags(tags.filter((tag, index) => index !== i));
     };
@@ -89,7 +79,6 @@ const AddBox= ({type, getItems}) => {
                 />
                 <div className={styles.buttons}>
                     <button onClick={handleSaveItem} className={styles.button}>Save</button>
-                    <button onClick={handleDeleteItem} className={styles.button}>Cancel</button>
                 </div> 
             </div>
         )
