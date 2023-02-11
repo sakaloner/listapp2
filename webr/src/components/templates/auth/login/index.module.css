@@ -1,0 +1,26 @@
+.contLogin{
+    text-align: center;
+    width: 60%;
+    margin: auto;
+}
+
+.contLogin span{
+    color: var(--main-color);
+    font-size: 100px;
+}
+.contLogin h2{
+    font-family: 'GameFont';
+    color: var(--main-color);
+    margin-bottom: 0px;
+}
+.contLogin h4{
+    margin-top: 0;
+    font-weight: 200;
+    color: var(--third-color);
+}
+@media (max-width: 1100px) {
+    .contLogin{
+        width: 90%;
+    }
+    
+ }
