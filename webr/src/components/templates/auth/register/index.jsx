@@ -6,55 +6,62 @@ const Register = ({ }) => {
     const email = useRef(null)
     const password = useRef(null)
     const confirmPassword = useRef(null)
-    const userName = useRef(null)
+    const [message, setErrorMsg] = useState({
+        msg: '',
+        type: '',
+    })
+    const styleMsg = (message.type === 'error') ? 'error': 'success'
 
     const onSubmitForm = (e) => {
         let body
         e.preventDefault()
         if (password.current?.value !== confirmPassword.current?.value) {
-            toastCallback("Oops! The passwords don't match", 'error')
+            setErrorMsg({msg:"Oops! The passwords don't match", type:'error'})
             return
         }
         const secondPartEmail = email.current?.value.split('@')[1]
         if (!secondPartEmail?.includes('.')) {
-            toastCallback("Invalid email", 'error')
-            return
+            setErrorMsg({msg:"Invalid email", type:'error'})
         }
-        if (email.current && password.current && userName.current)
+        if (email.current && password.current)
             body = {
                 email: (email.current.value.toLowerCase()),
-                nick: userName.current.value,
                 password: password.current.value,
             }
-        request('Users/Register', 'POST', body, false)
+        request('user_create', 'POST', body)
             .then((res) => {
-                const {status} = res
-                if (status === 404) {
-                    toastCallback("User already exists", "error")
+                console.log('pasooo')
+                console.log('res', res)
+                const { status } = res
+                console.log('status', status)
+                if (status === 400) {
+                    setErrorMsg({msg:"The email is already registered", type:'error'})
                     return
                 }
                 if (status === 200) {
-                    toastCallback("succesfully registered", "success")
+                    setErrorMsg({msg:"Successfully registered!", type:'success'})
                     return
                 } 
-                toastCallback("Oops! We have a problem.", "error")
+                setErrorMsg({msg:"Oops! there was a problem", type:'error'})
                 return
             })
             .catch((res) => {
-                toastCallback("Oops! There is a problem.", "error")
+                console.log('problema')
+                setErrorMsg({msg:"Oops there is a problem!", type:'error'})
             })
     }
     
     return (
         <div className={styles.container}>
             <span>Icon</span>
+            <h1>Register</h1>
             <h1>Welcome to Listapp!</h1>
-            <h1>Register down below</h1>
+
             <form className={styles.form} onSubmit={onSubmitForm}>
-                <input className={styles.input} placeholder='Email' label='Your email' required type='email' refInput={email} />
-                <input className={styles.input} placeholder='Password' label='Your password' required type='password' minlength={8} refInput={password} />
-                <input className={styles.input} placeholder='Confirm password' label='Your confirmed password' required type='password' minlength={8} refInput={confirmPassword} />
-                <input className={styles.input} placeholder='Username' label='Your username' required type='text' minlength={5} refInput={userName} />
+                <input className={styles.input} placeholder='Email' required type='email' ref={email} />
+                <input className={styles.input} placeholder='Password' required type='password' minlength={8} ref={password} />
+                <input className={styles.input} placeholder='Confirm password' required type='password' minlength={8} ref={confirmPassword} />
+                <div className={`${styles.msg} ${styles[styleMsg]}`}>{message.msg}</div>
                 <button className={styles.button} variant='filled' type='submit'>SIGN UP</button>
             </form>
         </div>

@@ -17,6 +17,10 @@ class User(BaseModel):
     class Config:
         orm_mode = True
 
+class UserCreate(BaseModel):
+    email: str | None = None
+    password: str | None = None
+
 class Item(BaseModel):
     id_item: int | None = None
     content: str | None = None
@@ -26,6 +30,7 @@ class Item(BaseModel):
     archived: bool | None = None
     archived_rating: int | None = None
     owner_id: int | None = None
+    tags: list[str] | None = None
     class Config:
         orm_mode = True
 

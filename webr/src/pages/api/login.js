@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import cookie from 'cookie';
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+export default (req, res) => {
     res.setHeader(
         'Set-Cookie',
-        cookie.serialize("token", req.body.token, {
+        cookie.serialize("Authorization", req.body.token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
             maxAge: 60*60*24, //1day

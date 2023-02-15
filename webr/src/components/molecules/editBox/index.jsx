@@ -21,10 +21,12 @@ const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender}) => {
         Request('get_item_tags', 'GET', {item_id: itemInfo.id_item})
             .then((response) => {
                 console.log('tags res', response)
-                const new_tags = response.map((tag) => {
-                    return {id: tag.tag_name, text: tag.tag_name}
+                response.json().then((res) => {
+                    const new_tags = res.map((tag) => {
+                        return {id: tag.tag_name, text: tag.tag_name}
+                    })
+                    setTags(new_tags)
                 })
-                setTags(new_tags)
             })
             .catch((error) => {
                 console.log('error', error)

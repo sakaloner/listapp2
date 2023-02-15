@@ -20,9 +20,11 @@ const MainBox = ({searchValue, orderItems}) => {
         }
         Request('get_items', 'GET', data)
         .then((response) => {
-            setIsLoading(false)
-            setItemsInfo(response)
-            setIsLoading(false)
+            response.json().then((data) => {
+                setIsLoading(false)
+                setItemsInfo(data)
+                setIsLoading(false)
+            })
         })
         .catch((error) => {
             console.log('error', error)

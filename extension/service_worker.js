@@ -1,3 +1,33 @@
+console.log('el backend esta prendido')
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.type == "click_event") {
+        console.log("click event captured in current webpage");
+        // Call the callback passed to chrome.action.onClicked
+    } else if (request.message === 'login') {
+        flip_user_status(true, request.payload)
+            .then(res => sendResponse(res))
+            .catch(err => console.log(err));
+    } else if (request.message === 'logout') {
+        flip_user_status(false, null)
+            .then(res => sendResponse(res))
+            .catch(err => console.log(err));
+    } else if (request.message === 'userStatus') {
+        console.log('activado el userStatus')
+        is_user_signed_in()
+            .then(res => {
+                console.log('activated function is signedin')
+                sendResponse({ 
+                    message: 'success', 
+                    userStatus: res.userStatus,
+                    user_info: res.user_info.email 
+                });
+            })
+            .catch(err => console.log(err));
+    } else if (request.message === 'clicked_icon') {
+        console.log('click event happened');
+    }
+    return true;
+});
 
 /// to check if someone is signed in
 function is_user_signed_in() {
@@ -16,46 +46,10 @@ function is_user_signed_in() {
     });
 };
 
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.type == "click_event") {
-        console.log("click event captured in current webpage");
-        // Call the callback passed to chrome.action.onClicked
-    } else if (request.message === 'login') {
-        flip_user_status(true, request.payload)
-            .then(res => sendResponse(res))
-            .catch(err => console.log(err));
-        return true;
-    
-    } else if (request.message === 'logout') {
-        flip_user_status(false, null)
-            .then(res => sendResponse(res))
-            .catch(err => console.log(err));
-        return true;
-    } else if (request.message === 'userStatus') {
-        is_user_signed_in()
-            .then(res => {
-                sendResponse({ 
-                    message: 'success', 
-                    userStatus: res.userStatus,
-                    user_info: res.user_info.email 
-                });
-            })
-            .catch(err => console.log(err));
-            return true;
-    } else if (request.message === 'clicked_icon') {
-        console.log('click event happened');
-    }
-});
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-
-});
-
 function flip_user_status(signIn, user_info) {
     if (signIn) {
         console.log(user_info);
-        return fetch('http://listapp.be.sexy:8000/token', {
+        return fetch('http://localhost:8000/token', {
             method: 'POST',
             headers: {
                 'accept': 'application/json'
@@ -100,3 +94,27 @@ function flip_user_status(signIn, user_info) {
     }
 };
 
+
+async function isLinkInDB() {
+    let response = await fetch('http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({
+    'link' : url.innerHTML,
+    }), {
+    method: 'GET',
+    headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+    },
+    })
+    .then(function (response) {  
+        console.log('res link', response);
+        let cosa = response.json();
+        console.log('json', cosa);
+        return cosa;
+    })   
+    .catch(function (error) {
+        //console.log(error);
+        return error
+    });
+    return response;
+};

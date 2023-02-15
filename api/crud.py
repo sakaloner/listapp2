@@ -3,6 +3,25 @@ from datetime import datetime
 import json
 import models, schemas
 
+
+########## Authentication Shit ################
+def create_user(db: Session, user: schemas.UserCreate, hashed_pw:str):
+    hashed_password = hashed_pw
+    db_user = models.Users(email=user.email, hashed_password=hashed_password)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.Users).filter(models.Users.email == email).first()
+
+
+
+
+
+######################################################
+
 def get_user_items(db: Session, order_by:str, owner_id:int, skip: int = 0, limit: int = 100):
     if order_by == 'rating':
         return db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id == owner_id).offset(skip).limit(limit).all()

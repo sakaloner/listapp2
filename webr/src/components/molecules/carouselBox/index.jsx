@@ -15,12 +15,17 @@ const CarouselBox = ({title, tag_id, searchValue}) => {
             tag_id: tag_id
         }
         Request('get_items_by_tag', 'GET', data)
-            .then((res) => {
-                if (res.length === 0 || res.message) {
-                    setItemsInfo(null)
-                } else {
-                    setItemsInfo(res)
-                }
+            .then((response) => {
+                console.log('res', response)
+                response.json().then((res) => {
+                    console.log(res)
+                    if (res.length === 0 || res.message) {
+                        setItemsInfo(null)
+                    } else {
+                        setItemsInfo(res)
+                    }
+                    return
+                })
             })
             .catch((error) => {
                 console.log('error', error)

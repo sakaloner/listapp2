@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import cookie from 'cookie';
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+export default (req, res) => {
     res.setHeader(
         'Set-Cookie',
         cookie.serialize("token", "", {

@@ -26,10 +26,12 @@ const CategoryView = () => {
         console.log('data category',data)
         Request("get_tags", "GET", data)
             .then((res) => {
-                setIsLoading(false)
-                console.log('tags res',res)
-                setItemsInfo(res)
-                setIsLoading(false)
+                res.json().then((data) => {
+                    setIsLoading(false)
+                    console.log('tags res',data)
+                    setItemsInfo(data)
+                    setIsLoading(false)
+                })
             })
             .catch((error) => { console.log('error', error) })
     }

@@ -1,0 +1,32 @@
+#container{
+  background-color: papayawhip;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  justify-content: space-between;
+  padding:10px;
+  width: 400px;
+  height: 350px;
+}
+input {
+  background: transparent;
+}
+#title{
+  margin-top: 20px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+.login_form{
+  gap:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+#error{
+  color:red;
+}
+#success{
+  color:green;
+
+}

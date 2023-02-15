@@ -1,19 +1,24 @@
-async function Request(url='', method='', data={}) {
+async function Request(url='', method='', data={}, contentType='application/json') {
     const MAIN_URL = process.env.MAIN_URL;
     let options = {
         method:method,
         headers: {
             'Access-Control-Allow-Credentials': 'true',
-            'Content-Type': 'application/json'
+            'Content-Type': contentType
         },
     }
     if ( 'GET' === method ) {
         url += '?' + (new URLSearchParams(data)).toString();
     } else {
-        options.body = JSON.stringify(data);
+        if (contentType === 'application/json'){
+            options.body = JSON.stringify(data);
+        } else {
+            options.body = data
+        }
     }
     const final_url = `http://${MAIN_URL+url}`;
-    return fetch(final_url,options).then(response=>response.json())
+    console.log('request',final_url, options)
+    return (await fetch(final_url,options))
 }
 
 export default Request;
