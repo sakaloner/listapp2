@@ -8,14 +8,16 @@ chrome.storage.local.get('signed_in', (data) => {
 });
 
 
+
 // get the username 
+let user_id
 let username = document.getElementById("username");
 chrome.runtime.sendMessage({message:'userStatus'})
 .then(res => {
     console.log('wrod',res)
     username.innerHTML += res.user_info
+    
 })
-
 
 
 // logout shit
@@ -46,6 +48,14 @@ getCurrentTab()
         console.log(error);
     })
 
+getCurrentTab()
+  .then(function (tab) {
+    console.log('linko',tab, ' ');
+    chrome.runtime.sendMessage({message:'is_link_in_db', link:tab})
+    .then(res => {
+        console.log('link in db',res)
+    })
+})
 
 let input = document.getElementById("tagsInput");
 const printFunction = (tag, name_tag) => {

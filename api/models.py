@@ -21,7 +21,7 @@ class Items(Base):
     link = Column(String)
     creation_date = Column(DateTime(timezone=True), server_default=func.now())
     rating = Column(Integer)
-    archived = Column(Boolean)
+    archived = Column(Boolean, default=False)
     archived_rating = Column(Integer)
     owner_id = Column(Integer, ForeignKey("users.id_user"))
 

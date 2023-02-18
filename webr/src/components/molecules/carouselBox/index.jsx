@@ -4,7 +4,7 @@ import Request from '@utils/request'
 import { useState, useEffect } from 'react'
 
 
-const CarouselBox = ({title, tag_id, searchValue}) => {
+const CarouselBox = ({title, tag_id, archive}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [itemsInfo, setItemsInfo] = useState(null);
     const [rerender, setRerender] = useState(0)
@@ -12,7 +12,8 @@ const CarouselBox = ({title, tag_id, searchValue}) => {
     const getItems = () => {
         const data = {
             owner_id: 4,
-            tag_id: tag_id
+            tag_id: tag_id,
+            archive:archive
         }
         Request('get_items_by_tag', 'GET', data)
             .then((response) => {
@@ -48,6 +49,7 @@ const CarouselBox = ({title, tag_id, searchValue}) => {
                             itemInfo={item}
                             rerender={rerender}
                             setRerender={setRerender}
+                            archive={archive}
                         />
                     )
                 })

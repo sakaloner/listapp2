@@ -25,6 +25,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             .catch(err => console.log(err));
     } else if (request.message === 'clicked_icon') {
         console.log('click event happened');
+    } else if (request.message === 'is_link_in_db') {
+        let link = request.link
+        isLinkInDB(link)
+            .then(res => sendResponse(res))
     }
     return true;
 });
@@ -95,16 +99,19 @@ function flip_user_status(signIn, user_info) {
 };
 
 
-async function isLinkInDB() {
-    let response = await fetch('http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({
-    'link' : url.innerHTML,
-    }), {
-    method: 'GET',
-    headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-    },
+async function isLinkInDB(link) {
+    return link
+    let response = await fetch(
+        'http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({
+            'link' : url.innerHTML,
+
+        }), {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+        },
     })
     .then(function (response) {  
         console.log('res link', response);
@@ -113,7 +120,6 @@ async function isLinkInDB() {
         return cosa;
     })   
     .catch(function (error) {
-        //console.log(error);
         return error
     });
     return response;

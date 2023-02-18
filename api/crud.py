@@ -19,14 +19,49 @@ def get_user_by_email(db: Session, email: str):
 
 
 
+############# LInk in db ##########
+def link_in_db(db: Session, link:str, owner_id:int):
+    return db.query(models.Items).filter(models.Items.link == link, models.Items.owner_id == owner_id).first()
 
-######################################################
-
-def get_user_items(db: Session, order_by:str, owner_id:int, skip: int = 0, limit: int = 100):
+################## Search items #######################
+def search_user_items_mainBox(db: Session, order_by:str, owner_id:int, search:str, archive:bool = False, skip: int = 0, limit: int = 100):
     if order_by == 'rating':
-        return db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id == owner_id).offset(skip).limit(limit).all()
+        return db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id == owner_id, models.Items.archived == archive).filter((models.Items.content.contains(search))|(models.Items.link.contains(search))).offset(skip).limit(limit).all()
     elif order_by == 'date':
-        return db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.owner_id == owner_id).offset(skip).limit(limit).all()
+        return db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.owner_id == owner_id, models.Items.archived == archive).filter((models.Items.content.contains(search))|(models.Items.link.contains(search))).offset(skip).limit(limit).all()
+
+def search_user_items_categories(db: Session, order_by:str, owner_id:int, search:str, skip: int = 0, limit: int = 100):
+    # type = ['random', 'rating', 'num_items]
+    if order_by == 'random':
+        return db.query(models.Tags).filter(models.Tags.owner_id == owner_id, models.Tags.tag_name.contains(search)).offset(skip).limit(limit).all()
+    elif order_by == 'rating':
+        tags = db.query(models.Tags).filter(models.Tags.owner_id == owner_id, models.Tags.tag_name.contains(search)).all()
+        id_tags = [x.id_tag for x in tags]
+        dict = {}
+        for tag_id in id_tags:
+            itemsTags = db.query(models.ItemTags).filter(models.ItemTags.id_tag == tag_id).all()
+            if itemsTags:
+                id_items_in_tags = [x.id_item for x in itemsTags]
+                items = db.query(models.Items).filter(models.Items.id_item.in_(id_items_in_tags)).all()
+                items_rating = [x.rating for x in items]
+                mean_rating = (sum(items_rating)/len(items_rating))
+                dict[tag_id] = mean_rating
+        tag_ids_ordered =  [x[0] for x in sorted(dict.items(), key=lambda item: item[1], reverse=True)]
+        final_list = []
+        for tag in tag_ids_ordered:
+            full_tag = db.query(models.Tags).filter(models.Tags.id_tag == tag).all()
+            final_list.append(full_tag[0])
+        return final_list[skip:skip+limit]
+    elif order_by == 'num_items':
+        tags = db.query(models.Tags).order_by(models.Tags.num_items.desc()).filter(models.Tags.owner_id == owner_id, models.Tags.tag_name.contains(search)).offset(skip).limit(limit).all() 
+        return tags
+
+########################################################
+def get_user_items(db: Session, order_by:str, owner_id:int, archive:bool, skip: int = 0, limit: int = 100):
+    if order_by == 'rating':
+        return db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id == owner_id, models.Items.archived == archive).offset(skip).limit(limit).all()
+    elif order_by == 'date':
+        return db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.owner_id == owner_id, models.Items.archived == archive).offset(skip).limit(limit).all()
 
 def get_user_items_by_tag(db: Session, order_by:str, owner_id:int, tag_id:int, skip: int = 0, limit: int = 100):
     itemsTags = db.query(models.ItemTags).filter(models.ItemTags.id_tag == tag_id).all()
@@ -95,6 +130,7 @@ def create_item(db: Session, item:schemas.CreateItem):
     print('item', item)
     ## create item
     item_dict.pop('tags')
+
     db_item = models.Items(**item_dict)
     db.add(db_item)
     db.commit()

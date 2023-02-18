@@ -1,10 +1,8 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import CategoryView from '@/components/templates/categoryView'
+import MainView from '@/components/templates/mainView'
 import NavBar from '@/components/molecules/navbar'
-import { Inter } from '@next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home
 () {
@@ -18,7 +16,7 @@ export default function Home
       </Head>
       <main className={styles.main}>
         <NavBar/>
-        <CategoryView/>
+        <MainView archive={true}/>
       </main>
     </>
   )

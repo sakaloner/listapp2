@@ -16,7 +16,7 @@ export default function Home
       </Head>
       <main className={styles.main}>
         <NavBar/>
-        <MainView/>
+        <MainView archive={false}/>
       </main>
     </>
   )

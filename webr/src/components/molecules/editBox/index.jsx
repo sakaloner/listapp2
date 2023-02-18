@@ -3,14 +3,16 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import { useState, useRef, useEffect } from 'react';
 import Request from '@/utils/request';
 
-const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender}) => {
+const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, archive}) => {
     const [tags, setTags] = useState([])
     const content = useRef(null)
     const link = useRef(null)
     const sliderValue = useRef(null)
+    const archived = useRef(null)
 
     useEffect (() => {
         getTags()
+        archived.current.checked = itemInfo.archived
         content.current.value = itemInfo.content
         link.current.value = itemInfo.link
         sliderValue.current.value = itemInfo.rating
@@ -34,14 +36,15 @@ const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender}) => {
     }
     const handleEditItem = () => {
         const tag_names = tags.map((tag) => {return tag.text})
-        console.log('itemInfo', itemInfo)
         let body = {
             ...itemInfo,
             content: content.current.value,
             link: link.current.value,
             rating: sliderValue.current.value,
             tags: tag_names,
+            archived: archived.current.checked,
         }
+        console.log('body req', body)
         Request('update_item', 'POST', body)
         .then((response) => {
             console.log('update res',response)
@@ -91,6 +94,7 @@ const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender}) => {
                 handleAddition={handleAddition}
                 autocomplete
             />
+            <input type='checkbox' className={styles.archive} ref={archived}/>archived
             <div className={styles.buttons}>
                 <button onClick={handleEditItem} className={styles.button}>Save</button>
                 <button className={`${styles.deleteButton} ${styles.button}`} onClick={handleDeleteItem}>Delete</button>

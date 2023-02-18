@@ -25,7 +25,7 @@ const NavBar = ()=>{
                 <ul style={{padding:'0'}}>
                     <NavButton name='Profile' link='/' icon='Prof' state={navBarState}/>
                     <NavButton name='Explore' link='/' icon='Expl' state={navBarState}/>
-                    <NavButton name='Categories' link='categories/' icon='cats' state={navBarState}/>
+                    <NavButton name='archive' link='/archive' icon='arch' state={navBarState}/>
                     <NavButton name='Main' link='/' icon='main' state={navBarState}/>
                 </ul>                
             </nav>

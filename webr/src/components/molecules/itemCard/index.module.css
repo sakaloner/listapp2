@@ -3,6 +3,12 @@
     border-radius: 10px;
     margin:10px;
 }
+.content {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-size: 17px;
+}
 .mainBox{
     margin:auto;
     padding:40px;
