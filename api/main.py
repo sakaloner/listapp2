@@ -124,7 +124,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"user_id":user.id_user,"access_token": access_token, "token_type": "bearer"}
 
 ## optional things
 async def get_current_user(token: str = Depends(oauth2_scheme), db:str = Depends(get_db)):
@@ -158,7 +158,7 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_active_
 
 ############# This is the new shit #################
 @app.get("/get_items", response_model=list[schemas.Item])
-def read_items(owner_id:int, archive:bool=False, order_by:str='rating', skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_items(owner_id:int, archive:bool=False, order_by:str='rating', skip: int = 0, limit: int = 100, token:str = Depends(oauth2_scheme) ,db: Session = Depends(get_db)):
     items = crud.get_user_items(db, owner_id=owner_id, order_by=order_by, archive=archive, skip=skip, limit=limit)
     return items
 

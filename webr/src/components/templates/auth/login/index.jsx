@@ -5,7 +5,6 @@ import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 
 const Login = () =>{
-    const [fetchLoading, setLoading] = useState(false)
     const email = useRef(null)
     const password = useRef(null)
     const [message, setMessage] = useState({
@@ -17,7 +16,6 @@ const Login = () =>{
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setLoading(true)
         const data = {
             username: email.current?.value,
             password: password.current?.value
@@ -28,13 +26,12 @@ const Login = () =>{
         .then((res)=>{
             console.log('res', res)
             const {status} = res
-            setLoading(false)
             if (status === 200) {
                 res.json().then((data)=>{
                     console.log(data)
                     setTokenCookie(data.access_token)
                     setMessage({msg: 'Successfully logged in', type: 'success'})
-                    //setTimeout(()=>router.push('/home'), 1000)
+                    setTimeout(()=>router.push('/'), 1000)
                     return 
                 })
 
@@ -52,7 +49,6 @@ const Login = () =>{
 
         })
         .catch((err)=> {
-            setLoading(false)
             console.log('error', err)
             setMessage({msg: 'Error', type: 'success'})
         }) 
@@ -65,9 +61,9 @@ const Login = () =>{
             <h1>Log In</h1>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input className={styles.input} placeholder='Email' label='Your email' required type='email' ref={email}/>
-                <input className={styles.input} placeholder='Password' label='Your password' required type='password' minlength={8} ref={password}/>
+                <input className={styles.input} placeholder='Password' label='Your password' required type='password' minLength={8} ref={password}/>
                 <div className={`${styles.msg} ${styles[styleMsg]}`}>{message.msg}</div>
-                <button className={styles.button} variant='filled' type='submit' loading={fetchLoading}>Sign in</button>
+                <button className={styles.button} variant='filled' type='submit'>Sign in</button>
             </form>
         </div>            
     )

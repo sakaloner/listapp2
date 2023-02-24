@@ -1,22 +1,33 @@
-// login
-chrome.storage.local.get('signed_in', (data) => {
-    if (data.signed_in) {
-      chrome.action.setPopup({popup: './popups/index_main.html'});
-    } else {
-      chrome.action.setPopup({popup: './popups/index_login.html'});
-    }
-});
-
-
-
+async function getCurrentTab() {
+    let queryOptions = { active: true, lastFocusedWindow: true };
+    let tab = await chrome.tabs.query(queryOptions);
+    return tab[0].url;
+};
 // get the username 
 let user_id
 let username = document.getElementById("username");
 chrome.runtime.sendMessage({message:'userStatus'})
 .then(res => {
     console.log('wrod',res)
-    username.innerHTML += res.user_info
-    
+    username.innerHTML += res.user_info.email
+    user_id = res.user_info.user_id
+    getCurrentTab()
+    .then(function (tab) {
+        console.log('linko',tab, user_id);
+        chrome.runtime.sendMessage({message:'is_link_in_db', link:tab, id:user_id})
+        .then(res => {
+            console.log('link in db',res)
+            if (res.archived) {
+                window.location.replace('./archived.html');
+                return
+            }
+            if (res.id_item){
+                window.location.replace('./index_archive.html');
+                return
+            }
+        })
+    })
+
 })
 
 
@@ -31,11 +42,6 @@ logoutbtn.addEventListener('click', () => {
     );
 });
 
-async function getCurrentTab() {
-    let queryOptions = { active: true, lastFocusedWindow: true };
-    let tab = await chrome.tabs.query(queryOptions);
-    return tab[0].url;
-};
 
 getCurrentTab()
     .then(function (tab) {
@@ -48,14 +54,6 @@ getCurrentTab()
         console.log(error);
     })
 
-getCurrentTab()
-  .then(function (tab) {
-    console.log('linko',tab, ' ');
-    chrome.runtime.sendMessage({message:'is_link_in_db', link:tab})
-    .then(res => {
-        console.log('link in db',res)
-    })
-})
 
 let input = document.getElementById("tagsInput");
 const printFunction = (tag, name_tag) => {
@@ -99,7 +97,7 @@ saveBtn.addEventListener("click", function () {
         link:document.getElementById("url").innerHTML,
         content:document.getElementById('content').value,
         rating:document.getElementById('slider').value,
-        tags: tags
+        tags: tags? tags : null
     }
     console.log('data', JSON.stringify(data));
     fetch('http://localhost:8000/create_item', {

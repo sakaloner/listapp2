@@ -16,6 +16,7 @@ document.querySelector('form').addEventListener('submit', event => {
     chrome.runtime.sendMessage({ message: 'login',
         payload: {email, pass}},
         function (response) {
+            console.log('response login', response)
             if (response === 'success'){
                 document.querySelector('#message').innerHTML = "succesfull login";
                 document.querySelector('#message').classList.add('success');

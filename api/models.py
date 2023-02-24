@@ -47,13 +47,10 @@ class ItemTags(Base):
     owner_id = Column(Integer, ForeignKey("users.id_user"))
 
 
-    
 
+class Connections(Base):
+    __tablename__ = "connections"
 
-
-# class Connections(Base):
-#     __tablename__ = "connections"
-
-#     id = Column(Integer, primary_key=True, index=True)
-#     folower = Column(String, ForeignKey("users.email"))
-#     folowee = Column(String, ForeignKey("users.email"))
+    id = Column(Integer, primary_key=True, index=True)
+    folowee = Column(Integer, ForeignKey("users.id_user"))
+    folower = Column(Integer, ForeignKey("users.id_user"))

@@ -17,12 +17,10 @@ def get_user_by_email(db: Session, email: str):
     return db.query(models.Users).filter(models.Users.email == email).first()
 
 
-
-
 ############# LInk in db ##########
 def link_in_db(db: Session, link:str, owner_id:int):
-    return db.query(models.Items).filter(models.Items.link == link, models.Items.owner_id == owner_id).first()
-
+    res = db.query(models.Items).filter(models.Items.link == link, models.Items.owner_id == owner_id).first()
+    return res if res else False
 ################## Search items #######################
 def search_user_items_mainBox(db: Session, order_by:str, owner_id:int, search:str, archive:bool = False, skip: int = 0, limit: int = 100):
     if order_by == 'rating':
@@ -147,7 +145,8 @@ def create_item(db: Session, item:schemas.CreateItem):
     # prepare the response
     db.refresh(db_item)
     res_dict = {**db_item.__dict__}
-    res_dict['tags'] = tags
+    if item.tags:
+        res_dict['tags'] = tags
     return res_dict
 
 def get_item_tags(db: Session, item_id:int):
@@ -159,13 +158,14 @@ def get_item_tags(db: Session, item_id:int):
 
 def update_item(db: Session, item:schemas.UpdateItem):
     ## update item no tags
+    print('#########', item)
     item_db = db.query(models.Items).filter(models.Items.id_item == item.id_item)
     item_no_tags = {**item.dict()}
     item_no_tags.pop('tags')
     item_db.update(item_no_tags)
     db.commit()
     ## update tags
-    if hasattr(item, 'tags'):
+    if item.tags != None:
         old_tags_db = get_item_tags(db, item.id_item)
         old_tags = [x.tag_name for x in old_tags_db]
         diff = list(set(old_tags).symmetric_difference(set(item.tags)))
@@ -226,6 +226,31 @@ def delete_item(db: Session, id_item: int):
     item.delete()
     db.commit()
     return True
+
+
+######## multiplayer things ########
+def follow_user(db: Session, folower:str, folowee:str):
+    db_follow = models.Connections(folower=folower, folowee=folowee)
+    db.add(db_follow)
+    db.commit()
+    db.refresh(db_follow)
+    return db_follow
+
+## Stop following an user
+def unfollow_user(db: Session, folower:str, folowee:str):
+    db.query(models.Connections).filter(models.Connections.folower == folower, models.Connections.folowee == folowee).delete()
+    db.commit()
+    return True
+
+## Get all the users that an user is following
+def get_following(db: Session, folower:str):
+    return db.query(models.Connections).filter(models.Connections.folower == folower).all()
+
+## Get all the users that are following an user
+def get_followers(db: Session, folowee:str):
+    return db.query(models.Connections).filter(models.Connections.folowee == folowee).all()
+
+
 
 # def get_user(db: Session, user_id: str):
 #    return db.query(models.User).filter(models.User.email == user_id).first()
@@ -314,28 +339,6 @@ def delete_item(db: Session, id_item: int):
 #     db.query(models.Categories).filter(models.Categories.category_name == name_category, models.Categories.owner_id == usuario).delete()
 #     db.commit()
 #     return True
-
-# ######## multiplayer things ########
-# def follow_user(db: Session, folower:str, folowee:str):
-#     db_follow = models.Connections(folower=folower, folowee=folowee)
-#     db.add(db_follow)
-#     db.commit()
-#     db.refresh(db_follow)
-#     return db_follow
-
-# ## Stop following an user
-# def unfollow_user(db: Session, folower:str, folowee:str):
-#     db.query(models.Connections).filter(models.Connections.folower == folower, models.Connections.folowee == folowee).delete()
-#     db.commit()
-#     return True
-
-# ## Get all the users that an user is following
-# def get_following(db: Session, folower:str):
-#     return db.query(models.Connections).filter(models.Connections.folower == folower).all()
-
-# ## Get all the users that are following an user
-# def get_followers(db: Session, folowee:str):
-#     return db.query(models.Connections).filter(models.Connections.folowee == folowee).all()
 
 
 # def get_items_by_cat(user:str, category:str, db: Session):

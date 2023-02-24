@@ -4,7 +4,8 @@ async function Request(url='', method='', data={}, contentType='application/json
         method:method,
         headers: {
             'Access-Control-Allow-Credentials': 'true',
-            'Content-Type': contentType
+            'Content-Type': contentType,
+            'Credentials': 'include',
         },
     }
     if ( 'GET' === method ) {

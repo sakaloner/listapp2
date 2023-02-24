@@ -27,6 +27,7 @@ const NavBar = ()=>{
                     <NavButton name='Explore' link='/' icon='Expl' state={navBarState}/>
                     <NavButton name='archive' link='/archive' icon='arch' state={navBarState}/>
                     <NavButton name='Main' link='/' icon='main' state={navBarState}/>
+                    <NavButton name='Profile' link='/profile' icon='profile' state={navBarState}/>
                 </ul>                
             </nav>
             <i className={styles.menu} onClick={handleClickMenu}>M</i>

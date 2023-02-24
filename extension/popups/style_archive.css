@@ -1,0 +1,48 @@
+#container{
+    background-color: papayawhip;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    justify-content: space-between;
+    padding:10px;
+    width: 400px;
+    height: 350px;
+}
+#firstLine{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+}
+#myRange {
+    width: 90%;
+}
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    height: 100%;
+}
+input {
+background: transparent;
+}
+#title{
+margin-top: 20px;
+font-size: 25px;
+font-weight: bold;
+text-align: center;
+}
+#buttons > button{
+    font-size: 17px
+}
+#error{
+color:red;
+}
+#success{
+color:green;
+}
+#btn_archive {
+    background-color: blueviolet;
+}

@@ -81,6 +81,7 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
                         />
                     )
                 })}
+                {console.log(itemsInfo)}
                 {itemsInfo && !!!searchInfo.enter && itemsInfo.map((item, index) => {
                     if (searchValue && item.content.includes(searchValue)) {
                         return (
@@ -113,3 +114,4 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
 }
 
 export default BoxView
+
