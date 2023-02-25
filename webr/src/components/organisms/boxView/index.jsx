@@ -19,14 +19,13 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
         console.log('enter value', searchInfo.enter)
         if (searchInfo.enter > 0 && searchValue && !searchItems) {
             const data = {
-                owner_id: 4,
                 search: searchValue,
                 order_by: orderItems,
                 skip: 0,
                 limit: 20,
                 archive: archive,
             }
-            Request('search_items_mainBox', 'GET', data)
+            Request('search_items_mainBox', 'GET', data, true)
             .then((response) => {
                 response.json().then((data) => {
                     console.log('finished search')
@@ -45,11 +44,10 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
 
     const getItems = () => {
         const data = {
-            owner_id: 4,
             order_by: orderItems,
             archive: archive,
         }
-        Request('get_items', 'GET', data)
+        Request('get_items', 'GET', data, true)
         .then((response) => {
             response.json().then((data) => {
                 setItemsInfo(data)
@@ -81,8 +79,8 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
                         />
                     )
                 })}
-                {console.log(itemsInfo)}
-                {itemsInfo && !!!searchInfo.enter && itemsInfo.map((item, index) => {
+                {!Array.isArray(itemsInfo) && <div>Loading...</div>}
+                {itemsInfo && Array.isArray(itemsInfo) && !!!searchInfo.enter && itemsInfo.map((item, index) => {
                     if (searchValue && item.content.includes(searchValue)) {
                         return (
                             <ItemCard 

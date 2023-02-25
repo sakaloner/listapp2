@@ -21,7 +21,7 @@ const CategoryView = ({searchInfo, archive}) => {
             archive: archive,
         }
         console.log('data category',data)
-        Request("get_tags", "GET", data)
+        Request("get_tags", "GET", data, true)
             .then((res) => {
                 res.json().then((data) => {
                     console.log('tags res',data)
@@ -42,7 +42,7 @@ const CategoryView = ({searchInfo, archive}) => {
                 limit: 20,
                 archive: archive,
             }
-            Request('search_user_items_categories', 'GET', data)
+            Request('search_user_items_categories', 'GET', data, true)
             .then((response) => {
                 response.json().then((data) => {
                     console.log('finished search')

@@ -157,24 +157,31 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_active_
 
 
 ############# This is the new shit #################
-@app.get("/get_items", response_model=list[schemas.Item])
-def read_items(owner_id:int, archive:bool=False, order_by:str='rating', skip: int = 0, limit: int = 100, token:str = Depends(oauth2_scheme) ,db: Session = Depends(get_db)):
+@app.get("/get_items")#, response_model=list[schemas.Item])
+def read_items(archive:bool=False, order_by:str='rating', skip: int = 0, limit: int = 100, current_user: schemas.User = Depends(get_current_active_user) ,db: Session = Depends(get_db)):
+    owner_id = current_user.id_user
     items = crud.get_user_items(db, owner_id=owner_id, order_by=order_by, archive=archive, skip=skip, limit=limit)
     return items
 
 @app.get("/get_items_by_tag")
-def read_items_by_tag(owner_id:int, tag_id:int, order_by:str='rating', skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_items_by_tag(tag_id:int, order_by:str='rating', skip: int = 0, limit: int = 100,current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    owner_id = current_user.id_user
     items = crud.get_user_items_by_tag(db, owner_id=owner_id, tag_id=tag_id, order_by=order_by, skip=skip, limit=limit)
     return items
 
 @app.get('/get_tags') #response_model=list[schemas.Tag]
-def read_tags(owner_id:int, type:str='random', skip: int = 0, limit: int = 5, db: Session = Depends(get_db)):
+def read_tags(type:str='random', skip: int = 0, limit: int = 5, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    owner_id = current_user.id_user
     tags = crud.get_user_tags(db, owner_id=owner_id, type=type, skip=skip, limit=limit)
     return tags
 
 @app.post('/create_item')
-def create_item(item:schemas.CreateItem, db: Session = Depends(get_db)):
-    return crud.create_item(db=db, item=item)
+def create_item(item:schemas.CreateItem, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    owner_id = current_user.id_user
+    item_fixed = item.dict()
+    item_fixed['owner_id'] = owner_id
+    item_fixed = schemas.CreateItem(**item_fixed)
+    return crud.create_item(db=db, item=item_fixed)
 
 @app.get('/get_item_tags')
 def get_item_tags(item_id:int, db: Session = Depends(get_db)):
@@ -189,11 +196,13 @@ def delete_item(id_item:int, db: Session = Depends(get_db)):
     return crud.delete_item(db=db, id_item=id_item)
 
 @app.get('/search_items_mainBox')
-def search_user_items_main(owner_id:int, search:str, order_by:str='rating', skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def search_user_items_main(search:str, order_by:str='rating', skip: int = 0, limit: int = 100, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    owner_id = current_user.id_user
     return crud.search_user_items_mainBox(db=db, owner_id=owner_id, search=search, order_by=order_by, skip=skip, limit=limit)
 
 @app.get('/search_user_items_categories')
-def search_user_items_categories(owner_id:int, search:str, order_by:str='rating', skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def search_user_items_categories(search:str, order_by:str='rating', skip: int = 0, limit: int = 100, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    owner_id = current_user.id_user
     return crud.search_user_items_categories(db=db, owner_id=owner_id, search=search, order_by=order_by, skip=skip, limit=limit)
 
 @app.get('/link_in_db')

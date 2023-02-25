@@ -15,7 +15,7 @@ const CarouselBox = ({title, tag_id, archive}) => {
             tag_id: tag_id,
             archive:archive
         }
-        Request('get_items_by_tag', 'GET', data)
+        Request('get_items_by_tag', 'GET', data, true)
             .then((response) => {
                 console.log('res', response)
                 response.json().then((res) => {
@@ -41,7 +41,8 @@ const CarouselBox = ({title, tag_id, archive}) => {
         <div className={styles.container}>
             <h1>{title}</h1>
             <div className={styles.itemsContainer}>
-                {itemsInfo && itemsInfo.map((item, index) => {
+                {!Array.isArray(itemsInfo) && <p>error</p>}
+                {itemsInfo && Array.isArray(itemsInfo) && itemsInfo.map((item, index) => {
                     return (
                         <ItemCard 
                             key={index}

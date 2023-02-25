@@ -27,10 +27,9 @@ const AddBox= ({type, getItems}) => {
             link: link.current.value,
             rating: sliderValue.current.value,
             tags: cleanTags,
-            owner_id: 4,
         }
         console.log('data to save', cleanTags)
-        Request('create_item', 'POST', data)
+        Request('create_item', 'POST', data, true)
         .then((response) => {
             console.log('save res',response)
             getItems()

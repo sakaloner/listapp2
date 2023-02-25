@@ -17,3 +17,15 @@ export const removeTokenCookie = () => {
         body: JSON.stringify({})
     })
 }
+
+export const getToken = async () =>  {
+    const res = 
+        await fetch("/api/cookies", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res => res.json())
+    return res
+  }

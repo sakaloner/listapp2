@@ -1,6 +1,6 @@
 import styles from './index.module.css'
 import { setTokenCookie } from '@utils/cookies'
-import request from '@utils/request'
+import Request from '@utils/request'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 
@@ -22,7 +22,7 @@ const Login = () =>{
         }
         const toUrlEncoded = obj => Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&');
         const body = toUrlEncoded(data)
-        request('token', 'POST', body, 'application/x-www-form-urlencoded')
+        Request('token', 'POST', body, false, 'application/x-www-form-urlencoded')
         .then((res)=>{
             console.log('res', res)
             const {status} = res
@@ -34,8 +34,6 @@ const Login = () =>{
                     setTimeout(()=>router.push('/'), 1000)
                     return 
                 })
-
-
             } 
             if (status === 401) {
                 setMessage({msg: 'Incorrect email or password', type: 'success'})
