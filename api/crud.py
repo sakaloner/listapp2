@@ -314,6 +314,7 @@ def get_recs(db:Session, order_by:str, owner_id:int, skip: int = 0, limit: int =
     print(followees)
     ### get item of the people they follow
     ids_items = []
+    friend_items = []
     if (len(followees) != 0):
         followees_ids = [x.folowee for x in get_following(db, owner_id)]
         print(followees_ids)
