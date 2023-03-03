@@ -102,7 +102,7 @@ saveBtn.addEventListener("click", async ()=> {
     console.log('data', JSON.stringify(data));
     chrome.storage.local.get(['token'], function(result) {
         let token = result.token;
-        fetch('http://localhost:8000/create_item', {
+        fetch('http://listapp.be.sexy:8000/create_item', {
             method: 'POST',
             headers: {
                 'accept': 'application/json',

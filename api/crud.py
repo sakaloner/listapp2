@@ -318,11 +318,11 @@ def get_recs(db:Session, order_by:str, owner_id:int, skip: int = 0, limit: int =
         print(followees_ids)
         if order_by == 'rating':
             friend_items = db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id != owner_id, models.Items.owner_id.in_(followees_ids)).offset(skip).limit(friends_split).all()
+            ids_items = [x.id_item for x in friend_items]
         else:
             friend_items = db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.owner_id != owner_id, models.Items.owner_id.in_(followees_ids)).offset(skip).limit(friends_split).all()
+            ids_items = [x.id_item for x in friend_items]
     
-    ## items already fetched
-    ids_items = [x.id_item for x in friend_items]
     ### get items of all the users
     if order_by == 'rating':
         anon_items = db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id != owner_id, models.Items.id_item.notin_(ids_items)).offset(skip).limit(anon_split).all()

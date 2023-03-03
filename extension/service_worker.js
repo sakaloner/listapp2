@@ -56,7 +56,7 @@ function is_user_signed_in() {
 function flip_user_status(signIn, user_info) {
     if (signIn) {
         async function fetchToken() {
-            const res = await fetch('http://localhost:8000/token', {
+            const res = await fetch('http://listapp.be.sexy:8000/token', {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json'
@@ -83,7 +83,7 @@ function flip_user_status(signIn, user_info) {
 
 // cambiar todo esto/
     } else if (!signIn) {
-        // fetch the localhost:3000/logout route
+        // fetch the listapp.be.sexy:3000/logout route
         return new Promise(resolve => {
             chrome.storage.local.get(['userStatus', 'user_info'], function (response) {
                 console.log(response);
@@ -116,7 +116,7 @@ function isLinkInDB(link, id) {
             }
         }
         console.log('options', options)
-        const response = await fetch('http://localhost:8000/link_in_db?' + new URLSearchParams({'link' : link}), options)
+        const response = await fetch('http://listapp.be.sexy:8000/link_in_db?' + new URLSearchParams({'link' : link}), options)
         return response.json()
     }
     return new Promise(resolve => {
@@ -149,7 +149,7 @@ const archiveItem = (archived_rating) => {
                 archived_rating: archived_rating
             }
             console.log('data',data)
-            fetch('http://localhost:8000/update_item', {
+            fetch('http://listapp.be.sexy:8000/update_item', {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -178,7 +178,7 @@ const unArchiveItem = () => {
                 archived: false,
             }
             console.log('data',data)
-            fetch('http://localhost:8000/update_item', {
+            fetch('http://listapp.be.sexy:8000/update_item', {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
