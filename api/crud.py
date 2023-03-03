@@ -313,15 +313,16 @@ def get_recs(db:Session, order_by:str, owner_id:int, skip: int = 0, limit: int =
     followees = get_following(db, owner_id)
     print(followees)
     ### get item of the people they follow
+    ids_items = []
     if (len(followees) != 0):
         followees_ids = [x.folowee for x in get_following(db, owner_id)]
         print(followees_ids)
         if order_by == 'rating':
             friend_items = db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id != owner_id, models.Items.owner_id.in_(followees_ids)).offset(skip).limit(friends_split).all()
-            ids_items = [x.id_item for x in friend_items]
+            ids_items += [x.id_item for x in friend_items]
         else:
             friend_items = db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.owner_id != owner_id, models.Items.owner_id.in_(followees_ids)).offset(skip).limit(friends_split).all()
-            ids_items = [x.id_item for x in friend_items]
+            ids_items += [x.id_item for x in friend_items]
     
     ### get items of all the users
     if order_by == 'rating':
