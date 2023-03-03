@@ -7,7 +7,7 @@ const NavButton = ({name, link,icon, state})=>{
     return (
         <li className={router.pathname==link ? styles.navButtonActive :  styles.navButtonGeneral}>
             <Link href={link} className={ state ? styles.textNavButtonGeneral :styles.textNavButton}>                
-                    <i className={styles.iconNavButton}>{icon}</i>
+                    <i className={styles.iconNavButton + " " + icon}></i>
                     <span className={state ? '' : styles.dissapear}>{name}</span>
             </Link>
         </li>

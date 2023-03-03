@@ -206,8 +206,34 @@ def search_user_items_categories(search:str, order_by:str='rating', skip: int = 
     return crud.search_user_items_categories(db=db, owner_id=owner_id, search=search, order_by=order_by, skip=skip, limit=limit)
 
 @app.get('/link_in_db')
-def link_in_db(link:str, owner_id:int, db: Session = Depends(get_db)):
-    return crud.link_in_db(db=db, link=link, owner_id=owner_id)
+def link_in_db(link:str, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    return crud.link_in_db(db=db, link=link, owner_id=current_user.id_user)
+
+################ Multiplayer Functions #####################
+@app.get('/profile/{id_profile}')
+def get_profile(id_profile:int, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    return crud.get_profile_info(db=db, user_id=current_user.id_user, profile_id=id_profile)
+
+@app.get('/myProfile')
+def get_profile(current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    return crud.get_my_profile(db=db, current_user=current_user)
+
+@app.post('/follow_user')
+def follow_user(folower:int, folowee:int,  db: Session = Depends(get_db)):
+    return crud.follow_user(db=db, folower=folower, folowee=folowee)
+
+@app.post('/unfollow_user')
+def unfollow_user(folower:int, folowee:int,  db: Session = Depends(get_db)):
+    return crud.unfollow_user(db=db, folower=folower, folowee=folowee)
+
+###### Multiplayer recommendation function #################
+@app.get('/get_recs')
+def get_recoomendation(order_by:str='rating', current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    return crud.get_recs(db=db, order_by=order_by, owner_id=current_user.id_user)
+
+@app.get('/search_all_items')
+def search_all_items(search:str, order_by:str='rating', skip: int = 0, limit: int = 100, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+    return crud.search_all_items(db=db, search=search, order_by=order_by, skip=skip, limit=limit,)
 
 if __name__ == '__main__':
     import uvicorn 

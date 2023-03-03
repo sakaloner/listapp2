@@ -4,6 +4,8 @@ import json
 import models, schemas
 
 
+
+
 ########## Authentication Shit ################
 def create_user(db: Session, user: schemas.UserCreate, hashed_pw:str):
     hashed_password = hashed_pw
@@ -20,6 +22,8 @@ def get_user_by_email(db: Session, email: str):
 ############# LInk in db ##########
 def link_in_db(db: Session, link:str, owner_id:int):
     res = db.query(models.Items).filter(models.Items.link == link, models.Items.owner_id == owner_id).first()
+    print('res, ', res)
+    print('link, ', link, 'owner id', owner_id)
     return res if res else False
 ################## Search items #######################
 def search_user_items_mainBox(db: Session, order_by:str, owner_id:int, search:str, archive:bool = False, skip: int = 0, limit: int = 100):
@@ -229,6 +233,43 @@ def delete_item(db: Session, id_item: int):
 
 
 ######## multiplayer things ########
+def get_profile_info(db: Session, user_id: int, profile_id: int):
+    user = db.query(models.Users).filter(models.Users.id_user == profile_id).first()
+    if(user == None):
+        return {'msg': "user not found"}
+    user_dict = {**user.__dict__}
+    followers = db.query(models.Connections).filter(models.Connections.folowee == profile_id).all()
+    following = db.query(models.Connections).filter(models.Connections.folower == profile_id).all()
+    num_items = db.query(models.Items).filter(models.Items.owner_id == profile_id).count()
+    res = {
+        "same_user": user_id == profile_id,
+        'user_id': user_id,
+        'profile_id': profile_id,
+        "user_email": user_dict['email'],
+        "num_followers": len(followers),
+        "num_following": len(following),
+        'user_is_following': any(x.folower == user_id for x in followers),
+        'user_is_followed': any(x.folowee == user_id for x in following),
+        'num_items': num_items
+    }
+    return res
+
+def get_my_profile(db:Session, current_user:schemas.User):
+    user_dict = {**current_user.__dict__}
+    user_id = user_dict['id_user']
+    followers = db.query(models.Connections).filter(models.Connections.folowee == user_id).all()
+    following = db.query(models.Connections).filter(models.Connections.folower == user_id).all()
+    num_items = db.query(models.Items).filter(models.Items.owner_id == user_id).count()
+
+    res = {
+        "user_id": user_dict['id_user'],
+        "user_email": user_dict['email'],
+        "num_followers": len(followers),
+        "num_following": len(following),
+        'num_items': num_items
+    }
+    return res
+
 def follow_user(db: Session, folower:str, folowee:str):
     db_follow = models.Connections(folower=folower, folowee=folowee)
     db.add(db_follow)
@@ -243,12 +284,63 @@ def unfollow_user(db: Session, folower:str, folowee:str):
     return True
 
 ## Get all the users that an user is following
-def get_following(db: Session, folower:str):
+def get_following(db: Session, folower:int):
     return db.query(models.Connections).filter(models.Connections.folower == folower).all()
 
 ## Get all the users that are following an user
-def get_followers(db: Session, folowee:str):
+def get_followers(db: Session, folowee:int):
     return db.query(models.Connections).filter(models.Connections.folowee == folowee).all()
+
+
+################ recommenation function ###########
+def get_recs(db:Session, order_by:str, owner_id:int, skip: int = 0, limit: int = 50):
+    """
+    This function gets a list of recommended items for an user
+    Arguments:
+    - user_id: id of the user
+    - type:str main View or category View
+    - orderBy
+        -  the box view you can choose from rating to date
+        - the category view will be ordered normally. This argument will not affect it
+    - db: database connection
+    - skip
+    - limit
+    """
+    # get followees accounts
+    num_items = limit-skip
+    friends_split, anon_split = int(num_items*0.8), int(num_items*0.2)
+    print('split!!!!!!!!!11', friends_split, anon_split)
+    followees = get_following(db, owner_id)
+    print(followees)
+    ### get item of the people they follow
+    if (len(followees) != 0):
+        followees_ids = [x.folowee for x in get_following(db, owner_id)]
+        print(followees_ids)
+        if order_by == 'rating':
+            friend_items = db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id != owner_id, models.Items.owner_id.in_(followees_ids)).offset(skip).limit(friends_split).all()
+        else:
+            friend_items = db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.owner_id != owner_id, models.Items.owner_id.in_(followees_ids)).offset(skip).limit(friends_split).all()
+    
+    ## items already fetched
+    ids_items = [x.id_item for x in friend_items]
+    ### get items of all the users
+    if order_by == 'rating':
+        anon_items = db.query(models.Items).order_by(models.Items.rating.desc()).filter(models.Items.owner_id != owner_id, models.Items.id_item.notin_(ids_items)).offset(skip).limit(anon_split).all()
+    else:
+        anon_items = db.query(models.Items).order_by(models.Items.creation_date.desc()).filter(models.Items.owner_id != owner_id, models.Items.id_item.notin_(ids_items)).offset(skip).limit(anon_split).all()
+
+    total_items = friend_items + anon_items
+    return total_items
+
+
+def search_all_items(db: Session, order_by:str, search:str, skip: int = 0, limit: int = 100):
+    if order_by == 'rating':
+        return db.query(models.Items).order_by(models.Items.rating.desc()).filter((models.Items.content.contains(search))|(models.Items.link.contains(search))).offset(skip).limit(limit).all()
+    elif order_by == 'date':
+        return db.query(models.Items).order_by(models.Items.creation_date.desc()).filter((models.Items.content.contains(search))|(models.Items.link.contains(search))).offset(skip).limit(limit).all()
+
+
+
 
 
 

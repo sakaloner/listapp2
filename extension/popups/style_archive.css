@@ -5,8 +5,14 @@
     justify-content: center;
     justify-content: space-between;
     padding:10px;
-    width: 400px;
-    height: 350px;
+    width: 300px;
+    gap:5px;
+}
+#logout{
+    font-size: 13px;
+}
+#container > *{
+    font-size: 14px;;
 }
 #firstLine{
     display:flex;
@@ -23,19 +29,18 @@
     justify-content: center;
     text-align: center;
     align-items: center;
-    height: 100%;
 }
 input {
 background: transparent;
 }
 #title{
 margin-top: 20px;
-font-size: 25px;
+font-size: 20px;
 font-weight: bold;
 text-align: center;
 }
 #buttons > button{
-    font-size: 17px
+    font-size: 15px
 }
 #error{
 color:red;

@@ -1,6 +1,5 @@
 import styles from './index.module.css'
 import NavButton from '../navButton'
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 const NavBar = ()=>{
@@ -13,24 +12,19 @@ const NavBar = ()=>{
         localStorage.setItem('navBar', JSON.stringify(!navBarState))
         setNavBarState(!navBarState)
     }
-    const handleUserChange = () => {
-
-    }
     
     return (
         <div className={styles.contNavBar}>
             <nav className={navBarState ? styles.navBar : styles.navBarClose}>
-                <i className={'icon-lw' + " " + styles.logo}>L</i>
-                <input onClick={handleUserChange} type='text'/>
+                <i className={'icon-university' + " " + styles.logo}></i>
                 <ul style={{padding:'0'}}>
-                    <NavButton name='Profile' link='/' icon='Prof' state={navBarState}/>
-                    <NavButton name='Explore' link='/' icon='Expl' state={navBarState}/>
-                    <NavButton name='archive' link='/archive' icon='arch' state={navBarState}/>
-                    <NavButton name='Main' link='/' icon='main' state={navBarState}/>
-                    <NavButton name='Profile' link='/profile' icon='profile' state={navBarState}/>
+                    <NavButton name='Explore' link='/explore' icon='icon-explore' state={navBarState}/>
+                    <NavButton name='archive' link='/archive' icon='icon-box' state={navBarState}/>
+                    <NavButton name='Main' link='/' icon='icon-book-reference' state={navBarState}/>
+                    <NavButton name='Profile' link='/myprofile' icon='icon-cog' state={navBarState}/>
                 </ul>                
             </nav>
-            <i className={styles.menu} onClick={handleClickMenu}>M</i>
+            <i className={styles.menu + " " + "icon-menu"} onClick={handleClickMenu} ></i>
         </div>
             
     )

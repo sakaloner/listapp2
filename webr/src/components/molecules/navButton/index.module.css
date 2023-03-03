@@ -12,6 +12,7 @@
 .iconNavButton{
     font-size: 25px;
     justify-self: center;
+    outline: none;
 }
 .textNavButton{
     font-size: 13px;

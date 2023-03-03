@@ -1,9 +1,12 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import Profile from '@/components/templates/profile'
+import MyProfile from '@/components/templates/myprofile'
 import NavBar from '@/components/molecules/navbar'
+import {useRouter} from 'next/router'
 
 export default function Home () {
+  const router = useRouter()
+  const {id} = router.query
   return (
     <>
       <Head>
@@ -14,7 +17,7 @@ export default function Home () {
       </Head>
       <main className={styles.main}>
         <NavBar/>
-        <Profile />
+        <MyProfile/>
       </main>
     </>
   )

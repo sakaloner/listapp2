@@ -2,7 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
   "/api/cookies": "pages/api/cookies.js",
-  "/archive": "pages/archive.js"
+  "/explore": "pages/explore.js",
+  "/login": "pages/login.js",
+  "/": "pages/index.js",
+  "/api/login": "pages/api/login.js"
 }

@@ -16,20 +16,23 @@
         <div class="mainContainer">
             <h2 id="title">Save in Listapp</h2>   
             <div class="elementContainer">
-                <div id="urlLabel">Link:</div>
-                <a id="url"></a>
+                <div class="normalText" id="urlLabel">Link:</div>
+                <a class="normalText" id="url"></a>
             </div>
             <div class="elementContainer">
-                <div id="contentLabel">name:</div>
-                <input id="content" type="text" placeholder="content of the card">
+                <div class="normalText" id="contentLabel">name:</div>
+                <input class="normalText" id="content" type="text" placeholder="content of the card">
             </div>
             <div class="elementContainer">
-                <div>tags:</div>
-                <input id="tagsInput" type="text" placeholder="Add a tag and press enter">
+                <div class="normalText">tags:</div>
+                <input class="normalText" id="tagsInput" type="text" placeholder="Add a tag and press enter">
             </div>
             <div id="tagsBox"></div>
-            <input type="range" min="0" max="100" value="50" class="slider" id="slider">
-            <button id='saveButton' class="btn btn-primary">Save</button>
+            <input class="normalText" type="range" min="0" max="100" value="50" class="slider" id="slider">
+            <div class="buttons">
+                <button id='saveButton' class="btn btn-primary">Save</button>
+                <button id='cancelButton' class="btn  cancel">Cancel</button>
+            </div>
         </div>
     </div>
 </body>

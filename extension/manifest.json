@@ -1,7 +1,7 @@
 {
     "name": "Listapp",
     "version": "1.0.0",
-    "description": "Save the shit you want to save",
+    "description": "A digital library for people terminally online",
     "manifest_version": 3,
     "author": "Andres Velasquez",
     "permissions": [

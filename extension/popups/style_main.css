@@ -4,9 +4,10 @@
   flex-direction:column;
   justify-content: center;
   padding:10px;
-  width: 400px;
-  /* height: 350px; */
+  width: 300px;
+  min-height: 280px;
 }
+
 input {
   background: transparent;
 }
@@ -16,18 +17,22 @@ input {
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  font-size: 15px;
 }
 .mainContainer{
   display:flex;
   flex-direction:column;
   justify-content: space-between;
-  gap:20px
+  gap:10px
 }
 #title{
   margin-top: 10px;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
+}
+.normalText{
+  font-size: 14px;
 }
 .elementContainer{
   display: flex;
@@ -52,6 +57,7 @@ input {
 .tag{
   position:relative;
   margin:5px;
+  font-size: 13px;
 }
 .tagText{
   padding-right:20px;
@@ -98,4 +104,23 @@ input {
   background: #bc1fff;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+#saveButton {
+  font-size: 13px;
+}
+#cancelButton {
+  font-size: 13px;
+  background-color: rgb(160, 3, 71);
+  border: 0;
+  color:white;
+}
+#logout{
+  font-size: 13px;
 }

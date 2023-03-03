@@ -3,7 +3,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import { useState, useRef, useEffect } from 'react';
 import Request from '@/utils/request';
 
-const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, archive}) => {
+const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, exploreSave, archive}) => {
     const [tags, setTags] = useState([])
     const content = useRef(null)
     const link = useRef(null)
@@ -36,24 +36,47 @@ const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, archive}) 
     }
     const handleEditItem = () => {
         const tag_names = tags.map((tag) => {return tag.text})
-        let body = {
-            ...itemInfo,
-            content: content.current.value,
-            link: link.current.value,
-            rating: sliderValue.current.value,
-            tags: tag_names,
-            archived: archived.current.checked,
+        if (exploreSave) {
+            let body = {
+                ...itemInfo,
+                content: content.current.value,
+                link: link.current.value,
+                rating: sliderValue.current.value,
+                tags: tag_names,
+                archived: archived.current.checked,
+            }
+            delete body.owner_id
+            delete body.id_item
+            console.log('body save thing', body)
+            Request('create_item', 'POST', body, true)
+            .then((response) => {
+                console.log('update res',response)
+                setEditMode(false)
+            })
+            .catch((error) => {
+                console.log('error', error)
+            })
+        } else {
+            let body = {
+                ...itemInfo,
+                content: content.current.value,
+                link: link.current.value,
+                rating: sliderValue.current.value,
+                tags: tag_names,
+                archived: archived.current.checked,
+            }
+            console.log('body req', body)
+            Request('update_item', 'POST', body)
+            .then((response) => {
+                console.log('update res',response)
+                setRerender(rerender+1)
+                setEditMode(false)
+            })
+            .catch((error) => {
+                console.log('error', error)
+            })
         }
-        console.log('body req', body)
-        Request('update_item', 'POST', body)
-        .then((response) => {
-            console.log('update res',response)
-            setRerender(rerender+1)
-            setEditMode(false)
-        })
-        .catch((error) => {
-            console.log('error', error)
-        })
+        
     }
     const handleDeleteItem = () => {
         const url = `delete_item?id_item=${itemInfo.id_item}`

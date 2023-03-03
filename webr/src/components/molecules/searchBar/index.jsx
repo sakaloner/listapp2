@@ -4,11 +4,10 @@ import { useState } from 'react';
 const SearchBar = ({ searchMsg, searchValue, handleOnChangeSearch, handleKeyDown, setSearchInfo, searchInfo}) => {
     const handleCloseSearch = () => {
         setSearchInfo({
-            ...searchInfo,
             enter: 0,
             searchValue: '',
         })
-    }            
+    }
     return (
         <div className={styles.container}>
             <input onKeyDown={handleKeyDown} className={styles.input} onChange={handleOnChangeSearch} value={searchValue} placeholder={searchMsg}/>

@@ -11,18 +11,20 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
     const [searchItems, setSearchItems] = useState(null);
     const {searchValue, enter} = searchInfo
 
+    console.log('searchValue', searchValue)
     const handleSelectChange = (e) => {
         setOrderItems(e.target.value)
     }
     // search 
     useEffect(() => {
-        console.log('enter value', searchInfo.enter)
-        if (searchInfo.enter > 0 && searchValue && !searchItems) {
+        // console.log('Search value', searchValue, 'enter', enter)
+        if (searchInfo.enter > 0 && searchValue ) {
+            console.log('calling the request')
             const data = {
                 search: searchValue,
                 order_by: orderItems,
                 skip: 0,
-                limit: 20,
+                limit: 50,
                 archive: archive,
             }
             Request('search_items_mainBox', 'GET', data, true)
@@ -36,11 +38,11 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
                 console.log('error', error)
             })
         }
-    }), [searchInfo.enter, rerender]
+    }, [enter, rerender])
     // main fetch
     useEffect(() => {
         getItems()
-    }, [orderItems, rerender]);
+    }, [orderItems, rerender, enter, searchValue]);
 
     const getItems = () => {
         const data = {
@@ -67,20 +69,9 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
             <div className={styles.boxContainer}>
                 {!searchValue && <AddBox type="mainBox" getItems={getItems}/>}
                 {!itemsInfo && <div>Loading...</div>}
-                {!!searchInfo.enter &&  searchItems && searchItems.map((item, index) => {
-                    return (
-                        <ItemCard 
-                            key={index}
-                            itemInfo={item}
-                            type="mainBox"
-                            setRerender={setRerender}
-                            rerender={rerender}
-                            archive={archive}
-                        />
-                    )
-                })}
-                {!Array.isArray(itemsInfo) && <div>Loading...</div>}
-                {itemsInfo && Array.isArray(itemsInfo) && !!!searchInfo.enter && itemsInfo.map((item, index) => {
+                {console.log('!!!searchInfo.enter', !!enter, enter, 'itemsInfo', itemsInfo)}
+                {itemsInfo  && !!!searchInfo.enter && itemsInfo.map((item, index) => {
+                    console.log('gato')
                     if (searchValue && item.content.includes(searchValue)) {
                         return (
                             <ItemCard 
@@ -90,7 +81,6 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
                                 setRerender={setRerender}
                                 rerender={rerender}
                                 archive={archive}
-
                             />
                         )
                     } else if (!searchValue) {
@@ -106,6 +96,21 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
                         )
                     }
                 })}
+                {!!searchInfo.enter &&  searchItems && searchItems.map((item, index) => {
+                    console.log('perro')
+                    return (
+                        <ItemCard 
+                            key={index}
+                            itemInfo={item}
+                            type="mainBox"
+                            setRerender={setRerender}
+                            rerender={rerender}
+                            archive={archive}
+                        />
+                    )
+                })}
+                {!Array.isArray(itemsInfo) && <div>Loading...</div>}
+
             </div>
         </div>
     )

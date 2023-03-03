@@ -13,7 +13,7 @@ const MainView = ({archive}) => {
 
     const handleOnChangeSearch = (e) => {
         setSearchInfo({
-            ...searchInfo,
+            enter: 0,
             searchValue: e.target.value,
         })
     }

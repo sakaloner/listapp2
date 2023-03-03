@@ -16,10 +16,10 @@ document.querySelector('form').addEventListener('submit', event => {
     chrome.runtime.sendMessage({ message: 'login',
         payload: {email, pass}},
         function (response) {
-            console.log('response login', response)
             if (response === 'success'){
                 document.querySelector('#message').innerHTML = "succesfull login";
                 document.querySelector('#message').classList.add('success');
+                console.log('response, log ing', response)
                 setTimeout(() => (window.location.replace('./index_main.html')),1200);
             }else {
                 document.querySelector('#message').innerHTML = "Invalid email or password";

@@ -2,7 +2,7 @@ import styles from './index.module.css'
 import { useState } from 'react'
 import EditBox from '../editBox'
 
-const ItemCard = ({type,itemInfo, setRerender, rerender, archive}) => {
+const ItemCard = ({type,itemInfo, setRerender, rerender, archive, exploreSave}) => {
   const [editMode, setEditMode] = useState(false)
   if (!editMode) {
     return (
@@ -12,7 +12,7 @@ const ItemCard = ({type,itemInfo, setRerender, rerender, archive}) => {
     )
   } else {
     return (
-      <EditBox type="mainBox" itemInfo={itemInfo} setEditMode={setEditMode} rerender={rerender} setRerender={setRerender} archive={archive}/>
+      <EditBox type="mainBox" itemInfo={itemInfo} setEditMode={setEditMode} rerender={rerender} setRerender={setRerender} archive={archive} exploreSave={exploreSave}/>
     )
   }
 }

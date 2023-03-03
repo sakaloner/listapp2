@@ -1,0 +1,155 @@
+[{
+  "version": "1.0",
+  "image": {
+    "name": "/home/videosdownloader/public_html/image/public/uploadt/farullo-svg.png",
+    "baseName": "farullo-svg.png",
+    "format": "PNG",
+    "formatDescription": "PNG",
+    "mimeType": "image/png",
+    "class": "DirectClass",
+    "geometry": {
+      "width": 375,
+      "height": 375,
+      "x": 0,
+      "y": 0
+    },
+    "resolution": {
+      "x": 28.35,
+      "y": 28.35
+    },
+    "printSize": {
+      "x": 13.2275,
+      "y": 13.2275
+    },
+    "units": "PixelsPerCentimeter",
+    "type": "PaletteAlpha",
+    "baseType": "Undefined",
+    "endianness": "Undefined",
+    "colorspace": "sRGB",
+    "depth": 8,
+    "baseDepth": 8,
+    "channelDepth": {
+      "alpha": 8,
+      "red": 8,
+      "green": 8,
+      "blue": 8
+    },
+    "pixels": 562500,
+    "imageStatistics": {
+      "Overall": {
+        "min": 0,
+        "max": 255,
+        "mean": 0.717758,
+        "median": 0,
+        "standardDeviation": 2383.61,
+        "kurtosis": 354.992,
+        "skewness": 18.0807,
+        "entropy": 0.0444474
+      }
+    },
+    "channelStatistics": {
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "mean": 1.3573,
+        "median": 0,
+        "standardDeviation": 4620.77,
+        "kurtosis": 185.325,
+        "skewness": 13.5965,
+        "entropy": 0.013991
+      },
+      "red": {
+        "min": 0,
+        "max": 89,
+        "mean": 0.554411,
+        "median": 0,
+        "standardDeviation": 1799.65,
+        "kurtosis": 155.535,
+        "skewness": 12.5512,
+        "entropy": 0.0545995
+      },
+      "green": {
+        "min": 0,
+        "max": 6,
+        "mean": 0.037376,
+        "median": 0,
+        "standardDeviation": 121.325,
+        "kurtosis": 155.535,
+        "skewness": 12.5512,
+        "entropy": 0.0545995
+      },
+      "blue": {
+        "min": 0,
+        "max": 148,
+        "mean": 0.921941,
+        "median": 0,
+        "standardDeviation": 2992.68,
+        "kurtosis": 155.535,
+        "skewness": 12.5512,
+        "entropy": 0.0545995
+      }
+    },
+    "alpha": "#00000000",
+    "renderingIntent": "Perceptual",
+    "gamma": 0.45455,
+    "chromaticity": {
+      "redPrimary": {
+        "x": 0.64,
+        "y": 0.33
+      },
+      "greenPrimary": {
+        "x": 0.3,
+        "y": 0.6
+      },
+      "bluePrimary": {
+        "x": 0.15,
+        "y": 0.06
+      },
+      "whitePrimary": {
+        "x": 0.3127,
+        "y": 0.329
+      }
+    },
+    "matteColor": "#BDBDBD",
+    "backgroundColor": "#FFFFFF",
+    "borderColor": "#DFDFDF",
+    "transparentColor": "#00000000",
+    "interlace": "None",
+    "intensity": "Undefined",
+    "compose": "Over",
+    "pageGeometry": {
+      "width": 375,
+      "height": 375,
+      "x": 0,
+      "y": 0
+    },
+    "dispose": "Undefined",
+    "iterations": 0,
+    "compression": "Zip",
+    "orientation": "Undefined",
+    "properties": {
+      "date:create": "2023-03-02T17:45:57+00:00",
+      "date:modify": "2023-03-02T17:45:57+00:00",
+      "png:cHRM": "chunk was found (see Chromaticity, above)",
+      "png:gAMA": "gamma=0.45455 (See Gamma, above)",
+      "png:IHDR.bit-depth-orig": "8",
+      "png:IHDR.bit_depth": "8",
+      "png:IHDR.color-type-orig": "3",
+      "png:IHDR.color_type": "3 (Indexed)",
+      "png:IHDR.interlace_method": "0 (Not interlaced)",
+      "png:IHDR.width,height": "375, 375",
+      "png:pHYs": "x_res=2835, y_res=2835, units=1",
+      "png:PLTE.number_colors": "28",
+      "png:sRGB": "intent=1 (Relative Intent)",
+      "png:tRNS": "chunk was found",
+      "signature": "247c70a85720af8d8ba499795f89f3d8d0f60cb6cbf1f45ed3751b71cc7ca639"
+    },
+    "tainted": false,
+    "filesize": "823B",
+    "numberPixels": "140625",
+    "pixelsPerSecond": "11.8062MB",
+    "userTime": "0.030u",
+    "elapsedTime": "0:01.011",
+    "version": "ImageMagick 7.0.10-58 Q16 x86_64 2021-01-14 https://imagemagick.org"
+  }
+}]

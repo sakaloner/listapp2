@@ -74,6 +74,7 @@ input.addEventListener("keypress", function (event){
         tagDiv.classList.add('tag');
         let tagText = document.createElement('div')
         tagText.innerHTML = input.value;
+        if (tagText.innerHTML === '') return
         tagText.classList.add('tagText');
         let eraseButton = document.createElement('div')
         eraseButton.classList.add('eraseButton');
@@ -91,30 +92,38 @@ input.addEventListener("keypress", function (event){
 
 
 let saveBtn = document.getElementById("saveButton");
-saveBtn.addEventListener("click", function () {
+saveBtn.addEventListener("click", async ()=> {
     let data = {
-        owner_id: 4,
         link:document.getElementById("url").innerHTML,
         content:document.getElementById('content').value,
         rating:document.getElementById('slider').value,
         tags: tags? tags : null
     }
     console.log('data', JSON.stringify(data));
-    fetch('http://localhost:8000/create_item', {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+    chrome.storage.local.get(['token'], function(result) {
+        let token = result.token;
+        fetch('http://localhost:8000/create_item', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(data)
+        })
+        .then((res) => {
+            console.log(res);
+            document.getElementById('saveButton').innerHTML = 'Saved!';
+            document.getElementById('saveButton').style.backgroundColor = 'green';
+            document.getElementById('saveButton').style.color = 'white';
+            setTimeout(() => {  window.close() }, 1200);
+            return true;
+        })
+        .catch(err => console.log('error',err));
     })
-    .then((res) => {
-        console.log(res);
-        document.getElementById('saveButton').innerHTML = 'Saved!';
-        document.getElementById('saveButton').style.backgroundColor = 'green';
-        document.getElementById('saveButton').style.color = 'white';
-        setTimeout(() => {  window.close() }, 1200);
-        return true;
-    })
-    .catch(err => console.log('error',err));
+})
+
+let cancelBtn = document.getElementById("cancelButton");
+cancelBtn.addEventListener("click", function () {
+    window.close()
 })

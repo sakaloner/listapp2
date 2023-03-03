@@ -1,3 +1,7 @@
 __pycache__
-./venv
-node_modules
+venv/
+node_modules/
+webr/node_modules/
+webr/__pycache__/
+webr/.next/
+api/__pycache__/
