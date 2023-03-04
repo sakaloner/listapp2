@@ -8,7 +8,7 @@ export const setTokenCookie = (token) => {
     })
 }
 
-export const removeTokenCookie = () => {
+export const removeTokenCookie = async () => {
     fetch("/api/logout", {
         method: "POST",
         headers: {

@@ -1,6 +1,7 @@
 import styles from './index.module.css'
 import { useRef, useState } from 'react'
 import request from '@utils/request'
+import { useRouter} from 'next/router'
 
 const Register = ({ }) => {
     const email = useRef(null)
@@ -11,6 +12,7 @@ const Register = ({ }) => {
         type: '',
     })
     const styleMsg = (message.type === 'error') ? 'error': 'success'
+    const router = useRouter()
 
     const onSubmitForm = (e) => {
         let body
@@ -40,6 +42,7 @@ const Register = ({ }) => {
                 }
                 if (status === 200) {
                     setErrorMsg({msg:"Successfully registered!", type:'success'})
+                    setTimeout(() => {router.push('/login')}, 1000)
                     return
                 } 
                 setErrorMsg({msg:"Oops! there was a problem", type:'error'})
@@ -53,10 +56,9 @@ const Register = ({ }) => {
     
     return (
         <div className={styles.container}>
-            <span>Icon</span>
+            <i className={`icon-university ${styles.icon} ` }></i>
             <h1>Register</h1>
             <h1>Welcome to Listapp!</h1>
-
             <form className={styles.form} onSubmit={onSubmitForm}>
                 <input className={styles.input} placeholder='Email' required type='email' ref={email} />
                 <input className={styles.input} placeholder='Password' required type='password' minlength={8} ref={password} />

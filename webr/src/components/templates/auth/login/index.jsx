@@ -55,8 +55,8 @@ const Login = () =>{
 
     return (
         <div className={styles.container}>
-            <span>Icon</span>
-            <h1>Log In</h1>
+            <i className={`icon-university ${styles.icon} ` }></i>
+            <h1>Log into your library</h1>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <input className={styles.input} placeholder='Email' label='Your email' required type='email' ref={email}/>
                 <input className={styles.input} placeholder='Password' label='Your password' required type='password' minLength={8} ref={password}/>

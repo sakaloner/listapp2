@@ -2,9 +2,11 @@ import styles from './index.module.css'
 import { WithContext as ReactTags } from 'react-tag-input';
 import { useState, useRef, useEffect } from 'react';
 import Request from '@/utils/request';
+import Link from 'next/link';
 
-const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, exploreSave, archive}) => {
+const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, exploreSave, archive, exploreMode}) => {
     const [tags, setTags] = useState([])
+    const [username, setUsername] = useState('Nada')
     const content = useRef(null)
     const link = useRef(null)
     const sliderValue = useRef(null)
@@ -12,11 +14,23 @@ const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, exploreSav
 
     useEffect (() => {
         getTags()
+        handle_get_username(itemInfo.owner_id)
         archived.current.checked = itemInfo.archived
         content.current.value = itemInfo.content
         link.current.value = itemInfo.link
         sliderValue.current.value = itemInfo.rating
+
     }, [])
+
+    const handle_get_username = (id) => {
+        Request(`profile/${id}`, 'GET', {}, true)
+            .then((response) => {  
+                response.json().then((data) => {
+                    console.log('username', data)
+                    setUsername(data.user_email)
+                })
+            })
+    }
 
     const getTags = () => {
         console.log('itemInfo', itemInfo)
@@ -105,6 +119,7 @@ const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, exploreSav
 
     return (
         <div className={styles.itemCardContainer + " " + styles[type]}>
+            {exploreMode && <div className={styles.username}>By:<button ><Link href={`/profile/${itemInfo.owner_id}`}>{username}</Link></button></div>}
             <button onClick={()=>setEditMode(false)} className={styles.closeButton}>X</button>
             <div className={styles.inputs}>
                 <input ref={content} className={styles.input} placeholder="Content"/>
@@ -119,8 +134,10 @@ const EditBox = ({type, itemInfo, setEditMode, rerender, setRerender, exploreSav
             />
             <input type='checkbox' className={styles.archive} ref={archived}/>archived
             <div className={styles.buttons}>
-                <button onClick={handleEditItem} className={styles.button}>Save</button>
-                <button className={`${styles.deleteButton} ${styles.button}`} onClick={handleDeleteItem}>Delete</button>
+                {exploreMode
+                    ? <><button onClick={handleEditItem} className={styles.button}>Save to your lists </button><button className={`${styles.deleteButton} ${styles.button}`} onClick={()=>setEditMode(false)}>Cancel</button></>
+                    :<> <button onClick={handleEditItem} className={styles.button}>Save</button><button className={`${styles.deleteButton} ${styles.button}`} onClick={handleDeleteItem}>Delete</button></>
+                }
             </div> 
         </div>
     )

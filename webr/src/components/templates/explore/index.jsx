@@ -34,7 +34,7 @@ const ExploreView = () => {
         <div className={styles.container}>
             <SearchBar
                 handleKeyDown={handleEnterSearch}                
-                searchMsg="Search in your lists"
+                searchMsg="Explore the world of knowledge"
                 handleOnChangeSearch={handleOnChangeSearch}
                 searchValue={searchInfo.searchValue}
                 activeSearch={searchInfo.enter}

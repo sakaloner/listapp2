@@ -10,6 +10,7 @@ const MainView = ({archive}) => {
         searchValue: '',
         enter: 0
     })
+    const placeholderMsg = archive?'Search in your archive':'Search in your lists'
 
     const handleOnChangeSearch = (e) => {
         setSearchInfo({
@@ -35,7 +36,7 @@ const MainView = ({archive}) => {
         <div className={styles.container}>
             <SearchBar
                 handleKeyDown={handleEnterSearch}                
-                searchMsg="Search in your lists"
+                searchMsg={placeholderMsg}
                 handleOnChangeSearch={handleOnChangeSearch}
                 searchValue={searchInfo.searchValue}
                 activeSearch={searchInfo.enter}

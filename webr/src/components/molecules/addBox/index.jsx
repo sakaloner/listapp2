@@ -6,7 +6,7 @@ import Request from '@/utils/request';
 const AddBox= ({type, getItems}) => {
     const [editMode, setEditMode] = useState(false)
     const [tags, setTags] = useState([])
-
+    const archived = useRef(null)
     const content = useRef(null)
     const link = useRef(null)
     const sliderValue = useRef(null)
@@ -27,6 +27,7 @@ const AddBox= ({type, getItems}) => {
             link: link.current.value,
             rating: sliderValue.current.value,
             tags: cleanTags,
+            archived: archived.current.checked,
         }
         console.log('data to save', cleanTags)
         Request('create_item', 'POST', data, true)
@@ -76,6 +77,7 @@ const AddBox= ({type, getItems}) => {
                     handleDrag={handleDrag}
                     autocomplete
                 />
+                <input type='checkbox' defaultChecked={true} className={styles.archive} ref={archived}/>archived
                 <div className={styles.buttons}>
                     <button onClick={handleSaveItem} className={styles.button}>Save</button>
                 </div> 

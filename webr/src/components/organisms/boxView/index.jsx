@@ -68,6 +68,20 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
             </select>
             <div className={styles.boxContainer}>
                 {!searchValue && <AddBox type="mainBox" getItems={getItems}/>}
+                {!Array.isArray(itemsInfo) && <div>Loading...</div>}
+                {!!searchInfo.enter &&  searchItems && searchItems.map((item, index) => {
+                    console.log('perro')
+                    return (
+                        <ItemCard 
+                            key={index}
+                            itemInfo={item}
+                            type="mainBox"
+                            setRerender={setRerender}
+                            rerender={rerender}
+                            archive={archive}
+                        />
+                    )
+                })}
                 {!itemsInfo && <div>Loading...</div>}
                 {console.log('!!!searchInfo.enter', !!enter, enter, 'itemsInfo', itemsInfo)}
                 {itemsInfo  && !!!searchInfo.enter && itemsInfo.map((item, index) => {
@@ -96,20 +110,7 @@ const BoxView = ({searchInfo, setSearchInfo, archive}) => {
                         )
                     }
                 })}
-                {!!searchInfo.enter &&  searchItems && searchItems.map((item, index) => {
-                    console.log('perro')
-                    return (
-                        <ItemCard 
-                            key={index}
-                            itemInfo={item}
-                            type="mainBox"
-                            setRerender={setRerender}
-                            rerender={rerender}
-                            archive={archive}
-                        />
-                    )
-                })}
-                {!Array.isArray(itemsInfo) && <div>Loading...</div>}
+                
 
             </div>
         </div>

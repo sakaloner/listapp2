@@ -73,7 +73,7 @@ const ExploreBox = ({searchInfo, setSearchInfo}) => {
                             setRerender={setRerender}
                             rerender={rerender}
                             archive={false}
-                            exploreSave={true}
+                            exploreMode={true}
                         />
                     )
                 })}
@@ -88,7 +88,7 @@ const ExploreBox = ({searchInfo, setSearchInfo}) => {
                                 setRerender={setRerender}
                                 rerender={rerender}
                                 archive={false}
-                                exploreSave={true}
+                                exploreMode={true}
 
                             />
                         )
@@ -101,8 +101,7 @@ const ExploreBox = ({searchInfo, setSearchInfo}) => {
                                 setRerender={setRerender}
                                 rerender={rerender}
                                 archive={false}
-                                exploreSave={true}
-
+                                exploreMode={true}
                             />
                         )
                     }
