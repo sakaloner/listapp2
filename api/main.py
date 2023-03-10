@@ -239,8 +239,9 @@ def get_recoomendation(order_by:str='rating', current_user: schemas.User = Depen
 def search_all_items(search:str, order_by:str='rating', skip: int = 0, limit: int = 100, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
     return crud.search_all_items(db=db, search=search, order_by=order_by, skip=skip, limit=limit,)
 
+
 @app.get('/get_telegram_user')
-def get_telegram_user_token(db: Session, telegram_id:int):
+def get_telegram_user_token(telegram_id:int, db: Session = Depends(get_db)):
     return db.query(models.TelegramUsers).filter(models.TelegramUsers.telegram_id == telegram_id).first()
 
 
