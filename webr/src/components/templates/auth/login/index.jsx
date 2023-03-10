@@ -13,15 +13,12 @@ const Login = () =>{
     })
     const styleMsg = (message.type === 'error') ? 'error': 'success'
     const router = useRouter()
-    const {isReady} = router
-    const{ telegram_id} = router.query
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const data = {
             username: email.current?.value,
             password: password.current?.value,
-            client_id: telegram_id? telegram_id: null
         }
         const toUrlEncoded = obj => Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&');
         const body = toUrlEncoded(data)
@@ -32,7 +29,6 @@ const Login = () =>{
             if (status === 200) {
                 res.json().then((data)=>{
                     console.log(data)
-                    return
                     setTokenCookie(data.access_token)
                     setMessage({msg: 'Successfully logged in', type: 'success'})
                     setTimeout(()=>router.push('/'), 1000)
@@ -57,8 +53,6 @@ const Login = () =>{
 
     }
 
-    if (!isReady) return <div>loading</div>
-    console.log('telegram_id', telegram_id)
     return (
         <div className={styles.container}>
             <i className={`icon-university ${styles.icon} ` }></i>

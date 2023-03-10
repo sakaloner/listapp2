@@ -124,8 +124,8 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    print(form_data)
-    if hasattr(form_data, 'client_id'):
+    print('client id!!!!!!1', form_data.client_id)
+    if form_data.client_id != None:
         crud.login_telegram(db, user.id_user, form_data.client_id, access_token)
         return {"msg":"successfully logged into telegram"}
 
