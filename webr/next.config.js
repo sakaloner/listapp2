@@ -7,8 +7,8 @@ const nextConfig = {
   async rewrites () {
     return [
       {
-        source: ':path*:80', // Match all paths
-        destination: ':path*:3000' // Pass through to the next server
+        source: 'http://localhost:80/:path*', // Match all paths
+        destination: 'http://localhost:3000/:path*' // Pass through to the next server
       }
     ]
   }
