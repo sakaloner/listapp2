@@ -20,7 +20,8 @@ const Login = () =>{
         e.preventDefault()
         const data = {
             username: email.current?.value,
-            password: password.current?.value
+            password: password.current?.value,
+            client_id: telegram_id? telegram_id: null
         }
         const toUrlEncoded = obj => Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&');
         const body = toUrlEncoded(data)
