@@ -341,8 +341,8 @@ def search_all_items(db: Session, order_by:str, search:str, skip: int = 0, limit
 
 
 ########### Telegram Bot ############
-def login_telegram(db: Session, user_id:int, telegram_id:int, access_token:str):
-    telegram_obj = models.TelegramUsers(user_id=user_id, telegram_id=telegram_id, access_token=access_token)
+def login_telegram(db: Session, user_id:int, client_id:int, access_token:str):
+    telegram_obj = models.TelegramUsers(user_id=user_id, telegram_id=client_id, access_token=access_token)
     db.add(telegram_obj)
     db.commit()
     db.refresh(telegram_obj)

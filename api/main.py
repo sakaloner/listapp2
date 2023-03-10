@@ -124,8 +124,8 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    if form_data.telegram_id != None:
-        crud.login_telegram(db, user.id_user, form_data.telegram_id, access_token)
+    if form_data.client_id != None:
+        crud.login_telegram(db, user.id_user, form_data.client_id, access_token)
         return {"msg":"successfully logged into telegram"}
 
     return {"user_id":user.id_user,"access_token": access_token, "token_type": "bearer"}
@@ -242,7 +242,7 @@ def search_all_items(search:str, order_by:str='rating', skip: int = 0, limit: in
 
 @app.get('/get_telegram_user')
 def get_telegram_user_token(telegram_id:int, db: Session = Depends(get_db)):
-    return db.query(models.TelegramUsers).filter(models.TelegramUsers.telegram_id == telegram_id).first()
+    return crud.get_telegram_user_token(db=db, telegram_id=telegram_id)
 
 
 
