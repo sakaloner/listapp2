@@ -19,7 +19,7 @@ logging.info('asdfasdfsadf')
 #### info for security
 SECRET_KEY = 'a5a52d2b4642d9bf9bffe27ca4c59d7da55098e05374281db838055569ab3136'
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 120
+ACCESS_TOKEN_EXPIRE_MINUTES = 1000000000
 
 
 import crud, models, schemas
@@ -124,6 +124,10 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
+    if form_data.telegram_id != None:
+        crud.login_telegram(db, user.id_user, form_data.telegram_id, access_token)
+        return {"msg":"successfully logged into telegram"}
+
     return {"user_id":user.id_user,"access_token": access_token, "token_type": "bearer"}
 
 ## optional things
@@ -234,6 +238,15 @@ def get_recoomendation(order_by:str='rating', current_user: schemas.User = Depen
 @app.get('/search_all_items')
 def search_all_items(search:str, order_by:str='rating', skip: int = 0, limit: int = 100, current_user: schemas.User = Depends(get_current_active_user), db: Session = Depends(get_db)):
     return crud.search_all_items(db=db, search=search, order_by=order_by, skip=skip, limit=limit,)
+
+@app.get('/get_telegram_user')
+def get_telegram_user_token(db: Session, telegram_id:int):
+    return db.query(models.TelegramUsers).filter(models.TelegramUsers.telegram_id == telegram_id).first()
+
+
+
+
+
 
 if __name__ == '__main__':
     import uvicorn 

@@ -7,17 +7,16 @@ import datetime
 
 log = start_logging('TelegramBot', logging.INFO)
 
-
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     log('Received /start command')
-    print('start')
+    user_id = update.message.from_user.id
+    bot_res = f"Log into your Listapp account using this link:\nhttp://listapp.be.sexy/login?telegram_id={user_id}\nIf you dont have a Listapp account you can register here:\nhttp://listapp.be.sexy/register\n then login using the first link"
     await context.bot.send_message(
         chat_id=update.effective_chat.id, 
-        text="I'm a bot, please talk to me!"
+        text=bot_res
     )
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    print(update)
     user_entities = update.message.parse_entities(
         [MessageEntity.MENTION, MessageEntity.TEXT_MENTION]
     )
@@ -28,9 +27,8 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if (update.message.from_user.id == 871787184):
             bot_res = 'you are the owner'
         else:
-            bor_res = (text)
-    else:
-        bot_res = (text)
+            bor_res = "@Doorknob is marika"
+
     
     # if(update.MessageEntity.type == MessageEntity.MENTION):
     #     bot_res= 'somebody talked to me'

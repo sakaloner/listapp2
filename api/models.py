@@ -54,3 +54,11 @@ class Connections(Base):
     id = Column(Integer, primary_key=True, index=True)
     folowee = Column(Integer, ForeignKey("users.id_user"))
     folower = Column(Integer, ForeignKey("users.id_user"))
+
+class TelegramUsers(Base):
+    __tablename__ = "telegram_users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    telegram_id = Column(Integer, unique=True)
+    access_token = Column(String)
+    user_id = Column(Integer, ForeignKey("users.id_user"))

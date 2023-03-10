@@ -13,12 +13,14 @@ const Login = () =>{
     })
     const styleMsg = (message.type === 'error') ? 'error': 'success'
     const router = useRouter()
+    const { telegram_id } = router.query
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const data = {
             username: email.current?.value,
-            password: password.current?.value
+            password: password.current?.value,
+            telegram_id: telegram_id? telegram_id: null
         }
         const toUrlEncoded = obj => Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&');
         const body = toUrlEncoded(data)
@@ -53,6 +55,8 @@ const Login = () =>{
 
     }
 
+    if (!router.isReady) return <div>loading</div>
+    console.log('telegram_id', telegram_id)
     return (
         <div className={styles.container}>
             <i className={`icon-university ${styles.icon} ` }></i>

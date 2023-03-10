@@ -2,8 +2,10 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/api/cookies": "pages/api/cookies.js",
   "/login": "pages/login.js",
+  "/api/cookies": "pages/api/cookies.js",
   "/api/login": "pages/api/login.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/myprofile": "pages/myprofile.js",
+  "/api/logout": "pages/api/logout.js"
 }

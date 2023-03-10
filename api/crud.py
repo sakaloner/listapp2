@@ -4,8 +4,6 @@ import json
 import models, schemas
 
 
-
-
 ########## Authentication Shit ################
 def create_user(db: Session, user: schemas.UserCreate, hashed_pw:str):
     hashed_password = hashed_pw
@@ -342,6 +340,16 @@ def search_all_items(db: Session, order_by:str, search:str, skip: int = 0, limit
         return db.query(models.Items).order_by(models.Items.creation_date.desc()).filter((models.Items.content.contains(search))|(models.Items.link.contains(search))).offset(skip).limit(limit).all()
 
 
+########### Telegram Bot ############
+def login_telegram(db: Session, user_id:int, telegram_id:int, access_token:str):
+    telegram_obj = models.TelegramUsers(user_id=user_id, telegram_id=telegram_id, access_token=access_token)
+    db.add(telegram_obj)
+    db.commit()
+    db.refresh(telegram_obj)
+    return telegram_obj
+
+def get_telegram_user_token(db: Session, telegram_id:int):
+    return db.query(models.TelegramUsers).filter(models.TelegramUsers.telegram_id == telegram_id).first()
 
 
 
