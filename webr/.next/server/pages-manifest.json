@@ -2,9 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/login_telegram": "pages/login_telegram.js",
-  "/login": "pages/login.js",
-  "/api/cookies": "pages/api/cookies.js",
-  "/": "pages/index.js",
-  "/api/login": "pages/api/login.js"
+  "/": "pages/index.js"
 }
