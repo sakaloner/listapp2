@@ -66,6 +66,7 @@ const Register = ({ }) => {
                 <div className={`${styles.msg} ${styles[styleMsg]}`}>{message.msg}</div>
                 <button className={styles.button} variant='filled' type='submit'>SIGN UP</button>
             </form>
+            <Link href="/login"><p>Do you already have an account? login here</p></Link>
         </div>
     )
 }
