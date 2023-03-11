@@ -64,7 +64,7 @@ const Login = () =>{
                 <div className={`${styles.msg} ${styles[styleMsg]}`}>{message.msg}</div>
                 <button className={styles.button} variant='filled' type='submit'>Sign in</button>
             </form>
-            <p>Dont have an account yet?<Link href="/register">register here</Link> register here</p>
+            <p>Dont have an account yet?<Link href="/register"> register here</Link></p> 
         </div>            
     )
 }
