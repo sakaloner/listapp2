@@ -3,6 +3,7 @@ import { setTokenCookie } from '@utils/cookies'
 import Request from '@utils/request'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const Login = () =>{
     const email = useRef(null)

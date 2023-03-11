@@ -2,6 +2,7 @@ import styles from './index.module.css'
 import { useRef, useState } from 'react'
 import request from '@utils/request'
 import { useRouter} from 'next/router'
+import Link from 'next/link'
 
 const Register = ({ }) => {
     const email = useRef(null)
