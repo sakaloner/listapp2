@@ -1,11 +1,28 @@
-from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
-from telegram.ext import InlineQueryHandler, ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler
+#!/usr/bin/env python3
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, MessageEntity
-
+from telegram.ext import InlineQueryHandler, ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler
 from utils.functions import *
+from chatgpt import get_chatbot_response
+from telegram.error import NetworkError
 import datetime
+import asyncio
+import listapp
 
+print('bro')
 log = start_logging('TelegramBot', logging.INFO)
+
+async def retry_on_error(func, wait=0.1, retry=2, *args, **kwargs):
+    i = 0
+    while True:
+        try:
+            return await func(*args, **kwargs)
+            break
+        except NetworkError:
+            logging.exception(f"Network Error. Retrying...{i}")
+            i += 1
+            await asyncio.sleep(wait)
+            if retry != 0 and i == retry:
+                break
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     log('Received /start command')
@@ -16,60 +33,71 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text=bot_res
     )
 
-async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+# async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+#     # get entities of the message
+#     user_entities = update.message.parse_entities(
+#         [MessageEntity.MENTION, MessageEntity.TEXT_MENTION]
+#     )
+#     # get text of the message
+#     text = update.message.text
+#     if ('@Parce420Bot' in user_entities.values()):
+#         text = update.message.text.replace('@Parce420Bot', '')
+#         if (update.message.from_user.id == 871787184):
+#             bot_res = get_chatbot_response(text)
+#         else:
+#             bot_res = get_chatbot_response(text)
+
+#     await context.bot.send_message(
+#         chat_id=update.effective_chat.id,
+#         text=bot_res
+#     )
+
+
+async def echo_private(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_entities = update.message.parse_entities(
         [MessageEntity.MENTION, MessageEntity.TEXT_MENTION]
     )
-    # get text of the message
-    text = update.message.text
-    if ('@Parce420Bot' in user_entities.values()):
-        text = update.message.text.replace('@Parce420Bot', '')
-        if (update.message.from_user.id == 871787184):
-            bot_res = 'you are the owner'
-        else:
-            bor_res = "@Doorknob is marika"
+    log('Received private message')
+    user_id = update.message.from_user.id
+    print(user_id)
+    ## If user is not logged in send message for him to login
+    if listapp.get_user_from_db(tl_id=user_id) == None:
+        print('user not logged in')
+        user_id = update.message.from_user.id
+        bot_res = f"Log into your Listapp account using this link:\nhttp://listapp.be.sexy/login_telegram?telegram_id={user_id}\nIf you dont have a Listapp account you can register here:\nhttp://listapp.be.sexy/register\n then login using the first link"
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=bot_res
+        )
+        return
 
-    
-    # if(update.MessageEntity.type == MessageEntity.MENTION):
-    #     bot_res= 'somebody talked to me'
-    # print('recieved echo')
-    # log('Received user message')
-    # user_msg = update.message.text
-    # user_msg = user_msg.replace('@Parce420Bot', '')
-    # log('User Message: ' + user_msg)
-    # send_msg('coms/user_msg.txt', user_msg)
-    # log('Waiting for bot response')
-    # bot_res = get_msg('coms/bot_msg.txt')
-    # log('received bot response. Sending it to user')    
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id, 
-        text= bot_res
-    )
+    user_msg = update.message.text
 
+    log(f'User message: {user_msg}')
+    bot_res = get_chatbot_response(user_msg, user_id)
 
-# async def bot_mentioned(update: Update, context: ContextTypes.DEFAULT_TYPE):
-#     log('mentiones bot')
-#     # get the message text and entities
-#     message = update.message.text
-#     entities = update.message.entities
-
-#     # check if any of the entities are mentions of the bot
-#     for entity in entities:
-#         if entity.type == MessageEntity.MENTION and entity.user.username == 'TheNameOfTheBot':
-#             # if the bot is mentioned, send a response
-#             await context.bot.send_message(chat_id=update.effective_chat.id, text="Hello, how are you?")
+    await retry_on_error(context.bot.send_message, 10, 3, chat_id=update.effective_chat.id, text=bot_res)
+    # await context.bot.send_message(
+    #     chat_id=update.effective_chat.id, 
+    #     text=bot_res
+    # )
 
 
 if __name__ == '__main__':
     application = ApplicationBuilder().token('931609591:AAHldMP8h6PIAzMkMpLE-NKJIUY3ljX3418').build()
     
+    # (Filters.text & Filters.entity(MENTION))
     # bot_mentioned_handler = MessageHandler(filters.Entity("mention"), bot_mentioned)
-    echo_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), echo)
+    echo_private = MessageHandler(filters.ChatType.PRIVATE | filters.Entity('mention'), echo_private)
+    # echo_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), echo)
     start_handler = CommandHandler('start', start)
     
-    # application.add_handler(bot_mentioned_handler)  
-    application.add_handler(echo_handler)
+    # application.add_handler(bot_mentioned_handler)
+
     application.add_handler(start_handler)
+    application.add_handler(echo_private)
+    # application.add_handler(echo_handler)
 
     
     application.run_polling()

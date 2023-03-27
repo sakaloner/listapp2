@@ -1,5 +1,6 @@
 from re import S
-from fastapi import Depends, FastAPI, HTTPException, status
+from typing import Annotated
+from fastapi import Depends, FastAPI, HTTPException, status, File, UploadFile
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm

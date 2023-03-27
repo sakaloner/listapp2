@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, LargeBinary
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from database import Base
@@ -22,6 +22,7 @@ class Items(Base):
     creation_date = Column(DateTime(timezone=True), server_default=func.now())
     rating = Column(Integer)
     archived = Column(Boolean, default=False)
+    items = Column(LargeBinary)
     archived_rating = Column(Integer)
     owner_id = Column(Integer, ForeignKey("users.id_user"))
 
@@ -45,7 +46,6 @@ class ItemTags(Base):
     id_item = Column(Integer, ForeignKey("items.id_item"))
     id_tag = Column(Integer, ForeignKey("tags.id_tag"))
     owner_id = Column(Integer, ForeignKey("users.id_user"))
-
 
 
 class Connections(Base):

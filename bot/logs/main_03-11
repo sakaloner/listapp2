@@ -1,0 +1,510 @@
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 22, in echo
+    user_entities = update.message.parse_entities(
+AttributeError: 'NoneType' object has no attribute 'parse_entities'
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 34, in echo_public
+    await context.bot.send_message(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 2598, in send_message
+    return await super().send_message(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 331, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 760, in send_message
+    return await self._send_message(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 488, in _send_message
+    result = await super()._send_message(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 512, in _send_message
+    result = await self._post(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 419, in _post
+    return await self._do_post(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 306, in _do_post
+    return await super()._do_post(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 450, in _do_post
+    return await request.post(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 165, in post
+    result = await self._request_wrapper(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 328, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message text is empty
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    text= bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    chat_id=update.effective_chat.id,
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    chat_id=update.effective_chat.id,
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    chat_id=update.effective_chat.id,
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 36, in echo_public
+    chat_id=update.effective_chat.id,
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 35, in echo_public
+    await context.bot.send_message(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 2598, in send_message
+    return await super().send_message(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 331, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 760, in send_message
+    return await self._send_message(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 488, in _send_message
+    result = await super()._send_message(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 512, in _send_message
+    result = await self._post(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 419, in _post
+    return await self._do_post(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_extbot.py", line 306, in _do_post
+    return await super()._do_post(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/_bot.py", line 450, in _do_post
+    return await request.post(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 165, in post
+    result = await self._request_wrapper(
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/request/_baserequest.py", line 328, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message must be non-empty
+TelegramBot 03-11 INFO: Application is stopping. This might take a moment.
+TelegramBot 03-11 INFO: Application.stop() complete
+TelegramBot 03-11 INFO: started TelegramBot
+TelegramBot 03-11 INFO: Application started
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment
+TelegramBot 03-11 ERROR: No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_application.py", line 1104, in process_update
+    await coroutine
+  File "/home/andres/coding/listapp2/venv/lib/python3.10/site-packages/telegram/ext/_handler.py", line 141, in handle_update
+    return await self.callback(update, context)
+  File "/home/andres/coding/listapp2/bot/tlbot.py", line 37, in echo_public
+    text=bot_res
+UnboundLocalError: local variable 'bot_res' referenced before assignment

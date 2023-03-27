@@ -1,0 +1,41 @@
+#+title: Plan
+
+
+* Intro
+Ok so this is the plan for the app we have a couple things todo
+it is aasy i think.
+Its going to the webpage and activating it
+
+#+end_src
+
+here is the [[*Intro][]]
+
+** Chapter 3
+#+begin_src elisp
+(+ 2 8 3 4 5)
+
+(defun great (name)
+  (concat "hello" name))
+
+(great "Zaiste")
+#+end_src
+
+#+RESULTS:
+: helloZaiste
+
+#+BEGIN_SRC js
+function great(name) {
+    console.log("hello", name)
+}
+great("piper")
+#+END_SRC
+
+#+RESULTS:
+: hello piper
+: undefined
+
+<s asdfs
+* chapter 4
+** TODO become an astronaut
+** TODO become a programmer
+** TODO become proficient in Emacs
