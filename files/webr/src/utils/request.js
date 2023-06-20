@@ -10,6 +10,7 @@ async function Request(url='', method='', data={}, auth=false, contentType='appl
             'Access-Control-Allow-Credentials': 'true',
             'Content-Type': contentType,
             // 'Credentials': 'include',
+            'Access-Control-Allow-Origin': '*',
             'Authorization': auth ? `Bearer ${cookie}` : " "
         }
     }
