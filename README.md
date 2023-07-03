@@ -1,4 +1,4 @@
 # listapp2
 
 
-![](outpu.gif)
+![](output.gif)
